@@ -58,6 +58,7 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
     track.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.clearTimeout(settle);
+      window.clearTimeout(programmatic.current);
       track.removeEventListener("scroll", onScroll);
     };
   }, []);

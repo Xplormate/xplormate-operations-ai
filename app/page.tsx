@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
 import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Factory, Mail, MapPin, Menu, MessageSquareText, Package, Repeat, ShieldCheck, Users, Wrench, X } from "lucide-react";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
@@ -65,6 +66,8 @@ const faq = [
 ];
 
 export default function Home() {
+  // First hero frame: fetch it early so the hero is never empty.
+  preload("/media/hero-weld.webp", { as: "image", fetchPriority: "high" });
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadError, setLeadError] = useState("");
@@ -148,7 +151,6 @@ export default function Home() {
   };
 
   return <main id="top">
-    <link rel="preload" as="image" href="/media/hero-weld.webp" fetchPriority="high" />
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
       <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#transformation" onClick={() => setNavOpen(false)}>How we work</a><a href="#explorer" onClick={() => setNavOpen(false)}>Where AI fits</a><a href="#approach" onClick={() => setNavOpen(false)}>Start with a pilot</a></nav>

@@ -85,7 +85,7 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   const center = offset + 1;
 
   return (
-    <div className="conveyor-layout" ref={rootRef} onMouseEnter={() => setHold(true)} onMouseLeave={() => setHold(false)}>
+    <div className="conveyor-layout" ref={rootRef} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHold(true); }} onPointerLeave={() => setHold(false)}>
       <div className="conveyor-intro">
         <span className="systems-eyebrow">YOUR EXISTING OPERATION</span>
         <h3 id="systems-map-title">Work with the systems you already use.</h3>

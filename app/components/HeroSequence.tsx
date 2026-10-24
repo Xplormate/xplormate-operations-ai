@@ -79,7 +79,7 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
     <>
       <div className="hero-slides">
         {slides.map((item, index) => (
-          <div key={item.label} className={`hero-slide${index === active ? " is-active" : ""}${running ? "" : " is-still"}`} aria-hidden={index === active ? undefined : true}>
+          <div key={item.label} className={`hero-slide${index === active ? " is-active" : ""}`} aria-hidden={index === active ? undefined : true}>
             {item.video ? (
               <video
                 ref={(element) => { videoRefs.current[index] = element; }}
