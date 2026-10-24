@@ -12,12 +12,13 @@ export type HeroSlide = {
 };
 
 const STILL_MS = 6500;
-const VIDEO_MS = 9000;
+const VIDEO_MS = 7000;
 
 /**
- * The hero's background: a slow crossfading sequence of plant scenes, each with
- * its own illustrative data readouts, plus a progress indicator. Reduced-motion
- * visitors get the first scene, still.
+ * The hero's background: short plant clips (or stills) that crossfade one after
+ * another, each with its own illustrative data readouts, plus a progress
+ * indicator. Only the visible clip plays and only the next one preloads.
+ * Reduced-motion visitors get the first scene's still frame.
  */
 export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
   const [active, setActive] = useState(0);
@@ -67,7 +68,7 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
                 muted
                 playsInline
                 loop
-                preload={index === 0 ? "auto" : "metadata"}
+                preload={index === active || index === (active + 1) % slides.length ? "auto" : "none"}
                 aria-label={item.alt}
               />
             ) : (
