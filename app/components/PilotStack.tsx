@@ -21,7 +21,7 @@ export default function PilotStack({ steps }: { steps: Step[] }) {
       const viewport = window.innerHeight;
       cards.forEach((card) => {
         const top = card.getBoundingClientRect().top;
-        const tilt = Math.min(1, Math.max(0, (top - viewport * 0.3) / (viewport * 0.62)));
+        const tilt = Math.min(1, Math.max(0, (top - viewport * 0.5) / (viewport * 0.45)));
         card.style.setProperty("--tilt", tilt.toFixed(3));
       });
     };

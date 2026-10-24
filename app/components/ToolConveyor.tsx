@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Pause, Play } from "lucide-react";
 
 type Tool = { brand: string; logo: string; area: string };
 type ToolGroup = { id: string; label: string; tools: Tool[] };
@@ -19,7 +20,11 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   const [offset, setOffset] = useState(0);
   const [instant, setInstant] = useState(false);
   const [autoGroups, setAutoGroups] = useState(true);
-  const [moving, setMoving] = useState(true);
+  const [reduced, setReduced] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [hold, setHold] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [laps, setLaps] = useState(0);
 
   const group = groups[groupIndex];
@@ -27,11 +32,18 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   const track = Array.from({ length: REPEATS }, () => group.tools).flat();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const still = requestAnimationFrame(() => setMoving(false));
-      return () => cancelAnimationFrame(still);
-    }
+    const still = requestAnimationFrame(() => setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches));
+    const root = rootRef.current;
+    // No timers run while the conveyor is off screen.
+    const observer = root ? new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting)) : null;
+    if (root && observer) observer.observe(root);
+    return () => {
+      cancelAnimationFrame(still);
+      observer?.disconnect();
+    };
   }, []);
+
+  const moving = !reduced && !paused && !hold && onScreen;
 
   useEffect(() => {
     if (!moving) return;
@@ -73,10 +85,11 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   const center = offset + 1;
 
   return (
-    <div className="conveyor-layout">
+    <div className="conveyor-layout" ref={rootRef} onMouseEnter={() => setHold(true)} onMouseLeave={() => setHold(false)}>
       <div className="conveyor-intro">
         <span className="systems-eyebrow">YOUR EXISTING OPERATION</span>
         <h3 id="systems-map-title">Work with the systems you already use.</h3>
+        <p className="conveyor-note">Examples of tools plants commonly run on. They are not our partners or customers.</p>
         <div className="conveyor-groups" role="tablist" aria-label="Tool categories">
           {groups.map((item, index) => (
             <button key={item.id} type="button" role="tab" aria-selected={index === groupIndex} onClick={() => choose(index)}>
@@ -97,7 +110,14 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
             ))}
           </div>
         </div>
-        <span className="systems-example">Illustrative tools</span>
+        <div className="conveyor-foot">
+          <span className="systems-example">Illustrative examples only</span>
+          {!reduced ? (
+            <button type="button" className="conveyor-pause" aria-label={paused ? "Play tool carousel" : "Pause tool carousel"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
+              {paused ? <Play size={12} /> : <Pause size={12} />}
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );

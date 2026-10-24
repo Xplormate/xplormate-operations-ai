@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Factory, Mail, MapPin, Menu, MessageSquareText, Package, Repeat, ShieldCheck, Users, Wrench, X } from "lucide-react";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
@@ -71,6 +71,12 @@ export default function Home() {
   const [leadFieldErrors, setLeadFieldErrors] = useState<Record<string, string>>({});
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  // After sending, move focus to the confirmation so it is read out.
+  useEffect(() => {
+    if (leadSubmitted) successRef.current?.focus();
+  }, [leadSubmitted]);
 
   // Header switches from dark glass (over the hero) to light glass once the hero is behind us.
   useEffect(() => {
@@ -142,6 +148,7 @@ export default function Home() {
   };
 
   return <main id="top">
+    <link rel="preload" as="image" href="/media/hero-weld.webp" fetchPriority="high" />
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
       <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#transformation" onClick={() => setNavOpen(false)}>How we work</a><a href="#explorer" onClick={() => setNavOpen(false)}>Where AI fits</a><a href="#approach" onClick={() => setNavOpen(false)}>Start with a pilot</a></nav>
@@ -272,14 +279,14 @@ export default function Home() {
                     {leadFieldErrors.challenge ? <small className="field-error" id="lead-challenge-error">{leadFieldErrors.challenge}</small> : null}
                   </label>
                 </div>
-                {leadError ? <p className="form-error" role="alert" aria-live="polite">{leadError}</p> : null}
+                {leadError ? <p className="form-error" role="alert">{leadError}</p> : null}
                 <button className="button button-amber" type="submit" disabled={leadSubmitting} aria-busy={leadSubmitting}>
                   {leadSubmitting ? "Sending" : "Start a conversation"} <ArrowUpRight size={20} />
                 </button>
                 <small className="form-note">Name, email, company and role are required. We use your details to review and respond to your enquiry.</small>
               </form>
             ) : (
-              <div className="lead-success" aria-live="polite">
+              <div className="lead-success" ref={successRef} tabIndex={-1} role="status">
                 <p>Thanks, we’ve received your details and will get back to you personally.</p>
                 <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Submit another response</button>
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, type LucideIcon } from "lucide-react";
 
 export type Area = {
@@ -26,6 +26,41 @@ export type Area = {
 export default function AreaCarousel({ areas }: { areas: Area[] }) {
   const [active, setActive] = useState(0);
   const area = areas[active];
+  const trackRef = useRef<HTMLDivElement>(null);
+  const programmatic = useRef(0);
+
+  // On phones the photo row scrolls sideways: keep it and the chosen area in step.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || track.scrollWidth <= track.clientWidth + 4) return;
+    const card = track.children[active] as HTMLElement | undefined;
+    if (!card) return;
+    programmatic.current = window.setTimeout(() => { programmatic.current = 0; }, 700);
+    track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+  }, [active]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    let settle = 0;
+    const onScroll = () => {
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        if (programmatic.current || track.scrollWidth <= track.clientWidth + 4) return;
+        const cards = Array.from(track.children) as HTMLElement[];
+        let nearest = 0;
+        cards.forEach((card, index) => {
+          if (Math.abs(card.offsetLeft - track.scrollLeft) < Math.abs(cards[nearest].offsetLeft - track.scrollLeft)) nearest = index;
+        });
+        setActive(nearest);
+      }, 140);
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.clearTimeout(settle);
+      track.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   const go = (index: number) => setActive((index + areas.length) % areas.length);
 
@@ -73,7 +108,7 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
         </div>
       </div>
 
-      <div className="areas-track">
+      <div className="areas-track" ref={trackRef}>
         {areas.map((item, index) => (
           <button
             key={item.id}
@@ -82,7 +117,6 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
             className={`area-card${index === active ? " is-active" : ""}`}
             onClick={() => go(index)}
             aria-hidden={index === active ? undefined : true}
-            aria-label={index === active ? undefined : `Show ${item.label}`}
           >
             <img src={item.image} alt="" loading="lazy" decoding="async" />
             <span className="area-card-shade" aria-hidden="true" />
