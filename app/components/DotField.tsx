@@ -76,8 +76,12 @@ export default function DotField({ className, color = "255,214,150", gap = 14, d
     };
 
     const loop = (time: number) => {
+      if (!visible) {
+        frame = 0;
+        return;
+      }
       frame = requestAnimationFrame(loop);
-      if (!visible || time - last < 33) return;
+      if (time - last < 33) return;
       last = time;
       draw(time);
     };
@@ -93,6 +97,8 @@ export default function DotField({ className, color = "255,214,150", gap = 14, d
 
     const intersection = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
+      // Restart the loop when the field comes back on screen; it stops itself when hidden.
+      if (visible && !frame && !reduceMotion) frame = requestAnimationFrame(loop);
     });
     intersection.observe(canvas);
 

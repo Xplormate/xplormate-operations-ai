@@ -63,9 +63,12 @@ export default function Home() {
   // Header switches from dark glass (over the hero) to light glass once the hero is behind us.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.72);
-    onScroll();
+    const first = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(first);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // Fade sections in as they arrive. Content stays visible if JS never runs.
@@ -73,6 +76,10 @@ export default function Home() {
     const root = document.documentElement;
     const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    // Anything already on screen stays put; only content further down fades in.
+    targets.forEach((target) => {
+      if (target.getBoundingClientRect().top < window.innerHeight) target.classList.add("is-visible");
+    });
     root.classList.add("reveal-ready");
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -301,7 +308,7 @@ export default function Home() {
 
     <footer className="site-footer"><div className="shell">
       <div className="footer-grid"><a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a><address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address><div className="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={16} /></a></div></div>
-      <div className="footer-bar bracketed"><span>© {new Date().getFullYear()} XPLORMATE</span><img className="footer-mark" src="/xplormate-logo.jpg" alt="" width="28" height="28" /><span>AI FOR MANUFACTURING OPERATIONS</span></div>
+      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><img className="footer-mark" src="/xplormate-logo.jpg" alt="" width="28" height="28" /><span>AI FOR MANUFACTURING OPERATIONS</span></div>
     </div></footer>
   </main>;
 }

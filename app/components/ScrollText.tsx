@@ -23,8 +23,8 @@ export default function ScrollText({ text, className, as = "p" }: ScrollTextProp
     if (!element) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLit(words.length);
-      return;
+      const all = requestAnimationFrame(() => setLit(words.length));
+      return () => cancelAnimationFrame(all);
     }
 
     let frame = 0;
@@ -42,7 +42,7 @@ export default function ScrollText({ text, className, as = "p" }: ScrollTextProp
       if (!frame) frame = requestAnimationFrame(update);
     };
 
-    update();
+    frame = requestAnimationFrame(update);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
