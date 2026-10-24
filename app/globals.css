@@ -104,16 +104,16 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .hero-slide.is-active .hero-image{animation:heroDrift 9s ease-out forwards}
 .hero-readouts{position:absolute;inset:0;z-index:2;pointer-events:none;font:10.5px/1.4 var(--mono);letter-spacing:.08em;color:rgba(255,240,215,.86)}
 .readout{position:absolute;display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid rgba(255,255,255,.16);border-radius:6px;background:rgba(12,12,9,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;animation:readoutIn 1s var(--ease) forwards}
-.readout-1{top:30%;right:15%}
-.readout-2{top:45%;right:6%}
-.readout-3{top:60%;right:19%}
+.readout-1{top:50%;right:16%}
+.readout-2{top:61%;right:6%}
+.readout-3{top:71%;right:21%}
 .readout-alert{border-color:rgba(255,182,41,.5);color:var(--amber-2)}
 .readout-alert i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(255,182,41,.6);animation:pulse 2.2s infinite}
 .crosshair{position:absolute;width:18px;height:18px;opacity:0;animation:readoutIn 1s var(--ease) 1.1s forwards}
 .crosshair::before,.crosshair::after{content:"";position:absolute;background:rgba(255,240,215,.55)}
 .crosshair::before{left:50%;top:0;bottom:0;width:1px}
 .crosshair::after{top:50%;left:0;right:0;height:1px}
-.crosshair-one{top:24%;right:33%}
+.crosshair-one{top:44%;right:34%}
 .crosshair-two{top:70%;right:9%}
 .hero-progress{position:absolute;z-index:4;right:max(48px,calc((100% - 1240px) / 2));bottom:18px;display:flex;gap:6px}
 .hero-progress button{display:grid;gap:7px;width:84px;padding:4px 0;border:0;background:none;color:rgba(244,240,230,.45);cursor:pointer;text-align:left;font:9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
@@ -296,7 +296,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .pilot-card-copy{order:-1;align-self:end}
 .pilot-card h3{margin:0 0 10px;font-size:24px;font-weight:450;letter-spacing:-.035em}
 .pilot-card p{margin:0;font-size:15px;line-height:1.6;color:rgba(244,240,230,.66);max-width:420px}
-.pilot-art svg{display:block;width:100%;height:auto;overflow:visible}
+.pilot-art svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;overflow:visible}
 .art-line,.art-axis{fill:none;stroke:rgba(244,240,230,.28);stroke-width:1.2}
 .art-axis{stroke:rgba(244,240,230,.2)}
 .art-dash{stroke:rgba(244,240,230,.35);stroke-width:1;stroke-dasharray:4 5}
