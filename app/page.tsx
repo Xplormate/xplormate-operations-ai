@@ -2,21 +2,35 @@
 
 import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
+import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Factory, Mail, MapPin, Menu, MessageSquareText, Package, Repeat, ShieldCheck, Users, Wrench, X } from "lucide-react";
+import AreaCarousel, { type Area } from "./components/AreaCarousel";
 import DotField from "./components/DotField";
-import ScrollText from "./components/ScrollText";
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, CircleAlert, Database, Mail, MapPin, Menu, MessageSquareText, Users, X } from "lucide-react";
+import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
+import OperatingLoop from "./components/OperatingLoop";
+import PilotStack from "./components/PilotStack";
+import PinnedStatement from "./components/PinnedStatement";
+import ToolConveyor from "./components/ToolConveyor";
 
 const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
 const businessEmail = "jeetendra@xplormate.com";
 
+// Readouts are illustrative: they show the kind of signal each scene produces, not real data.
+const heroSlides: HeroSlide[] = [
+  { label: "Shop floor", image: "/xplormate-hero.webp", alt: "Modern manufacturing floor during an active shift", readouts: [{ text: "SHORTAGE FLAGGED · 14:32", alert: true }, { text: "OWNER · PLANNER + BUYER" }, { text: "STATUS · FOLLOW-UP DRAFTED" }] },
+  { label: "Fabrication", image: "/media/hero-weld.webp", video: "/media/hero-weld.mp4", alt: "Welder at work, sparks lighting a dark fabrication bay", readouts: [{ text: "WELD CELL 2 · RUNNING" }, { text: "NEXT JOB · BRACKET B-118" }, { text: "MATERIAL CHECK · DUE 15:00", alert: true }] },
+  { label: "Assembly", image: "/media/hero-assembly.webp", alt: "Automated assembly line inside a modern plant", readouts: [{ text: "LINE 3 · PLAN VS ACTUAL −6%", alert: true }, { text: "CHANGEOVER · 15:10" }, { text: "OWNER · SHIFT LEAD" }] },
+  { label: "Materials", image: "/media/hero-materials.webp", alt: "High-bay warehouse racks stacked with pallets", readouts: [{ text: "BIN A-14 · 40 PCS SHORT", alert: true }, { text: "ORDERS AFFECTED · 3" }, { text: "SUPPLIER ETA · TOMORROW" }] },
+  { label: "Maintenance", image: "/media/hero-maintenance.webp", alt: "Dimly lit heavy machinery hall", readouts: [{ text: "PUMP P-12 · VIBRATION HIGH", alert: true }, { text: "REQUEST · RAISED 09:40" }, { text: "SPARES · IN STOCK" }] },
+  { label: "Planning", image: "/media/hero-planning.webp", alt: "Plant control room with operator consoles", readouts: [{ text: "DAILY REVIEW · 3 EXCEPTIONS", alert: true }, { text: "OPEN ACTIONS · 7" }, { text: "MISSING UPDATES · 2" }] },
+];
 
-const opportunities = [
-  { id: "production", label: "Production", index: "01", title: "Production planning & execution", friction: "The plan changes, but the updated priority and its impact do not reach every owner at the same time.", ai: "Gather current context, highlight deviations, and prepare the next follow-up for review.", human: "Confirm the operational priority and approve changes that affect the plan.", measure: "Follow-up effort and response time", question: "Where do plan-versus-actual updates live today?" },
-  { id: "quality", label: "Quality", index: "02", title: "Quality management", friction: "Corrective actions require repeated follow-up, and closure evidence can be difficult to assemble.", ai: "Organise context, identify missing evidence, and support accountable owner follow-ups.", human: "Approve disposition, validate corrective action, and verify closure.", measure: "Time from issue detection to verified closure", question: "Where are issues, actions, and evidence currently recorded?" },
-  { id: "maintenance", label: "Maintenance", index: "03", title: "Maintenance coordination", friction: "Requests, observations, spares, and production constraints arrive through different channels.", ai: "Connect the available context, surface missing inputs, and keep the next action visible.", human: "Set priority, approve safety-sensitive work, and confirm equipment readiness.", measure: "Open-request age and repeat follow-ups", question: "How does a maintenance request move from report to verified completion?" },
-  { id: "materials", label: "Materials", index: "04", title: "Materials & procurement", friction: "A late component becomes urgent only after its effect on production is manually understood.", ai: "Relate material signals to orders, timing, and ownership, then prepare an exception summary.", human: "Validate the constraint and decide the supplier or planning response.", measure: "Time from risk signal to owned action", question: "Which sources are checked before material readiness is confirmed?" },
-  { id: "handovers", label: "Handovers", index: "05", title: "Shift handovers", friction: "The incoming team receives a list of issues without the full context, decision history, or clear owners.", ai: "Structure open items, carry forward context, and flag what still needs acknowledgement.", human: "Confirm what was handed over and accept responsibility for the next step.", measure: "Missed or repeatedly explained open items", question: "How is acknowledgement captured between shifts?" },
-  { id: "reporting", label: "Reporting", index: "06", title: "Operational reporting", friction: "Teams spend time collecting updates before leaders can understand what needs attention.", ai: "Compile updates, separate exceptions from routine activity, and make missing context explicit.", human: "Interpret trade-offs and decide where management attention is required.", measure: "Preparation time and missing-update rate", question: "Which recurring report depends most on manual consolidation?" },
+const areas: Area[] = [
+  { id: "production", label: "Production", index: "01", icon: Factory, image: "/media/area-production.webp", code: "PLAN · v4\nLINE 2 ▲\nLINE 3 ▼", title: "Production planning & execution", friction: "The plan changes, but the updated priority and its impact do not reach every owner at the same time.", ai: "Gather current context, highlight deviations, and prepare the next follow-up for review.", human: "Confirm the operational priority and approve changes that affect the plan.", measure: "Follow-up effort and response time", question: "Where do plan-versus-actual updates live today?" },
+  { id: "quality", label: "Quality", index: "02", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "Quality management", friction: "Corrective actions require repeated follow-up, and closure evidence can be difficult to assemble.", ai: "Organise context, identify missing evidence, and support accountable owner follow-ups.", human: "Approve disposition, validate corrective action, and verify closure.", measure: "Time from issue detection to verified closure", question: "Where are issues, actions, and evidence currently recorded?" },
+  { id: "maintenance", label: "Maintenance", index: "03", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Maintenance coordination", friction: "Requests, observations, spares, and production constraints arrive through different channels.", ai: "Connect the available context, surface missing inputs, and keep the next action visible.", human: "Set priority, approve safety-sensitive work, and confirm equipment readiness.", measure: "Open-request age and repeat follow-ups", question: "How does a maintenance request move from report to verified completion?" },
+  { id: "materials", label: "Materials", index: "04", icon: Package, image: "/media/area-materials.webp", code: "PO-7713\nETA · +2 DAYS\nORDERS · 3", title: "Materials & procurement", friction: "A late component becomes urgent only after its effect on production is manually understood.", ai: "Relate material signals to orders, timing, and ownership, then prepare an exception summary.", human: "Validate the constraint and decide the supplier or planning response.", measure: "Time from risk signal to owned action", question: "Which sources are checked before material readiness is confirmed?" },
+  { id: "handovers", label: "Handovers", index: "05", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handovers", friction: "The incoming team receives a list of issues without the full context, decision history, or clear owners.", ai: "Structure open items, carry forward context, and flag what still needs acknowledgement.", human: "Confirm what was handed over and accept responsibility for the next step.", measure: "Missed or repeatedly explained open items", question: "How is acknowledgement captured between shifts?" },
+  { id: "reporting", label: "Reporting", index: "06", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nMISSING · 2", title: "Operational reporting", friction: "Teams spend time collecting updates before leaders can understand what needs attention.", ai: "Compile updates, separate exceptions from routine activity, and make missing context explicit.", human: "Interpret trade-offs and decide where management attention is required.", measure: "Preparation time and missing-update rate", question: "Which recurring report depends most on manual consolidation?" },
 ];
 
 const stages = [
@@ -27,19 +41,19 @@ const stages = [
   { number: "05", title: "Closed properly", copy: "A person confirms the response, updates the plan, and marks it done.", icon: Check },
 ];
 
-const operationSources = [
-  { area: "Engineering", brand: "Autodesk", logo: "autodesk", x: 50, y: 7 },
-  { area: "ERP / orders", brand: "SAP", logo: "sap", x: 70, y: 13 },
-  { area: "Planning", brand: "Google Sheets", logo: "googlesheets", x: 85, y: 29 },
-  { area: "Materials / dispatch", brand: "Odoo", logo: "odoo", x: 90, y: 50 },
-  { area: "Shop floor", brand: "Siemens", logo: "siemens", x: 82, y: 72 },
-  { area: "Equipment", brand: "Rockwell Automation", logo: "rockwellautomation", x: 67, y: 87 },
-  { area: "Quality / safety", brand: "Google Forms", logo: "googleforms", x: 50, y: 93 },
-  { area: "Maintenance", brand: "Jira", logo: "jira", x: 33, y: 87 },
-  { area: "Utilities", brand: "ABB", logo: "abb", x: 18, y: 72 },
-  { area: "Email", brand: "Gmail", logo: "gmail", x: 10, y: 50 },
-  { area: "Team updates", brand: "WhatsApp", logo: "whatsapp", x: 15, y: 29 },
-  { area: "Reporting", brand: "Looker", logo: "looker", x: 30, y: 13 },
+const toolGroups = [
+  { id: "floor", label: "Shop floor & equipment", tools: [{ brand: "Siemens", logo: "siemens", area: "Shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Equipment" }, { brand: "ABB", logo: "abb", area: "Utilities" }, { brand: "Autodesk", logo: "autodesk", area: "Engineering" }] },
+  { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }, { brand: "Google Sheets", logo: "googlesheets", area: "Planning" }] },
+  { id: "quality", label: "Quality & maintenance", tools: [{ brand: "Google Forms", logo: "googleforms", area: "Quality / safety" }, { brand: "Jira", logo: "jira", area: "Maintenance" }, { brand: "Google Sheets", logo: "googlesheets", area: "Checklists" }] },
+  { id: "comms", label: "Messages & reporting", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "WhatsApp", logo: "whatsapp", area: "Team updates" }, { brand: "Looker", logo: "looker", area: "Reporting" }] },
+];
+
+const pilotSteps = [
+  { number: "01", art: "bottleneck" as const, title: "Choose a recurring bottleneck", copy: "Start with an operational workflow that costs time or delays action, such as material readiness or quality issue closure." },
+  { number: "02", art: "understand" as const, title: "Understand the real work", copy: "Walk through recent examples with the people who run it, including the systems, messages, decisions and handovers." },
+  { number: "03", art: "measure" as const, title: "Agree on the measure", copy: "Set a baseline and decide what would count as a useful improvement for your plant." },
+  { number: "04", art: "pilot" as const, title: "Run a focused paid pilot", copy: "Apply AI to the routine coordination steps while your team reviews important decisions and verifies the outcome." },
+  { number: "05", art: "expand" as const, title: "Expand what works", copy: "Review the evidence together. If the pilot proves useful, identify the next workflow or team where the approach could help." },
 ];
 
 const faq = [
@@ -51,14 +65,12 @@ const faq = [
 ];
 
 export default function Home() {
-  const [activeOpportunity, setActiveOpportunity] = useState(0);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadError, setLeadError] = useState("");
   const [leadFieldErrors, setLeadFieldErrors] = useState<Record<string, string>>({});
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const active = opportunities[activeOpportunity];
 
   // Header switches from dark glass (over the hero) to light glass once the hero is behind us.
   useEffect(() => {
@@ -129,31 +141,6 @@ export default function Home() {
     }
   };
 
-  const selectOpportunityFromKeyboard = (
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    currentIndex: number,
-  ) => {
-    let nextIndex = currentIndex;
-
-    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-      nextIndex = (currentIndex + 1) % opportunities.length;
-    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-      nextIndex = (currentIndex - 1 + opportunities.length) % opportunities.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = opportunities.length - 1;
-    } else {
-      return;
-    }
-
-    event.preventDefault();
-    setActiveOpportunity(nextIndex);
-    requestAnimationFrame(() => {
-      document.getElementById(`opportunity-tab-${opportunities[nextIndex].id}`)?.focus();
-    });
-  };
-
   return <main id="top">
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
@@ -166,17 +153,10 @@ export default function Home() {
 
     <section className="hero">
       <div className="hero-frame">
-        <img className="hero-image" src="/xplormate-hero.webp" alt="Modern manufacturing floor during an active shift" fetchPriority="high" decoding="async" />
+        <HeroSequence slides={heroSlides} />
         <div className="hero-shade" />
         <DotField className="hero-dots" color="255,206,128" gap={15} density={0.26} />
         <div className="grain" aria-hidden="true" />
-        <div className="hero-readouts" aria-hidden="true">
-          <div className="readout readout-codes"><span>WO-4471</span><span>WO-4475</span><span>WO-4480</span></div>
-          <div className="readout readout-alert"><i />SHORTAGE FLAGGED · 14:32</div>
-          <div className="readout readout-owner"><b>OWNER</b> PLANNER · BUYER</div>
-          <div className="readout readout-status"><b>STATUS</b> FOLLOW-UP DRAFTED</div>
-          <span className="crosshair crosshair-one" /><span className="crosshair crosshair-two" />
-        </div>
         <div className="hero-content shell">
           <div className="hero-kicker"><span className="signal-pulse" /> AI TRANSFORMATION FOR MANUFACTURING</div>
           <h1>Make the work that runs your plant <em>move.</em></h1>
@@ -189,12 +169,20 @@ export default function Home() {
       </div>
     </section>
 
-    <section className="statement">
-      <div className="shell statement-inner">
-        <span className="statement-rail" aria-hidden="true"><i /><i /><i /></span>
-        <ScrollText text="Your people keep command. AI does the chasing: it pulls the context together, drafts the follow-up and keeps the next owner visible, so issues close instead of circling." />
+    <section className="glow-intro"><div className="shell">
+      <div className="glow-card" data-reveal>
+        <div className="glow-card-light" aria-hidden="true" />
+        <DotField className="glow-card-dots" color="255,214,150" gap={16} density={0.22} />
+        <div className="grain" aria-hidden="true" />
+        <div className="glow-card-content">
+          <h2>AI for the work that runs your plant.</h2>
+          <p>Redesign · Apply AI · Keep control</p>
+          <a className="button button-cream" href="#transformation">See how we work <ArrowRight size={17} /></a>
+        </div>
       </div>
-    </section>
+    </div></section>
+
+    <PinnedStatement text="Your people keep command. AI does the chasing: it pulls the context together, drafts the follow-up and keeps the next owner visible, so issues close instead of circling." />
 
     <section className="transformation" id="transformation"><div className="shell">
       <div className="section-topline" data-reveal><span>01 / AI TRANSFORMATION</span><span>BUILT AROUND YOUR OPERATION</span></div>
@@ -204,46 +192,41 @@ export default function Home() {
         <article className="bracketed" data-reveal><DotField className="card-dots" color="255,206,128" gap={13} density={0.2} /><span>02 / APPLY AI</span><h3>Move routine work forward.</h3><p>Bring the available context together, identify exceptions, prepare follow-ups and keep the next owner visible.</p></article>
         <article className="bracketed" data-reveal><span>03 / KEEP CONTROL</span><h3>Let people decide.</h3><p>Plant teams review consequential actions, resolve trade-offs and verify closure. AI supports the workflow; responsibility stays clear.</p></article>
       </div>
-      <div className="systems-map" aria-labelledby="systems-map-title" data-reveal>
-        <div className="grain" aria-hidden="true" />
-        <div className="systems-map-heading"><div><span className="systems-eyebrow">YOUR EXISTING OPERATION</span><h3 id="systems-map-title">Work with the systems you already use.</h3></div><span className="systems-example">Illustrative tools</span></div>
-        <div className="systems-orbit" role="img" aria-label="Examples of manufacturing tools around one workflow: Autodesk for engineering, SAP for ERP and orders, Google Sheets for planning, Odoo for materials and dispatch, Siemens for shop floor, Rockwell Automation for equipment, Google Forms for quality and safety, Jira for maintenance, ABB for utilities, Gmail for email, WhatsApp for team updates, and Looker for reporting.">
-          <span className="orbit-haze orbit-haze-one" aria-hidden="true" /><span className="orbit-haze orbit-haze-two" aria-hidden="true" />
-          <span className="orbit-ring orbit-ring-outer" aria-hidden="true" />
-          <svg className="orbit-energy" viewBox="0 0 1000 660" preserveAspectRatio="none" aria-hidden="true">
-            <defs><linearGradient id="orbit-flow-gradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffb629" stopOpacity="0" /><stop offset="0.34" stopColor="#ffcf7a" stopOpacity="0.7" /><stop offset="0.68" stopColor="#ff9d3c" stopOpacity="0.7" /><stop offset="1" stopColor="#ffb629" stopOpacity="0" /></linearGradient></defs>
-            <path className="orbit-energy-glow" d="M85 400 C250 170 350 505 530 326 S755 150 915 355" />
-            <path className="orbit-energy-glow orbit-energy-glow-second" d="M155 150 C350 380 360 150 565 350 S760 485 860 515" />
-            <path className="orbit-energy-line" d="M85 400 C250 170 350 505 530 326 S755 150 915 355" />
-            <path className="orbit-energy-line orbit-energy-line-second" d="M155 150 C350 380 360 150 565 350 S760 485 860 515" />
-          </svg>
-          {operationSources.map((source, index) => <div className="orbit-source" key={source.brand} style={{ left: `${source.x}%`, top: `${source.y}%`, animationDelay: `${index * -0.4}s` }} aria-hidden="true"><span className="orbit-logo"><img src={`/tool-logos/${source.logo}.svg`} width="34" height="34" alt="" /></span><span className="orbit-area">{source.area}</span></div>)}
-        </div>
-        <p className="systems-note">Keep your core systems. We map the sources a chosen workflow needs, then agree what can be accessed safely during a pilot.</p>
+      <div className="systems-map bracketed" aria-labelledby="systems-map-title" data-reveal>
+        <ToolConveyor groups={toolGroups} />
+        <ul className="systems-points">
+          <li><h4>Keep your core systems</h4><p>We work alongside the tools your plant already runs on. Nothing is ripped out or replaced.</p></li>
+          <li><h4>Map what one workflow needs</h4><p>We trace the few sources a chosen workflow actually depends on, not your whole estate.</p></li>
+          <li><h4>Count messages and sheets too</h4><p>Updates often live in email, chat and spreadsheets, so they are part of the picture.</p></li>
+          <li><h4>Agree access before the pilot</h4><p>We agree what can be accessed safely during a pilot before anything is connected.</p></li>
+        </ul>
       </div>
     </div></section>
 
-    <section className="signal-story" id="signal-story"><div className="shell">
-      <div className="section-topline" data-reveal><span>02 / THE OPERATING LOOP</span><span>ILLUSTRATIVE WORKFLOW</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>An update should lead<br /><span className="dim">to something happening.</span></h2><p>Knowing about a problem is only the start. What matters is what happens next, who owns it, and how everyone knows it’s done.</p></div>
-      <div className="signal-visual" data-reveal><img src="/operational-signal.webp" alt="Close-up of industrial machinery and an active sensor" loading="lazy" decoding="async" /><div className="grain" aria-hidden="true" /><div className="signal-overlay">
-        <div className="signal-alert"><span className="alert-icon">!</span><div><small>NEW ISSUE</small><strong>Material shortage before next shift</strong></div><span className="signal-time">14:32</span></div>
-        <div className="signal-trace" aria-hidden="true"><span /><span /><span /><span /><span /></div>
-        <div className="stage-grid">{stages.map((stage) => { const Icon = stage.icon; return <article key={stage.title} className="stage-card"><div className="stage-head"><span>{stage.number}</span><Icon size={20} strokeWidth={1.5} /></div><h3>{stage.title}</h3><p>{stage.copy}</p></article>; })}</div>
-      </div></div>
-    </div></section>
+    <OperatingLoop stages={stages}>
+      <div className="section-topline"><span>02 / THE OPERATING LOOP</span><span>ILLUSTRATIVE WORKFLOW</span></div>
+      <div className="section-heading split-heading signal-heading"><h2>An update should lead<br /><span className="dim">to something happening.</span></h2><p>Knowing about a problem is only the start. What matters is what happens next, who owns it, and how everyone knows it’s done.</p></div>
+    </OperatingLoop>
 
     <section className="explorer" id="explorer"><div className="shell">
       <div className="section-topline" data-reveal><span>03 / WHERE AI FITS</span><span>PICK AN AREA</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Where could work<br /><span className="dim">move differently?</span></h2><p>Even when information is available, work can stall because the next step isn’t clear. Pick an area to see where it slows down, how AI could help, and what your team would still decide.</p></div>
-      <div className="explorer-grid" data-reveal><div className="explorer-tabs" role="tablist" aria-label="Manufacturing operating areas">{opportunities.map((item, index) => <button key={item.id} id={`opportunity-tab-${item.id}`} role="tab" aria-selected={activeOpportunity === index} aria-controls="opportunity-panel" tabIndex={activeOpportunity === index ? 0 : -1} onClick={() => setActiveOpportunity(index)} onKeyDown={(event) => selectOpportunityFromKeyboard(event, index)}><span>{item.index}</span>{item.label}<ArrowRight size={18} /></button>)}</div>
-        <div className="explorer-panel" id="opportunity-panel" role="tabpanel" aria-labelledby={`opportunity-tab-${active.id}`}><div className="grain" aria-hidden="true" /><div className="panel-orbit" aria-hidden="true"><span /><span /><span /></div><div className="panel-index">{active.index}</div><h3 key={active.id} className="panel-title">{active.title}</h3><div className="panel-facts"><div><small>WHERE IT SLOWS DOWN</small><p>{active.friction}</p></div><div><small>HOW AI COULD HELP</small><p>{active.ai}</p></div><div><small>WHAT YOUR TEAM DECIDES</small><p>{active.human}</p></div></div><div className="panel-footer"><div><small>WHAT WE’D MEASURE</small><strong>{active.measure}</strong></div><div><small>FIRST QUESTION WE’D ASK</small><strong>{active.question}</strong></div></div></div>
-      </div>
+      <div data-reveal><AreaCarousel areas={areas} /></div>
     </div></section>
 
     <section className="approach" id="approach"><div className="shell">
-      <div className="section-topline" data-reveal><span>04 / HOW WE START</span><span>ONE WORKFLOW AT A TIME</span></div>
-      <div className="approach-layout"><div className="approach-intro" data-reveal><h2>Start with one workflow. <span className="dim">Build from proof.</span></h2><p>A focused paid pilot tests whether AI can improve work your plant already does. We agree on the measure before starting, review the result together, and only then decide what should expand.</p><a href="#contact">Discuss a workflow <ArrowUpRight size={18} /></a></div><div className="approach-steps">{[["01", "Choose a recurring bottleneck", "Start with an operational workflow that costs time or delays action, such as material readiness or quality issue closure."], ["02", "Understand the real work", "Walk through recent examples with the people who run it, including the systems, messages, decisions and handovers."], ["03", "Agree on the measure", "Set a baseline and decide what would count as a useful improvement for your plant."], ["04", "Run a focused paid pilot", "Apply AI to the routine coordination steps while your team reviews important decisions and verifies the outcome."], ["05", "Expand what works", "Review the evidence together. If the pilot proves useful, identify the next workflow or team where the approach could help."]].map(([n, title, copy]) => <article key={n} data-reveal><span>{n}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div>
+      <div className="approach-panel">
+        <div className="approach-glow" aria-hidden="true" />
+        <div className="grain" aria-hidden="true" />
+        <div className="approach-head" data-reveal>
+          <img className="approach-mark" src="/xplormate-logo.jpg" alt="" width="40" height="40" />
+          <span className="approach-eyebrow">04 / HOW WE START</span>
+          <h2>Start with one workflow.<br /><span>Build from proof.</span></h2>
+          <p>A focused paid pilot tests whether AI can improve work your plant already does. We agree on the measure before starting, review the result together, and only then decide what should expand.</p>
+          <a className="button button-cream" href="#contact">Discuss a workflow <ArrowUpRight size={17} /></a>
+        </div>
+        <PilotStack steps={pilotSteps} />
+      </div>
     </div></section>
 
     <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>05 / PRACTICAL QUESTIONS</span></div><h2>Before we talk.</h2><p>Clear expectations make the first conversation more useful.</p></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
@@ -307,7 +290,16 @@ export default function Home() {
     </section>
 
     <footer className="site-footer"><div className="shell">
-      <div className="footer-grid"><a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a><address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address><div className="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={16} /></a></div></div>
+      <div className="footer-top">
+        <div className="footer-brand">
+          <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
+          <p>AI transformation for manufacturing operations.</p>
+          <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
+        </div>
+        <nav className="footer-col" aria-label="Sections"><h2>On this page</h2><a href="#transformation">How we work</a><a href="#signal-story">The operating loop</a><a href="#explorer">Where AI fits</a><a href="#approach">How we start</a><a href="#questions">Questions</a></nav>
+        <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
+        <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+      </div>
       <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><img className="footer-mark" src="/xplormate-logo.jpg" alt="" width="28" height="28" /><span>AI FOR MANUFACTURING OPERATIONS</span></div>
     </div></footer>
   </main>;
