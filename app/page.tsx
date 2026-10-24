@@ -16,12 +16,12 @@ const businessEmail = "jeetendra@xplormate.com";
 
 // Readouts are illustrative: they show the kind of signal each scene produces, not real data.
 const heroSlides: HeroSlide[] = [
-  { label: "Shop floor", image: "/xplormate-hero.webp", alt: "Modern manufacturing floor during an active shift", readouts: [{ text: "SHORTAGE FLAGGED · 14:32", alert: true }, { text: "OWNER · PLANNER + BUYER" }, { text: "STATUS · FOLLOW-UP DRAFTED" }] },
   { label: "Fabrication", image: "/media/hero-weld.webp", video: "/media/hero-weld.mp4", alt: "Welder at work, sparks lighting a dark fabrication bay", readouts: [{ text: "WELD CELL 2 · RUNNING" }, { text: "NEXT JOB · BRACKET B-118" }, { text: "MATERIAL CHECK · DUE 15:00", alert: true }] },
-  { label: "Assembly", image: "/media/hero-assembly.webp", alt: "Automated assembly line inside a modern plant", readouts: [{ text: "LINE 3 · PLAN VS ACTUAL −6%", alert: true }, { text: "CHANGEOVER · 15:10" }, { text: "OWNER · SHIFT LEAD" }] },
-  { label: "Materials", image: "/media/hero-materials.webp", alt: "High-bay warehouse racks stacked with pallets", readouts: [{ text: "BIN A-14 · 40 PCS SHORT", alert: true }, { text: "ORDERS AFFECTED · 3" }, { text: "SUPPLIER ETA · TOMORROW" }] },
-  { label: "Maintenance", image: "/media/hero-maintenance.webp", alt: "Dimly lit heavy machinery hall", readouts: [{ text: "PUMP P-12 · VIBRATION HIGH", alert: true }, { text: "REQUEST · RAISED 09:40" }, { text: "SPARES · IN STOCK" }] },
-  { label: "Planning", image: "/media/hero-planning.webp", alt: "Plant control room with operator consoles", readouts: [{ text: "DAILY REVIEW · 3 EXCEPTIONS", alert: true }, { text: "OPEN ACTIONS · 7" }, { text: "MISSING UPDATES · 2" }] },
+  { label: "Assembly", image: "/media/hero-assembly.webp", video: "/media/hero-assembly.mp4", alt: "Robot arm working on an automated assembly line", readouts: [{ text: "LINE 3 · PLAN VS ACTUAL −6%", alert: true }, { text: "CHANGEOVER · 15:10" }, { text: "OWNER · SHIFT LEAD" }] },
+  { label: "Materials", image: "/media/hero-materials.webp", video: "/media/hero-materials.mp4", alt: "Forklift moving through warehouse racking", readouts: [{ text: "BIN A-14 · 40 PCS SHORT", alert: true }, { text: "ORDERS AFFECTED · 3" }, { text: "SUPPLIER ETA · TOMORROW" }] },
+  { label: "Maintenance", image: "/media/hero-maintenance.webp", video: "/media/hero-maintenance.mp4", alt: "Cutting head moving over a metal sheet", readouts: [{ text: "CUTTER 2 · NOZZLE WEAR", alert: true }, { text: "REQUEST · RAISED 09:40" }, { text: "SPARES · IN STOCK" }] },
+  { label: "Handover", image: "/media/hero-handover.webp", video: "/media/hero-handover.mp4", alt: "Shift team huddle on the warehouse floor, seen from above", readouts: [{ text: "SHIFT B → C · 5 OPEN ITEMS", alert: true }, { text: "ACKNOWLEDGED · 3 OF 5" }, { text: "OWNER · INCOMING LEAD" }] },
+  { label: "Planning", image: "/media/hero-planning.webp", video: "/media/hero-planning.mp4", alt: "Operator pressing buttons on a lit machine control panel", readouts: [{ text: "DAILY REVIEW · 3 EXCEPTIONS", alert: true }, { text: "OPEN ACTIONS · 7" }, { text: "MISSING UPDATES · 2" }] },
 ];
 
 const areas: Area[] = [

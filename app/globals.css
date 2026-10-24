@@ -433,7 +433,8 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .readout-3,.crosshair{display:none}
   .hero-actions{align-items:flex-start;flex-direction:column}
   .hero-buttons{justify-content:flex-start}
-  .hero-progress button{width:62px}
+  .hero-progress{top:96px;bottom:auto;right:32px}
+  .hero-progress button{width:46px}
   .hero-progress-label{display:none}
   .split-heading{gap:40px}
   .transformation-flow article{min-height:420px;padding:26px}
