@@ -228,7 +228,6 @@ export default function Home() {
         <div className="approach-glow" aria-hidden="true" />
         <div className="grain" aria-hidden="true" />
         <div className="approach-head" data-reveal>
-          <img className="approach-mark" src="/xplormate-logo.jpg" alt="" width="40" height="40" />
           <span className="approach-eyebrow">04 / HOW WE START</span>
           <h2>Start with one workflow.<br /><span>Build from proof.</span></h2>
           <p>A focused paid pilot tests whether AI can improve work your plant already does. We agree on the measure before starting, review the result together, and only then decide what should expand.</p>
@@ -309,7 +308,7 @@ export default function Home() {
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
-      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><img className="footer-mark" src="/xplormate-logo.jpg" alt="" width="28" height="28" /><span>AI FOR MANUFACTURING OPERATIONS</span></div>
+      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><span>AI FOR MANUFACTURING OPERATIONS</span></div>
     </div></footer>
   </main>;
 }

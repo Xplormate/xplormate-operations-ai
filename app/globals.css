@@ -198,14 +198,14 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .conveyor-stage{position:relative;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:300px;padding-left:44px}
 .conveyor-ticks{position:absolute;left:0;top:14px;bottom:14px;display:flex;flex-direction:column;justify-content:space-between}
 .conveyor-ticks i{display:block;width:14px;height:1px;background:var(--line-2)}
-.conveyor-window{min-width:0;--card-w:190px;--gap:18px;position:relative;overflow:hidden;padding:26px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.conveyor-window{min-width:0;--card-w:168px;--gap:16px;position:relative;overflow:hidden;padding:26px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
 .conveyor-window::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:repeating-linear-gradient(90deg,var(--line-2) 0 6px,transparent 6px 12px)}
-.conveyor-track{position:relative;display:flex;gap:var(--gap);padding-left:calc(50% - var(--card-w) * 1.5 - var(--gap));transform:translateX(calc(var(--offset) * (var(--card-w) + var(--gap)) * -1));transition:transform .85s var(--ease)}
-.conveyor-track.is-instant{transition:none}
-.conveyor-card{flex:none;width:var(--card-w);height:118px;display:grid;place-items:center;align-content:center;gap:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 6px 24px rgba(20,19,15,.05);opacity:.55;transform:scale(.9);transition:transform .85s var(--ease),opacity .85s var(--ease),box-shadow .85s}
+.conveyor-track{display:flex;gap:var(--gap);width:max-content;animation:conveyorFlow calc(var(--count) * 2.4s) linear infinite}
+.conveyor-track.is-paused{animation-play-state:paused}
+.conveyor-card{flex:none;width:var(--card-w);height:118px;display:grid;place-items:center;align-content:center;gap:12px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 6px 24px rgba(20,19,15,.05);opacity:.78;transform:scale(.96);transition:transform .7s var(--ease),opacity .7s var(--ease),box-shadow .7s}
 .conveyor-card img{width:44px;height:44px;object-fit:contain}
 .conveyor-card span{font:10px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.conveyor-card.is-center{opacity:1;transform:scale(1.06);box-shadow:0 16px 44px rgba(20,19,15,.12)}
+.conveyor-card.is-lit{opacity:1;transform:scale(1.04);box-shadow:0 16px 44px rgba(20,19,15,.12);border-color:rgba(255,182,41,.55)}
 .conveyor-note{margin:14px 0 0;max-width:380px;font-size:14px;line-height:1.55;color:var(--ink-2)}
 .conveyor-foot{display:flex;align-items:center;justify-content:flex-end;gap:12px}
 .conveyor-pause,.hero-pause{display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:8px;cursor:pointer;transition:background .2s,border-color .2s}
@@ -292,7 +292,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .approach-glow{position:absolute;z-index:0;left:50%;top:0;width:140%;height:720px;transform:translateX(-50%);background:radial-gradient(ellipse 45% 55% at 50% 30%,rgba(255,150,60,.32),transparent 70%),radial-gradient(ellipse 20% 30% at 20% 10%,rgba(255,200,120,.16),transparent 70%);filter:blur(20px)}
 .approach-panel .grain{opacity:.12}
 .approach-head{position:relative;z-index:2;display:grid;justify-items:center;text-align:center;gap:16px;max-width:760px;margin:0 auto 70px}
-.approach-mark{width:40px;height:40px;border-radius:9px;opacity:.9}
 .approach-eyebrow{font:10.5px var(--mono);letter-spacing:.14em;color:rgba(244,240,230,.6)}
 .approach-head h2{margin:0;font-size:clamp(36px,4.4vw,64px);font-weight:380;letter-spacing:-.045em;line-height:1.04;text-shadow:0 0 40px rgba(255,180,90,.25)}
 .approach-head h2 span{color:rgba(244,240,230,.55)}
@@ -360,7 +359,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .footer-col a{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:rgba(244,240,230,.85);transition:color .2s}
 .footer-col a:hover{color:var(--amber)}
 .footer-bar{margin-top:64px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px dashed rgba(255,255,255,.14);border-bottom:1px dashed rgba(255,255,255,.14);font:10.5px var(--mono);letter-spacing:.12em;color:rgba(244,240,230,.5);--bracket:rgba(255,255,255,.35);--bracket-inset:-1px}
-.footer-mark{width:24px;height:24px;border-radius:6px;opacity:.85}
 
 /* Lead form (on the dark glow panel) */
 .lead-form{display:grid;gap:18px;margin-top:28px;max-width:620px}
@@ -416,6 +414,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
    ========================================================================= */
 @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(255,182,41,0)}100%{box-shadow:0 0 0 0 rgba(255,182,41,0)}}
 @keyframes heroDrift{from{transform:scale(1.02)}to{transform:scale(1.09)}}
+@keyframes conveyorFlow{to{transform:translateX(calc(var(--count) * (var(--card-w) + var(--gap)) * -1))}}
 @keyframes progressFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes readoutIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -560,7 +559,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .footer-top{grid-template-columns:1fr 1fr;gap:34px 20px}
   .footer-brand{grid-column:1/-1}
   .footer-bar{flex-direction:column;align-items:flex-start;gap:12px;font-size:9.5px}
-  .footer-mark{display:none}
   .legal-shell{width:calc(100% - 36px)}
   .legal-header-inner{min-height:72px}
   .legal-content{padding:76px 0 85px}
@@ -573,7 +571,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .hero-slide.is-active .hero-image,.signal-pulse,.contact-glow,.glow-card-light,.readout-alert i,.alert-icon,.area-panel,.art-pulse,.art-scan{animation:none}
+  .conveyor-track,.hero-slide.is-active .hero-image,.signal-pulse,.contact-glow,.glow-card-light,.readout-alert i,.alert-icon,.area-panel,.art-pulse,.art-scan{animation:none}
   .readout,.crosshair{animation:none;opacity:1}
   .flow-dot{display:none}
   .art-draw,.art-grow{animation:none;stroke-dashoffset:0}

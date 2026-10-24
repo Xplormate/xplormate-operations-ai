@@ -6,35 +6,31 @@ import { Pause, Play } from "lucide-react";
 type Tool = { brand: string; logo: string; area: string };
 type ToolGroup = { id: string; label: string; tools: Tool[] };
 
-const STEP_MS = 1900;
-const SNAP_MS = 850;
-const REPEATS = 4;
+const GROUP_MS = 3600;
 
 /**
- * Logo cards on a horizontal conveyor that steps left, one card at a time.
- * The category list on the left cycles through tool groups on its own until
- * the visitor picks one.
+ * Logo cards gliding continuously right-to-left on a horizontal conveyor.
+ * The category list on the left cycles on its own and lights up that
+ * category's tools as they pass; clicking a category holds it. A pause button
+ * stops everything, and nothing runs while the conveyor is off screen.
  */
 export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   const [groupIndex, setGroupIndex] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [instant, setInstant] = useState(false);
   const [autoGroups, setAutoGroups] = useState(true);
   const [reduced, setReduced] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [hold, setHold] = useState(false);
   const [onScreen, setOnScreen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [laps, setLaps] = useState(0);
 
   const group = groups[groupIndex];
-  const cycle = group.tools.length;
-  const track = Array.from({ length: REPEATS }, () => group.tools).flat();
+  const highlighted = new Set(group.tools.map((tool) => `${tool.logo}-${tool.area}`));
+  // Every tool once, in category order, then the same list again for a seamless loop.
+  const tools = groups.flatMap((item) => item.tools).filter((tool, index, all) => all.findIndex((other) => other.logo === tool.logo && other.area === tool.area) === index);
+  const track = [...tools, ...tools];
 
   useEffect(() => {
     const still = requestAnimationFrame(() => setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches));
     const root = rootRef.current;
-    // No timers run while the conveyor is off screen.
     const observer = root ? new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting)) : null;
     if (root && observer) observer.observe(root);
     return () => {
@@ -43,49 +39,21 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
     };
   }, []);
 
-  const moving = !reduced && !paused && !hold && onScreen;
+  const running = !reduced && !paused && onScreen;
 
   useEffect(() => {
-    if (!moving) return;
-    // Three kinds of tick: a normal one-card step, a silent snap back to the
-    // start once a full lap is shown (the track repeats, so nothing visibly
-    // jumps), and the first step after a snap.
-    if (instant) {
-      const timer = window.setTimeout(() => {
-        setInstant(false);
-        setOffset(1);
-      }, STEP_MS - SNAP_MS);
-      return () => window.clearTimeout(timer);
-    }
-    if (offset >= cycle) {
-      const timer = window.setTimeout(() => {
-        setInstant(true);
-        setOffset(0);
-        if (autoGroups && laps + 1 >= 2) {
-          setLaps(0);
-          setGroupIndex((current) => (current + 1) % groups.length);
-        } else {
-          setLaps(laps + 1);
-        }
-      }, SNAP_MS);
-      return () => window.clearTimeout(timer);
-    }
-    const timer = window.setTimeout(() => setOffset(offset + 1), STEP_MS);
-    return () => window.clearTimeout(timer);
-  }, [offset, cycle, moving, autoGroups, groups.length, instant, laps]);
+    if (!running || !autoGroups) return;
+    const timer = window.setInterval(() => setGroupIndex((current) => (current + 1) % groups.length), GROUP_MS);
+    return () => window.clearInterval(timer);
+  }, [running, autoGroups, groups.length]);
 
   const choose = (index: number) => {
     setAutoGroups(false);
-    setInstant(true);
-    setOffset(0);
-    setLaps(0);
     setGroupIndex(index);
   };
 
-  const center = offset + 1;
-
   return (
-    <div className="conveyor-layout" ref={rootRef} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHold(true); }} onPointerLeave={() => setHold(false)}>
+    <div className="conveyor-layout" ref={rootRef}>
       <div className="conveyor-intro">
         <span className="systems-eyebrow">YOUR EXISTING OPERATION</span>
         <h3 id="systems-map-title">Work with the systems you already use.</h3>
@@ -101,9 +69,9 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
       <div className="conveyor-stage" role="tabpanel" aria-label={`${group.label}: ${group.tools.map((tool) => tool.brand).join(", ")}`}>
         <span className="conveyor-ticks" aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <i key={index} />)}</span>
         <div className="conveyor-window" aria-hidden="true">
-          <div key={group.id} className={`conveyor-track${instant ? " is-instant" : ""}`} style={{ "--offset": offset } as React.CSSProperties}>
+          <div className={`conveyor-track${running ? "" : " is-paused"}`} style={{ "--count": tools.length } as React.CSSProperties}>
             {track.map((tool, index) => (
-              <div key={`${tool.logo}-${index}`} className={`conveyor-card${index === center ? " is-center" : ""}`}>
+              <div key={`${tool.logo}-${tool.area}-${index}`} className={`conveyor-card${highlighted.has(`${tool.logo}-${tool.area}`) ? " is-lit" : ""}`}>
                 <img src={`/tool-logos/${tool.logo}.svg`} width="44" height="44" alt="" />
                 <span>{tool.area}</span>
               </div>
