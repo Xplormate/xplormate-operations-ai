@@ -93,7 +93,6 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
           </div>
         </div>
         <div className="conveyor-foot">
-          <span className="systems-example">Illustrative examples only</span>
           {!reduced ? (
             <button type="button" className="conveyor-pause" aria-label={paused ? "Play tool carousel" : "Pause tool carousel"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
               {paused ? <Play size={12} /> : <Pause size={12} />}

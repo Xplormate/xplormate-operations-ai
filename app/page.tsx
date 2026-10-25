@@ -213,7 +213,7 @@ export default function Home() {
     </div></section>
 
     <OperatingLoop stages={stages}>
-      <div className="section-topline"><span>02 / THE OPERATING LOOP</span><span>ILLUSTRATIVE WORKFLOW</span></div>
+      <div className="section-topline"><span>02 / THE OPERATING LOOP</span><span>EXAMPLE WORKFLOW</span></div>
       <div className="section-heading split-heading signal-heading"><h2>An update should lead<br /><span className="dim">to something happening.</span></h2><p>Knowing about a problem is only the start. What matters is what happens next, who owns it, and how everyone knows it’s done.</p></div>
     </OperatingLoop>
 
