@@ -52,6 +52,19 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
     setGroupIndex(index);
   };
 
+  const onTabKey = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next = index;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next += 1;
+    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next -= 1;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = groups.length - 1;
+    else return;
+    event.preventDefault();
+    const target = (next + groups.length) % groups.length;
+    choose(target);
+    document.getElementById(`tool-tab-${groups[target].id}`)?.focus();
+  };
+
   return (
     <div className="conveyor-layout" ref={rootRef}>
       <div className="conveyor-intro">
@@ -60,13 +73,14 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
         <p className="conveyor-note">Examples of tools plants commonly run on. They are not our partners or customers.</p>
         <div className="conveyor-groups" role="tablist" aria-label="Tool categories">
           {groups.map((item, index) => (
-            <button key={item.id} type="button" role="tab" aria-selected={index === groupIndex} onClick={() => choose(index)}>
+            <button key={item.id} id={`tool-tab-${item.id}`} type="button" role="tab" tabIndex={index === groupIndex ? 0 : -1} aria-selected={index === groupIndex} aria-controls="tool-panel" onClick={() => choose(index)} onKeyDown={(event) => onTabKey(event, index)}>
               <span aria-hidden="true">{index === groupIndex ? ">" : ""}</span>{item.label}
             </button>
           ))}
         </div>
       </div>
-      <div className="conveyor-stage" role="tabpanel" aria-label={`${group.label}: ${group.tools.map((tool) => tool.brand).join(", ")}`}>
+      <div className="conveyor-stage" id="tool-panel" role="tabpanel" tabIndex={0} aria-labelledby={`tool-tab-${group.id}`}>
+        <span className="sr-only">{group.tools.map((tool) => tool.brand).join(", ")}</span>
         <span className="conveyor-ticks" aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <i key={index} />)}</span>
         <div className="conveyor-window" aria-hidden="true">
           <div className={`conveyor-track${running ? "" : " is-paused"}`} style={{ "--count": tools.length } as React.CSSProperties}>

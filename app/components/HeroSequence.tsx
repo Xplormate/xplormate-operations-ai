@@ -99,6 +99,7 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
         ))}
       </div>
       <div className="hero-readouts" aria-hidden="true" key={active}>
+        <span className="hero-example">Illustrative scenes and data</span>
         {slide.readouts.map((readout, index) => (
           <div key={readout.text} className={`readout readout-${index + 1}${readout.alert ? " readout-alert" : ""}`} style={{ animationDelay: `${0.35 + index * 0.35}s` }}>
             {readout.alert ? <i /> : null}{readout.text}

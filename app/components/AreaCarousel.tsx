@@ -35,8 +35,13 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
     if (!track || track.scrollWidth <= track.clientWidth + 4) return;
     const card = track.children[active] as HTMLElement | undefined;
     if (!card) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     programmatic.current = window.setTimeout(() => { programmatic.current = 0; }, 700);
-    track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    track.scrollTo({ left: card.offsetLeft, behavior: reduced ? "auto" : "smooth" });
+    return () => {
+      window.clearTimeout(programmatic.current);
+      programmatic.current = 0;
+    };
   }, [active]);
 
   useEffect(() => {
@@ -129,7 +134,7 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
         ))}
       </div>
 
-      <div className="area-panel" id="area-panel" role="tabpanel" aria-labelledby={`area-tab-${area.id}`} key={area.id}>
+      <div className="area-panel" id="area-panel" role="tabpanel" tabIndex={0} aria-labelledby={`area-tab-${area.id}`} key={area.id}>
         <div className="area-panel-head"><span>{area.index} / {String(areas.length).padStart(2, "0")}</span><h3>{area.title}</h3></div>
         <div className="area-facts">
           <div><small>WHERE IT SLOWS DOWN</small><p>{area.friction}</p></div>
