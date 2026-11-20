@@ -13,6 +13,7 @@ import OperatingLoop from "./components/OperatingLoop";
 import PilotStack from "./components/PilotStack";
 import PinnedStatement from "./components/PinnedStatement";
 import RotatingWord from "./components/RotatingWord";
+import StickyCta from "./components/StickyCta";
 import ToolConveyor, { type ToolGroup } from "./components/ToolConveyor";
 
 const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
@@ -52,7 +53,7 @@ const capabilities = [
   { icon: CircleAlert, copy: "Notices problems early, before they hold up a shift." },
 ];
 
-// Examples of systems plants run on, shown on the animated conveyor. Not partners or customers.
+// Examples of systems plants run on, shown by category. Not partners or customers.
 const systemGroups: ToolGroup[] = [
   { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", area: "ERP / supply" }, { brand: "Microsoft Dynamics", area: "ERP / finance" }, { brand: "Tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
   { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Line data" }, { brand: "ABB", logo: "abb", area: "Line data" }] },
@@ -298,7 +299,11 @@ export default function Home() {
             <h2>Tell us where work <em>gets stuck in your plant.</em></h2>
           </div>
           <div className="contact-content">
-            <p>We reply personally to set up a 30-minute call.</p>
+            <ol className="contact-steps" aria-label="What happens next">
+              <li><span>01</span>Tell us about one workflow</li>
+              <li><span>02</span>A 30-minute call, no slides</li>
+              <li><span>03</span>A pilot proposal, if it fits</li>
+            </ol>
             {!leadSubmitted ? (
               <form className="lead-form" onSubmit={handleLeadSubmit}>
                 <div className="hp-field" aria-hidden="true">
@@ -347,6 +352,8 @@ export default function Home() {
         </div>
       </div>
     </section>
+
+    <StickyCta />
 
     <footer className="site-footer"><div className="shell">
       <div className="footer-top">
