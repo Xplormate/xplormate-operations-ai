@@ -28,7 +28,7 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
   const highlighted = new Set(group.tools.map(keyOf));
   // Every system once, in category order, then the same list again for a seamless loop.
   const tools = groups.flatMap((item) => item.tools).filter((tool, index, all) => all.findIndex((other) => keyOf(other) === keyOf(tool)) === index);
-  const track = [...tools, ...tools];
+  const doubled = [...tools, ...tools];
 
   useEffect(() => {
     const still = requestAnimationFrame(() => setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches));
@@ -42,6 +42,8 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
   }, []);
 
   const running = !reduced && !paused && onScreen;
+  // With reduced motion the conveyor stands still, so show every system once instead.
+  const track = reduced ? tools : doubled;
 
   useEffect(() => {
     if (!running || !autoGroups) return;
@@ -73,7 +75,7 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
         <span className="systems-eyebrow">{eyebrow}</span>
         <h3 id="systems-map-title">{title}</h3>
         <p className="conveyor-note">{note}</p>
-        <div className="conveyor-groups" role="tablist" aria-label="System types">
+        <div className="conveyor-groups" role="tablist" aria-label="System types" onFocus={() => setAutoGroups(false)}>
           {groups.map((item, index) => (
             <button key={item.id} id={`tool-tab-${item.id}`} type="button" role="tab" tabIndex={index === groupIndex ? 0 : -1} aria-selected={index === groupIndex} aria-controls="tool-panel" onClick={() => choose(index)} onKeyDown={(event) => onTabKey(event, index)}>
               <span aria-hidden="true">{index === groupIndex ? ">" : ""}</span>{item.label}

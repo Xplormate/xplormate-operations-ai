@@ -63,7 +63,7 @@ const capabilities = [
 // Examples of systems plants run on, shown on the animated conveyor. Not partners or customers.
 const systemGroups: ToolGroup[] = [
   { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", area: "ERP / supply" }, { brand: "Microsoft Dynamics", area: "ERP / finance" }, { brand: "Tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
-  { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Line data" }, { brand: "ABB", logo: "abb", area: "Drives / utilities" }] },
+  { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Line data" }, { brand: "ABB", logo: "abb", area: "Line data" }] },
   { id: "quality", label: "Quality & maintenance", tools: [{ brand: "SAP", logo: "sap", area: "Quality / maintenance" }, { brand: "Google Forms", logo: "googleforms", area: "Inspections" }, { brand: "Jira", logo: "jira", area: "Work requests" }] },
   { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans / trackers" }, { brand: "Looker", logo: "looker", area: "Reports" }] },
 ];

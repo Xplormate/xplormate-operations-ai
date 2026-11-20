@@ -31,7 +31,7 @@ export default function OperatingLoop({ stages, children, alertLabel = "NEW ISSU
         <div className="shell">
           {children}
           <div className="signal-visual" data-step={active}>
-            <img src="/operational-signal.webp" alt="Close-up of industrial machinery and an active sensor" loading="lazy" decoding="async" />
+            <img src="/operational-signal.webp" alt="Close-up of factory machinery and an active sensor" loading="lazy" decoding="async" />
             <div className="grain" aria-hidden="true" />
             <div className="signal-overlay">
               <div className="signal-alert">
