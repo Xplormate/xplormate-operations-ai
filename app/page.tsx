@@ -12,6 +12,7 @@ import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
 import OperatingLoop from "./components/OperatingLoop";
 import PilotStack from "./components/PilotStack";
 import PinnedStatement from "./components/PinnedStatement";
+import RotatingWord from "./components/RotatingWord";
 import ToolConveyor, { type ToolGroup } from "./components/ToolConveyor";
 
 const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
@@ -27,13 +28,13 @@ const heroSlides: HeroSlide[] = [
   { label: "Planning", image: "/media/hero-planning.webp", video: "/media/hero-planning.mp4", alt: "Operator pressing buttons on a lit machine control panel", readouts: [{ text: "DAILY REVIEW · 3 EXCEPTIONS", alert: true }, { text: "ACTION POINTS · 7 OPEN" }, { text: "AGENT · OWNERS REMINDED" }] },
 ];
 
-// Jobs an agent can start with. In the carousel: friction = what it watches, ai = what it does on its own, human = what waits for approval.
+// Areas where agents help. In the carousel: friction = what it watches, ai = what it handles on its own, human = what waits for approval.
 const agents: Area[] = [
-  { id: "materials", label: "Material readiness", index: "01", icon: Package, image: "/media/area-materials.webp", code: "PO-7713\nETA · +2 DAYS\nORDERS · 3", title: "Material readiness agent", friction: "Production plan, stock, open POs and receipts in your ERP.", ai: "Flags shortages for the next 24–48 hours, checks other stores and PO dates, alerts the buyer and planner with the affected orders, and chases supplier dates.", human: "Changing the plan or placing an emergency purchase.", measure: "Time from shortage to an owned action", question: "Which orders were short on material last month, and how did you find out?" },
-  { id: "quality", label: "Quality & CAPA", index: "02", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "Quality & CAPA closure agent", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
-  { id: "maintenance", label: "Maintenance", index: "03", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Maintenance escalation agent", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
-  { id: "handovers", label: "Shift handover", index: "04", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handover agent", friction: "Shift logs, open issues, and plan versus actual.", ai: "Builds the handover, carries open items to the next shift with owners, and chases acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
-  { id: "reporting", label: "Daily ops review", index: "05", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Daily ops review agent", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
+  { id: "materials", label: "Materials", index: "01", icon: Package, image: "/media/area-materials.webp", code: "PO-7713\nETA · +2 DAYS\nORDERS · 3", title: "Material readiness", friction: "Production plan, stock, open POs and receipts in your ERP.", ai: "Flags shortages for the next 24–48 hours, checks other stores and PO dates, and tells the buyer and planner which orders are affected.", human: "Changing the plan or placing an emergency purchase.", measure: "Time from shortage to an owned action", question: "Which orders were short on material last month, and how did you find out?" },
+  { id: "quality", label: "Quality", index: "02", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "Quality issues and CAPA", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
+  { id: "maintenance", label: "Maintenance", index: "03", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Maintenance escalation", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
+  { id: "handovers", label: "Shift handover", index: "04", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handover", friction: "Shift logs, open issues, and plan versus actual.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
+  { id: "reporting", label: "Daily review", index: "05", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Daily operations review", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
 ];
 
 // Sample agent run for the example section.
@@ -45,19 +46,12 @@ const agentRun = [
   { number: "05", time: "17:00", title: "Closed and logged", copy: "The supplier date is confirmed. The agent closes the issue and logs every step with who approved it.", icon: Check },
 ];
 
-const howItWorks = [
-  { tag: "01 / PLUG IN", title: "Read from your systems.", copy: "We read from your systems first. Nothing is replaced, and we write back only where you approve it." },
-  { tag: "02 / SHAPE", title: "Build around one job.", copy: "We map one job with the people who run it, and build the agent around how your plant really works." },
-  { tag: "03 / APPROVE", title: "You decide what it may do.", copy: "You set what the agent can do alone and what needs a person. Every step it takes is logged." },
-  { tag: "04 / LEARN", title: "Better with each correction.", copy: "We use your team’s corrections to improve how the agent works." },
-];
-
 const capabilities = [
-  { icon: Workflow, copy: "Runs one job end to end across planning, production, quality and stores." },
+  { icon: Workflow, copy: "Follows one workflow end to end across planning, production, quality and stores." },
   { icon: Database, copy: "Reads your ERP, MES, quality and maintenance records, plus email and sheets." },
-  { icon: CircleAlert, copy: "Flags shortages, breakdowns and quality issues before the next shift." },
-  { icon: Factory, copy: "Covers more lines and plants without adding people to chase updates." },
-  { icon: ShieldCheck, copy: "Waits for approval on what matters, and logs every step it takes." },
+  { icon: CircleAlert, copy: "Spots shortages, breakdowns and quality issues before they hold up a shift." },
+  { icon: Factory, copy: "Extends to more lines and plants once a pilot shows it works." },
+  { icon: UserCheck, copy: "Leaves every decision that matters to your team." },
 ];
 
 // Examples of systems plants run on, shown on the animated conveyor. Not partners or customers.
@@ -68,45 +62,34 @@ const systemGroups: ToolGroup[] = [
   { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans / trackers" }, { brand: "Looker", logo: "looker", area: "Reports" }] },
 ];
 
-const withYou = [
-  { tag: "01 / FIND", title: "Find the job.", copy: "We walk through last month’s real cases with your team and pick the job that takes the most chasing." },
-  { tag: "02 / BUILD", title: "Build it in your systems.", copy: "We connect the agent to the systems that job uses, read-only first, and shape it around how your plant works." },
-  { tag: "03 / RUN", title: "Run it with your team.", copy: "We stay with your team while it runs, fix what’s wrong, and measure it against your own baseline." },
-];
-
 const controls = [
   { icon: UserCheck, title: "People approve critical steps", copy: "Anything that changes the plan, a record or leaves the plant waits for a person." },
-  { icon: ScrollText, title: "Every action is logged", copy: "Each step the agent takes is recorded, with who approved it." },
-  { icon: Lock, title: "Read-only to start", copy: "Write access comes later, and only where you agree." },
-  { icon: Database, title: "Your data stays with your work", copy: "It is used only for your plant’s work." },
+  { icon: ScrollText, title: "Every step is logged", copy: "Each action the agent takes is recorded, with who approved it." },
+  { icon: Lock, title: "Read-only to start", copy: "The agent starts by reading. Write access comes later, only where you agree." },
+  { icon: KeyRound, title: "Access agreed up front", copy: "Nothing connects before you sign off, and you can remove access any time." },
+  { icon: Database, title: "Your data, your work only", copy: "It is used only for your plant’s work." },
   { icon: Server, title: "Hosted in India", copy: "The agent and its data run in an India cloud region." },
-  { icon: KeyRound, title: "Access you can remove", copy: "Agree access before anything connects, and remove it any time." },
 ];
 
 const pilotSteps = [
-  { number: "01", art: "bottleneck" as const, title: "Pick one job", copy: "The one that repeats and takes the most chasing. We set the baseline from your own records." },
-  { number: "02", art: "pilot" as const, title: "Run it on your real data", copy: "One agent, one plant, read-only first, with your team approving what matters." },
-  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If the numbers move, the agent becomes part of daily work, with write access only where you agree." },
-  { number: "04", art: "expand" as const, title: "Choose the next job", copy: "Then the next plant. Each step is a separate decision, based on what the pilot showed." },
+  { number: "01", art: "understand" as const, title: "Map the real work", copy: "We walk through last month’s cases with the people who run the workflow, and set the baseline from your own records." },
+  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "One agent, one workflow, one plant. Read-only first, with your team approving what matters." },
+  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If the numbers move, the agent becomes part of daily work." },
+  { number: "04", art: "expand" as const, title: "Choose what’s next", copy: "The next workflow or the next plant, as a separate decision based on what the pilot showed." },
 ];
 
 const principles = [
-  { title: "One job done properly", copy: "We finish one job well before starting the next." },
+  { title: "One workflow done properly", copy: "We finish one well before starting the next." },
   { title: "Accountable for what we build", copy: "We stay with the agent we build until it works in your plant." },
-  { title: "Numbers as they are", copy: "We report the results as they are, good or bad." },
-  { title: "Simple pricing", copy: "A fixed pilot fee, agreed before we start. What comes next is agreed on the results." },
+  { title: "Numbers as they are", copy: "We report results as they are, good or bad." },
 ];
 
 const faq = [
-  ["Does it replace our ERP or MES?", "No. The agent works on top of them, and they stay the record."],
-  ["Will this replace my people?", "No. The agent does the chasing and the routine steps. Your people decide and approve."],
-  ["Which systems can it work with?", "The ones your chosen job uses. We confirm access on the first call, starting read-only."],
-  ["Will it act without approval?", "Only on routine steps you agree up front. Anything that changes the plan, a record or leaves the plant waits for a person."],
-  ["When does it write into our systems?", "Only after the pilot proves itself, and only where you approve it."],
-  ["Which AI model does it use?", "We pick the model that fits each task and aren’t tied to one provider."],
-  ["Where is our plant data?", "The agent and the plant data it uses run in an India cloud region, used only for your plant’s work."],
-  ["What do you need from us?", "One person who owns the job, read access to the systems it touches, and an hour a week."],
-  ["What does a pilot cost?", "A fixed fee in rupees, set after the first call once we know the job and the systems involved."],
+  ["Will this replace my people?", "No. The agent handles the routine steps. Your people decide and approve."],
+  ["Which systems can it work with?", "The ones your chosen workflow uses. We confirm access on the first call."],
+  ["What do you need from us?", "One person who owns the workflow, access to the systems it touches, and an hour a week."],
+  ["What does a pilot cost?", "It depends on the workflow and systems involved. We agree a fixed fee before we start."],
+  ["What happens after the pilot?", "You decide: stop, extend it, or add the next workflow, based on the numbers."],
   ["What if it won’t help?", "We’ll tell you after the first call."],
 ];
 
@@ -206,7 +189,7 @@ export default function Home() {
   return <main id="top">
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#how" onClick={closeNav}>How it works</a><a href="#agents" onClick={closeNav}>Agents</a><a href="#security" onClick={closeNav}>Security</a><a href="#about" onClick={closeNav}>About</a></nav>
+      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#what-it-does" onClick={closeNav}>What agents do</a><a href="#example" onClick={closeNav}>Example</a><a href="#security" onClick={closeNav}>Security</a><a href="#pilot" onClick={closeNav}>Pilot</a></nav>
       <div className="header-actions">
         <a className="header-cta" href="#contact" onClick={closeNav}>Book a call <ArrowUpRight size={16} /></a>
         <button className="mobile-nav-toggle" type="button" aria-label={navOpen ? "Close navigation" : "Open navigation"} aria-expanded={navOpen} aria-controls="site-navigation" onClick={() => setNavOpen((open) => !open)}>{navOpen ? <X size={18} /> : <Menu size={18} />}</button>
@@ -221,13 +204,13 @@ export default function Home() {
         <div className="grain" aria-hidden="true" />
         <AgentPanel />
         <div className="hero-content shell">
-          <div className="hero-kicker"><span className="signal-pulse" /> AI AGENTS FOR MANUFACTURING OPERATIONS</div>
-          <h1>AI agents that do the <em>chasing</em> in your plant.</h1>
+          <div className="hero-kicker"><span className="signal-pulse" /> BUILT ON SITE WITH PLANT TEAMS</div>
+          <h1>AI agents for <em>manufacturing</em> operations.</h1>
           <div className="hero-actions">
-            <p>They work on top of your ERP, MES, quality and maintenance systems. They spot what’s slipping, do the routine steps, and bring in the right person when a decision is needed.</p>
+            <p>Agents that work on top of your ERP, MES, quality and maintenance systems. They handle the routine work across production, quality, maintenance and materials, and bring in your team for the decisions that matter.</p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
           </div>
-          <div className="hero-meta"><span>NOW TAKING OUR FIRST PAID PILOTS</span><span>YOUR TEAM APPROVES</span></div>
+          <div className="hero-meta"><span>PRODUCTION · QUALITY · MAINTENANCE · MATERIALS</span><span>SAMPLE DATA</span></div>
         </div>
       </div>
     </section>
@@ -238,66 +221,39 @@ export default function Home() {
         <DotField className="glow-card-dots" color="255,214,150" gap={16} density={0.22} />
         <div className="grain" aria-hidden="true" />
         <div className="glow-card-content">
-          <h2>Your systems record the work. The follow-up still runs on calls and reminders.</h2>
-          <p>Plug in · Shape · Approve · Learn</p>
-          <a className="button button-cream" href="#how">See how it works <ArrowRight size={17} /></a>
+          <h2>Less time following up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "handovers", "daily reviews"]} /></h2>
+          <p>One workflow at a time, with your team in charge.</p>
+          <a className="button button-cream" href="#what-it-does">See what agents can do <ArrowRight size={17} /></a>
         </div>
       </div>
     </div></section>
 
     <section className="capability-section" id="what-it-does"><div className="shell">
-      <div className="section-topline" data-reveal><span>WHAT AN AGENT DOES</span><span>MANUFACTURING OPERATIONS</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Keep material, machines and quality moving,<br /><span className="dim">without the chasing.</span></h2><p>An agent connects the systems your plant already runs and takes on the follow-up work between them. Your team keeps the decisions.</p></div>
+      <div className="section-topline" data-reveal><span>01 / WHAT AGENTS CAN DO</span><span>MANUFACTURING OPERATIONS</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Keep material, machines and quality<br /><span className="dim">moving on time.</span></h2><p>Agents connect the systems your plant already runs and handle the routine steps between them.</p></div>
       <Capabilities items={capabilities} />
     </div></section>
 
-    <PinnedStatement text="The update sits in one system. The action needs three people. The chasing happens on calls, outside any system, so issues close late and nobody can see why until the review." />
+    <PinnedStatement text="Updates sit in one system. The action needs three people. The follow-up runs on calls and reminders outside any system, so issues close late and nobody sees why until the review." />
 
-    <section className="transformation" id="how"><div className="shell">
-      <div className="section-topline" data-reveal><span>01 / HOW IT WORKS</span><span>WHAT WE DO IN A PILOT</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Agents that work on top of<br /><span className="dim">what you already run.</span></h2><p>We connect an agent to the systems one job depends on, build it around how your plant really works, and keep your team in charge of every decision that matters.</p></div>
-      <div className="transformation-flow flow-four">
-        {howItWorks.map((step, index) => (
-          <article className="bracketed" data-reveal key={step.tag}>
-            {index === 1 ? <DotField className="card-dots" color="255,206,128" gap={13} density={0.2} /> : null}
-            <span>{step.tag}</span><h3>{step.title}</h3><p>{step.copy}</p>
-          </article>
-        ))}
-      </div>
+    <section className="transformation" id="systems"><div className="shell">
+      <div className="section-topline" data-reveal><span>02 / YOUR SYSTEMS</span><span>NOTHING REPLACED</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Works on top of<br /><span className="dim">what you already run.</span></h2><p>Your ERP, MES, quality and maintenance systems stay the record. An agent connects only to the few sources one workflow needs.</p></div>
       <div className="systems-map bracketed" data-reveal>
-        <ToolConveyor groups={systemGroups} eyebrow="SYSTEMS WE WORK ON TOP OF" title="Works on top of what you already run." note="Examples of systems plants use. Not partners or customers." />
-        <ul className="systems-points">
-          <li><h4>Nothing replaced</h4><p>Your systems stay the record. The agent works alongside them.</p></li>
-          <li><h4>Only what one job needs</h4><p>We connect the few sources one agent uses, not your whole estate.</p></li>
-          <li><h4>Read-only first</h4><p>The agent starts by reading. Write access comes later, only if you agree.</p></li>
-          <li><h4>Access agreed up front</h4><p>Nothing connects before you sign off on what the agent can see.</p></li>
-        </ul>
+        <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="The tools plants already run on." note="Examples only. Not partners or customers." />
       </div>
     </div></section>
 
     <span id="example" className="anchor-target" aria-hidden="true" />
-    <OperatingLoop stages={agentRun} alertLabel="SAMPLE DATA · MATERIAL READINESS AGENT" alertTitle="Raw material short for Line 2 tomorrow" hint="SCROLL TO FOLLOW THE AGENT">
-      <div className="section-topline"><span>02 / EXAMPLE AGENT RUN</span><span>SAMPLE DATA</span></div>
-      <div className="section-heading split-heading signal-heading"><h2>One shortage.<br /><span className="dim">Handled before the next shift.</span></h2><p>Here is how a material readiness agent would handle a shortage, step by step. The agent does the chasing; your planner approves the change.</p></div>
+    <OperatingLoop stages={agentRun} alertLabel="SAMPLE DATA · MATERIALS" alertTitle="Raw material short for Line 2 tomorrow" hint="SCROLL TO FOLLOW THE AGENT">
+      <div className="section-topline"><span>03 / EXAMPLE</span><span>ONE ISSUE, START TO FINISH</span></div>
+      <div className="section-heading split-heading signal-heading"><h2>One shortage.<br /><span className="dim">Handled before the next shift.</span></h2><p>How an agent would handle a material shortage, step by step. The planner approves the change.</p></div>
     </OperatingLoop>
 
     <section className="explorer" id="agents"><div className="shell">
-      <div className="section-topline" data-reveal><span>03 / AGENTS</span><span>JOBS WE CAN START WITH</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Start with one job.<br /><span className="dim">Add the next when it works.</span></h2><p>Each agent is built for one job in your plant. Pick a job to see what the agent would watch, what it would do on its own, and what would wait for your team.</p></div>
+      <div className="section-topline" data-reveal><span>04 / WHERE AGENTS HELP</span><span>PICK AN AREA</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Where agents<br /><span className="dim">can help first.</span></h2><p>Pick an area to see what an agent would watch, what it would handle on its own, and what would wait for your team.</p></div>
       <div data-reveal><AreaCarousel areas={agents} /></div>
-    </div></section>
-
-    <section className="with-you" id="with-you"><div className="shell">
-      <div className="section-topline" data-reveal><span>04 / HOW WE WORK WITH YOU</span><span>ON SITE, IN YOUR SYSTEMS</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>We sit with the people<br /><span className="dim">who do the job.</span></h2><p>The person who scopes your pilot builds it, and stays with your team while it runs.</p></div>
-      <div className="transformation-flow">
-        {withYou.map((step, index) => (
-          <article className="bracketed" data-reveal key={step.tag}>
-            {index === 1 ? <DotField className="card-dots" color="255,206,128" gap={13} density={0.2} /> : null}
-            <span>{step.tag}</span><h3>{step.title}</h3><p>{step.copy}</p>
-          </article>
-        ))}
-      </div>
     </div></section>
 
     <section className="security" id="security"><div className="shell">
@@ -318,17 +274,16 @@ export default function Home() {
         <div className="grain" aria-hidden="true" />
         <div className="approach-head" data-reveal>
           <span className="approach-eyebrow">06 / HOW A PILOT RUNS</span>
-          <h2>Pick one job.<br /><span>See if it works.</span></h2>
-          <p>A small paid pilot on one job at one plant, measured against your own records. A fixed fee in rupees, agreed before we start. Planned for 4–8 weeks.</p>
-          <a className="button button-cream" href="#contact">Book a 30-minute call <ArrowUpRight size={17} /></a>
+          <h2>Pick one workflow.<br /><span>See if it works.</span></h2>
+          <p>A small paid pilot on one workflow at one plant, measured against your own records. A fixed fee in rupees, agreed before we start. Planned for 4–8 weeks.</p>
         </div>
         <PilotStack steps={pilotSteps} />
       </div>
     </div></section>
 
     <section className="about" id="about"><div className="shell">
-      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>AI AGENTS FOR MANUFACTURING</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Plant work stalls<br /><span className="dim">between systems and people.</span></h2><p>Xplormate builds AI agents for manufacturing operations: the follow-up work that falls between your systems and the people who run the plant.</p></div>
+      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>ON SITE, IN YOUR SYSTEMS</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Plant work stalls<br /><span className="dim">between systems and people.</span></h2><p>Xplormate builds AI agents for manufacturing operations. We work on site with your team, and the person who scopes your pilot builds it.</p></div>
       <ul className="systems-points principles" data-reveal>
         {principles.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
       </ul>
@@ -344,7 +299,7 @@ export default function Home() {
         <div className="shell contact-grid">
           <div>
             <div className="section-topline"><span>09 / BOOK A CALL</span></div>
-            <h2>Pick one job. <em>See if it works before you commit more.</em></h2>
+            <h2>Tell us where work <em>gets stuck in your plant.</em></h2>
           </div>
           <div className="contact-content">
             <p>Tell us a little about your plant. We’ll reply personally to set up a 30-minute call.</p>
@@ -375,7 +330,7 @@ export default function Home() {
                     {leadFieldErrors.role ? <small className="field-error" id="lead-role-error">{leadFieldErrors.role}</small> : null}
                   </label>
                   <label className={`field-wide${leadFieldErrors.challenge ? " has-error" : ""}`} htmlFor="lead-challenge">
-                    <span>Which job should we start with? <i className="optional-mark">optional</i></span>
+                    <span>Which workflow should we look at first? <i className="optional-mark">optional</i></span>
                     <textarea id="lead-challenge" name="challenge" rows={4} maxLength={2000} placeholder="e.g. Every morning our planner checks the ERP and calls suppliers to find which orders are short on material." aria-invalid={Boolean(leadFieldErrors.challenge)} aria-describedby={leadFieldErrors.challenge ? "lead-challenge-error" : undefined} />
                     {leadFieldErrors.challenge ? <small className="field-error" id="lead-challenge-error">{leadFieldErrors.challenge}</small> : null}
                   </label>
@@ -404,7 +359,7 @@ export default function Home() {
           <p>AI agents for manufacturing operations.</p>
           <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
         </div>
-        <nav className="footer-col" aria-label="Sections"><h2>On this page</h2><a href="#how">How it works</a><a href="#example">Example agent run</a><a href="#agents">Agents</a><a href="#security">Security</a><a href="#pilot">How a pilot runs</a><a href="#about">About</a><a href="#questions">Questions</a></nav>
+        <nav className="footer-col" aria-label="Sections"><h2>On this page</h2><a href="#what-it-does">What agents do</a><a href="#systems">Your systems</a><a href="#example">Example</a><a href="#agents">Where agents help</a><a href="#security">Security</a><a href="#pilot">How a pilot runs</a><a href="#about">About</a><a href="#questions">Questions</a></nav>
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>

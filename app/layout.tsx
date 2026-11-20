@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Xplormate | AI agents for manufacturing operations",
   description:
-    "Xplormate builds AI agents that take over follow-up work in manufacturing plants, on top of your ERP, MES, quality and maintenance systems. Start with one job in a small paid pilot.",
+    "Xplormate builds AI agents for manufacturing operations: production, quality, maintenance and materials, on top of your ERP, MES and quality systems. Start with one workflow in a small paid pilot.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "AI agents for manufacturing operations | Xplormate",
     description:
-      "AI agents that do the chasing in your plant, on top of the systems you already run. Your team approves what matters.",
+      "AI agents for manufacturing operations, on top of the systems your plant already runs. Your team keeps the decisions.",
     url: "/",
     siteName: "Xplormate",
     type: "website",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI agents for manufacturing operations | Xplormate",
     description:
-      "AI agents for the follow-up work in manufacturing plants. Start with one job in a small paid pilot.",
+      "AI agents for manufacturing operations. Start with one workflow in a small paid pilot.",
   },
   icons: {
     icon: "/xplormate-logo.jpg",

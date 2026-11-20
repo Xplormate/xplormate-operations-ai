@@ -3,45 +3,38 @@
 import { useEffect, useRef, useState } from "react";
 
 type Line = { name: string; status: string; level: number; alert?: boolean };
-type Scene = { lines: Line[]; alert: string; action: string };
+type Scene = { lines: Line[]; alert: string; action: string; resolved?: boolean };
 
-// Sample data only: what a material readiness agent would show while it works.
+const ok = (name: string, level: number): Line => ({ name, status: "ON TRACK", level });
+
+// Sample data only: what an agent would show across one plant's day.
 const scenes: Scene[] = [
   {
-    lines: [
-      { name: "LINE 1", status: "COVERED", level: 92 },
-      { name: "LINE 2", status: "SHORT TOMORROW", level: 34, alert: true },
-      { name: "LINE 3", status: "COVERED", level: 81 },
-      { name: "LINE 4", status: "COVERED", level: 76 },
-    ],
+    lines: [{ name: "MATERIALS", status: "LINE 2 SHORT", level: 34, alert: true }, ok("QUALITY", 82), ok("MAINTENANCE", 76), ok("HANDOVER", 88)],
     alert: "Raw material short for Line 2 tomorrow",
-    action: "Buyer asked · due 17:00",
+    action: "Buyer and planner informed",
   },
   {
-    lines: [
-      { name: "LINE 1", status: "COVERED", level: 90 },
-      { name: "LINE 2", status: "PO 2 DAYS LATE", level: 34, alert: true },
-      { name: "LINE 3", status: "COVERED", level: 79 },
-      { name: "LINE 4", status: "CHECKING STORE B", level: 58 },
-    ],
-    alert: "3 orders at risk on Line 2",
-    action: "Waiting for planner approval",
+    lines: [ok("MATERIALS", 72), { name: "QUALITY", status: "CAPA 2/3", level: 45, alert: true }, ok("MAINTENANCE", 76), ok("HANDOVER", 88)],
+    alert: "CAPA evidence missing before Friday",
+    action: "Owner reminded · due Thursday",
   },
   {
-    lines: [
-      { name: "LINE 1", status: "COVERED", level: 88 },
-      { name: "LINE 2", status: "RESEQUENCED", level: 70 },
-      { name: "LINE 3", status: "COVERED", level: 79 },
-      { name: "LINE 4", status: "COVERED", level: 74 },
-    ],
-    alert: "Planner approved the new sequence",
-    action: "Closed and logged",
+    lines: [ok("MATERIALS", 74), ok("QUALITY", 70), { name: "MAINTENANCE", status: "PRESS 4 LATE", level: 30, alert: true }, ok("HANDOVER", 86)],
+    alert: "Press 4 work order past response time",
+    action: "Waiting for maintenance head",
+  },
+  {
+    lines: [ok("MATERIALS", 78), ok("QUALITY", 74), ok("MAINTENANCE", 72), { name: "HANDOVER", status: "5/5 OWNED", level: 92 }],
+    alert: "Shift B handover acknowledged",
+    action: "Every open item has an owner",
+    resolved: true,
   },
 ];
 
 const SCENE_MS = 5200;
 
-/** A sample-data agent card for the hero. It cycles through three moments of one shortage, and holds while hovered. */
+/** A sample-data agent card for the hero. It cycles through one plant's day across four areas, and holds while hovered. */
 export default function AgentPanel() {
   const [index, setIndex] = useState(0);
   const [onScreen, setOnScreen] = useState(false);
@@ -64,21 +57,21 @@ export default function AgentPanel() {
   }, [onScreen, held]);
 
   const scene = scenes[index];
-  const resolved = index === scenes.length - 1;
+  const resolved = Boolean(scene.resolved);
 
   return (
     <div
       className="agent-panel"
       ref={rootRef}
       role="img"
-      aria-label="Sample data: a material readiness agent watching four lines, flagging a shortage on Line 2 and waiting for planner approval."
+      aria-label="Sample data: an agent watching materials, quality, maintenance and shift handover in one plant, flagging the next issue for its owner."
       onMouseEnter={() => setHeld(true)}
       onMouseLeave={() => setHeld(false)}
     >
       <div className="agent-panel-head" aria-hidden="true">
-        <span className="agent-live"><i />Material readiness agent</span>
+        <span className="agent-live"><i />Plant operations agent</span>
       </div>
-      <div className="agent-panel-sub" aria-hidden="true"><span>4 lines watched</span><span className="agent-live-chip">SAMPLE DATA</span></div>
+      <div className="agent-panel-sub" aria-hidden="true"><span>4 areas watched</span><span className="agent-live-chip">EXAMPLE</span></div>
       <ul className="agent-lines" aria-hidden="true" key={index}>
         {scene.lines.map((line, row) => (
           <li key={line.name} className={line.alert ? "is-alert" : undefined} style={{ "--row": row, "--level": `${line.level}%` } as React.CSSProperties}>

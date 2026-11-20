@@ -41,14 +41,14 @@ export default function OpengraphImage() {
           <span style={{ color: "#ffb629" }}>.</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 74, fontWeight: 700, lineHeight: 1.04, letterSpacing: -3 }}>
-          <span>AI agents that do the</span>
+          <span>AI agents for</span>
           <div style={{ display: "flex" }}>
-            <span style={{ color: "#ffb629" }}>chasing</span>
-            <span>&nbsp;in your plant.</span>
+            <span style={{ color: "#ffb629" }}>manufacturing</span>
+            <span>&nbsp;operations.</span>
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, letterSpacing: 2, color: "#c9cec8" }}>
-          AI AGENTS FOR MANUFACTURING OPERATIONS
+          PRODUCTION · QUALITY · MAINTENANCE · MATERIALS
         </div>
       </div>
     ),

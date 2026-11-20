@@ -86,8 +86,8 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
   return (
     <div className="areas">
       <div className="areas-bar">
-        <span className="areas-kicker">EXAMPLE AGENTS</span>
-        <div className="areas-tabs" role="tablist" aria-label="Agent jobs">
+        <span className="areas-kicker">EXAMPLE AREAS</span>
+        <div className="areas-tabs" role="tablist" aria-label="Plant areas">
           {areas.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -109,8 +109,8 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
           })}
         </div>
         <div className="areas-arrows">
-          <button type="button" aria-label="Previous agent" onClick={() => go(active - 1)}><ArrowLeft size={18} /></button>
-          <button type="button" aria-label="Next agent" onClick={() => go(active + 1)}><ArrowRight size={18} /></button>
+          <button type="button" aria-label="Previous area" onClick={() => go(active - 1)}><ArrowLeft size={18} /></button>
+          <button type="button" aria-label="Next area" onClick={() => go(active + 1)}><ArrowRight size={18} /></button>
         </div>
       </div>
 

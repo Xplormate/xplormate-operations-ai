@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Information you provide</h2>
-          <p>When you submit the contact form, we collect your name, email address, company, and role. These fields are required so we can understand who is reaching out and respond to the enquiry. You can also choose to share a short description of the work your team keeps chasing. This is optional.</p>
+          <p>When you submit the contact form, we collect your name, email address, company, and role. These fields are required so we can understand who is reaching out and respond to the enquiry. You can also choose to share a short description of the workflow you want to improve. This is optional.</p>
         </section>
 
         <section>
