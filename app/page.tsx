@@ -59,9 +59,9 @@ const controls = [
 ];
 
 const pilotPath = [
-  { when: "1 week", title: "Map", copy: "We map the workflow with the people who run it, using last month’s real cases." },
-  { when: "3 weeks", title: "Run", copy: "The agent runs that workflow on your systems, in daily use by your team." },
-  { when: "12 weeks", title: "Expand", copy: "If it works, agents take on more workflows across your plant on the same connections. If not, we stop." },
+  { when: "1 week", title: "Map", copy: "We map one workflow with the people who run it, using last month’s real cases." },
+  { when: "3 weeks", title: "First workflow live", copy: "The agent runs that workflow on your systems, in daily use by your team." },
+  { when: "12 weeks", title: "Full system", copy: "If it works, agents run across your plant’s workflows on the same connections. If not, we stop." },
 ];
 
 const faq = [
