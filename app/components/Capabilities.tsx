@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 type Capability = { icon: LucideIcon; copy: string };
 
-/** Five framed capability cards. Icons draw themselves in when the row scrolls into view. */
+/** Framed capability cards. Icons draw themselves in when the row scrolls into view. */
 export default function Capabilities({ items }: { items: Capability[] }) {
   return (
     <ul className="capabilities" data-reveal>

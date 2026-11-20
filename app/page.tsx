@@ -17,6 +17,7 @@ import ToolConveyor, { type ToolGroup } from "./components/ToolConveyor";
 
 const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
 const businessEmail = "jeetendra@xplormate.com";
+const year = new Date().getFullYear();
 
 const heroSlides: HeroSlide[] = [
   { label: "Fabrication", image: "/media/hero-weld.webp", video: "/media/hero-weld.mp4", alt: "Welder at work, sparks lighting a dark fabrication bay" },
@@ -70,8 +71,8 @@ const controls = [
 
 const pilotSteps = [
   { number: "01", art: "understand" as const, title: "Map the real work", copy: "We walk through last month’s cases with the people who run the workflow." },
-  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "One agent, one workflow, one plant, read-only first." },
-  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If the numbers move, the agent becomes part of daily work." },
+  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "One agent on one workflow, using your data." },
+  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If it saves time, the agent becomes part of daily work." },
   { number: "04", art: "expand" as const, title: "Choose what’s next", copy: "The next workflow or the next plant, as a separate decision based on what the pilot showed." },
 ];
 
@@ -254,7 +255,7 @@ export default function Home() {
 
     <section className="security" id="security"><div className="shell">
       <div className="section-topline" data-reveal><span>05 / SECURITY AND CONTROL</span><span>NO SURPRISES</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>You stay<br /><span className="dim">in control.</span></h2><p>Six rules every pilot runs under.</p></div>
+      <div className="section-heading split-heading" data-reveal><h2>You stay<br /><span className="dim">in control.</span></h2><p>Six rules for every pilot.</p></div>
       <ul className="security-grid" data-reveal>
         {controls.map((item) => {
           const Icon = item.icon;
@@ -277,14 +278,14 @@ export default function Home() {
     </div></section>
 
     <section className="about" id="about"><div className="shell">
-      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>ON SITE, IN YOUR SYSTEMS</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>A small team.<br /><span className="dim">On the floor with you.</span></h2><p>We work on site with your team, and the person who scopes your pilot builds it.</p></div>
+      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>WHO WE ARE</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Small and hands-on.<br /><span className="dim">On the floor with you.</span></h2><p>The person who scopes your pilot builds it.</p></div>
       <ul className="systems-points principles" data-reveal>
         {principles.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
       </ul>
     </div></section>
 
-    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>08 / QUESTIONS</span></div><h2>Before we talk.</h2><p>Straight answers to what plant teams usually ask first.</p></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
+    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>08 / QUESTIONS</span></div><h2>Before we talk.</h2><p>Short answers before a first call.</p></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
 
     <section className="contact" id="contact">
       <div className="contact-frame">
@@ -338,7 +339,7 @@ export default function Home() {
               </form>
             ) : (
               <div className="lead-success" ref={successRef} tabIndex={-1} role="status">
-                <p>Thanks. We’ve received your details and will reply personally to set up a call.</p>
+                <p>Thanks. Your details are in. Expect an email from us soon.</p>
                 <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Submit another response</button>
               </div>
             )}
@@ -351,14 +352,13 @@ export default function Home() {
       <div className="footer-top">
         <div className="footer-brand">
           <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-          <p>AI agents for manufacturing operations.</p>
           <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
         </div>
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
       <div className="footer-mark" aria-hidden="true" data-reveal>Xplormate<span>.</span></div>
-      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><a href="#top" className="footer-top-link">BACK TO TOP <ArrowUp size={13} /></a></div>
+      <div className="footer-bar bracketed"><span>© {year} XPLORMATE</span><a href="#top" className="footer-top-link">BACK TO TOP <ArrowUp size={13} /></a></div>
     </div></footer>
   </main>;
 }

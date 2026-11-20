@@ -10,8 +10,6 @@ export type HeroSlide = {
   /** Short muted clip. A lighter "-m.mp4" version is used on phones. */
   video?: string;
   alt: string;
-  /** Optional sample-data readouts over the scene. */
-  readouts?: { text: string; alert?: boolean }[];
 };
 
 const STILL_MS = 6500;
@@ -21,7 +19,7 @@ const clipFor = (video: string, variant: "desktop" | "mobile") => (variant === "
 
 /**
  * The hero's background: short plant clips that crossfade one after another,
- * each with its own illustrative data readouts, plus scene buttons and a pause
+ * with scene buttons and a pause
  * control. Only the visible clip plays and only the next one preloads; phones
  * get lighter files. Reduced-motion visitors get the first scene's still frame.
  */
@@ -74,7 +72,6 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
     if (video && video.currentTime > 0.5) video.currentTime = 0;
   }, [active]);
 
-  const slide = slides[active];
 
   return (
     <>
@@ -99,14 +96,6 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
           </div>
         ))}
       </div>
-      {slide.readouts?.length ? <div className="hero-readouts" aria-hidden="true" key={active}>
-        {slide.readouts.map((readout, index) => (
-          <div key={readout.text} className={`readout readout-${index + 1}${readout.alert ? " readout-alert" : ""}`} style={{ animationDelay: `${0.35 + index * 0.35}s` }}>
-            {readout.alert ? <i /> : null}{readout.text}
-          </div>
-        ))}
-        <span className="crosshair crosshair-one" /><span className="crosshair crosshair-two" />
-      </div> : null}
       <div className="hero-progress" role="group" aria-label="Plant scenes">
         {slides.map((item, index) => (
           <button
