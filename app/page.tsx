@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
-import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, KeyRound, Lock, Mail, MapPin, Menu, Package, Repeat, ScrollText, Server, ShieldCheck, UserCheck, Users, Workflow, Wrench, X } from "lucide-react";
+import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, KeyRound, Lock, Mail, MapPin, Menu, Package, Repeat, ScrollText, Server, ShieldCheck, UserCheck, Users, Workflow, Wrench, X } from "lucide-react";
 import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
 import Capabilities from "./components/Capabilities";
@@ -185,7 +185,7 @@ export default function Home() {
   return <main id="top">
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#what-it-does" onClick={closeNav}>What agents do</a><a href="#example" onClick={closeNav}>Example</a><a href="#security" onClick={closeNav}>Security</a><a href="#pilot" onClick={closeNav}>Pilot</a></nav>
+      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#what-it-does" onClick={closeNav}>What agents do</a><a href="#example" onClick={closeNav}>Example</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
       <div className="header-actions">
         <a className="header-cta" href="#contact" onClick={closeNav}>Book a call <ArrowUpRight size={16} /></a>
         <button className="mobile-nav-toggle" type="button" aria-label={navOpen ? "Close navigation" : "Open navigation"} aria-expanded={navOpen} aria-controls="site-navigation" onClick={() => setNavOpen((open) => !open)}>{navOpen ? <X size={18} /> : <Menu size={18} />}</button>
@@ -261,7 +261,6 @@ export default function Home() {
           return <li key={item.title}><span className="security-icon" aria-hidden="true"><Icon size={18} strokeWidth={1.6} /></span><h3>{item.title}</h3><p>{item.copy}</p></li>;
         })}
       </ul>
-      <p className="security-cta" data-reveal>IT team? <a href="#contact">Book a security call <ArrowUpRight size={15} /></a></p>
     </div></section>
 
     <section className="approach" id="pilot"><div className="shell">
@@ -355,11 +354,11 @@ export default function Home() {
           <p>AI agents for manufacturing operations.</p>
           <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
         </div>
-        <nav className="footer-col" aria-label="Sections"><h2>On this page</h2><a href="#what-it-does">What agents do</a><a href="#systems">Your systems</a><a href="#example">Example</a><a href="#agents">Where agents help</a><a href="#security">Security</a><a href="#pilot">How a pilot runs</a><a href="#about">About</a><a href="#questions">Questions</a></nav>
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
-      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><span>BENGALURU, INDIA</span></div>
+      <div className="footer-mark" aria-hidden="true" data-reveal>Xplormate<span>.</span></div>
+      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><a href="#top" className="footer-top-link">BACK TO TOP <ArrowUp size={13} /></a></div>
     </div></footer>
   </main>;
 }
