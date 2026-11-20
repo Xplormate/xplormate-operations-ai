@@ -10,7 +10,8 @@ export type HeroSlide = {
   /** Short muted clip. A lighter "-m.mp4" version is used on phones. */
   video?: string;
   alt: string;
-  readouts: { text: string; alert?: boolean }[];
+  /** Optional sample-data readouts over the scene. */
+  readouts?: { text: string; alert?: boolean }[];
 };
 
 const STILL_MS = 6500;
@@ -98,14 +99,14 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
           </div>
         ))}
       </div>
-      <div className="hero-readouts" aria-hidden="true" key={active}>
+      {slide.readouts?.length ? <div className="hero-readouts" aria-hidden="true" key={active}>
         {slide.readouts.map((readout, index) => (
           <div key={readout.text} className={`readout readout-${index + 1}${readout.alert ? " readout-alert" : ""}`} style={{ animationDelay: `${0.35 + index * 0.35}s` }}>
             {readout.alert ? <i /> : null}{readout.text}
           </div>
         ))}
         <span className="crosshair crosshair-one" /><span className="crosshair crosshair-two" />
-      </div>
+      </div> : null}
       <div className="hero-progress" role="group" aria-label="Plant scenes">
         {slides.map((item, index) => (
           <button

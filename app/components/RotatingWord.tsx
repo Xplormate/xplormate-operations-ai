@@ -1,23 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ROTATE_MS = 2400;
 
-/** Cycles through a short list of words with a soft slide. Holds on the first word for reduced motion. */
+const spoken = (words: string[]) => (words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words[words.length - 1]}` : words[0]);
+
+/**
+ * Cycles once through a short list of words with a soft slide, then rests on the first word.
+ * All words share one grid cell, so the line never reflows. Holds still for reduced motion
+ * and while off screen.
+ */
 export default function RotatingWord({ words }: { words: string[] }) {
-  const [index, setIndex] = useState(0);
+  const [step, setStep] = useState(0);
+  const [onScreen, setOnScreen] = useState(false);
+  const rootRef = useRef<HTMLSpanElement>(null);
+  const index = step % words.length;
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setIndex((current) => (current + 1) % words.length), ROTATE_MS);
-    return () => window.clearInterval(timer);
-  }, [words.length]);
+    const root = rootRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!onScreen || step >= words.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setStep((current) => current + 1), ROTATE_MS);
+    return () => window.clearTimeout(timer);
+  }, [onScreen, step, words.length]);
 
   return (
-    <span className="rotating-word">
-      <span className="sr-only">{words.join(", ")}</span>
-      <em key={index} aria-hidden="true">{words[index]}</em>
+    <span className="rotating-word" ref={rootRef}>
+      <span className="sr-only">{spoken(words)}</span>
+      {words.map((word, wordIndex) => (
+        <em key={word} aria-hidden="true" className={wordIndex === index ? "is-active" : undefined}>{word}</em>
+      ))}
     </span>
   );
 }

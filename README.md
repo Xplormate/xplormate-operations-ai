@@ -77,21 +77,22 @@ For local submission tests, use a separate test database or local test storage. 
 
 ## Website sections
 
+In page order:
+
 | Section | Main component |
 | --- | --- |
-| Hero scenes and sample operational readouts | `HeroSequence.tsx` |
-| Introductory glow card | `page.tsx` |
-| Scroll-highlighted statement | `PinnedStatement.tsx` |
-| Live agent panel in the hero (sample data) | `AgentPanel.tsx` |
-| What an agent does (five animated cards) | `Capabilities.tsx` |
-| How it works (four steps) and animated systems conveyor | `page.tsx`, `ToolConveyor.tsx` |
-| Five-step example agent run (sample data) | `OperatingLoop.tsx` |
-| Five agent jobs | `AreaCarousel.tsx` |
-| How we work with you, security and control, about | `page.tsx` |
-| How a pilot runs | `PilotStack.tsx` |
-| FAQ, enquiry form, navigation, and footer | `page.tsx` |
+| Hero scenes and a sample-data plant operations panel (plays through once) | `HeroSequence.tsx`, `AgentPanel.tsx` |
+| Glow statement with a rotating word (one cycle) | `page.tsx`, `RotatingWord.tsx` |
+| 01 What an agent would do (three animated cards) | `Capabilities.tsx` |
+| Scroll-highlighted problem statement | `PinnedStatement.tsx` |
+| 02 Your systems: animated conveyor of example systems | `ToolConveyor.tsx` |
+| 03 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
+| 04 Where agents help: five plant areas | `AreaCarousel.tsx` |
+| 05 Security and control | `page.tsx` |
+| 06 How a pilot runs | `PilotStack.tsx` |
+| 07 About, 08 FAQ, 09 contact form, navigation and footer | `page.tsx` |
 
-The hero and systems conveyor have pause controls. Dot fields and the conveyor pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
+The hero and systems conveyor have pause controls. The agent panel holds while hovered; the panel, the rotating word and the conveyor stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel is hidden, the operating loop shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -117,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `agents`, `agentRun`, `capabilities`, `howItWorks`, `systemGroups`, `withYou`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`.
+- **Homepage copy and examples:** edit `heroSlides`, `capabilities`, `systemGroups`, `agentRun`, `agents`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`; the hero panel scenes live in `AgentPanel.tsx`.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -140,10 +141,10 @@ Keep those variants together when replacing media and update `heroSlides` or `ag
 
 Keep example operational data distinguishable from customer evidence:
 
-- Hero readouts use **“Sample data”**.
+- The hero panel carries the hero’s only **“Sample data”** label; hero scenes have no readouts.
 - The example agent run is labelled **“Sample data”**.
-- Agent cards use **“Example agents”**; describe them as what we build in a pilot, not as live deployments.
-- The systems conveyor shows example systems (logos where we have them, wordmark tiles otherwise) with the note “Examples of systems plants use. Not partners or customers.”
+- Plant areas use **“Example areas”**; describe what an agent *would* do, not live deployments.
+- The systems conveyor shows example systems (logos where we have them, wordmark tiles otherwise) with the note “Not partners or customers.”
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 

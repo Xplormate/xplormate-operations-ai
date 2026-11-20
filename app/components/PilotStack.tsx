@@ -125,7 +125,7 @@ function PilotArt({ kind }: { kind: Step["art"] }) {
       ))}
       <circle className="art-node art-node-hot" cx="200" cy="72" r="9" />
       <circle className="art-pulse" cx="200" cy="72" r="9" />
-      <text className="art-label art-label-hot" x="200" y="104" textAnchor="middle">PROVEN</text>
+      <text className="art-label art-label-hot" x="200" y="104" textAnchor="middle">NEXT</text>
     </svg>
   );
 }

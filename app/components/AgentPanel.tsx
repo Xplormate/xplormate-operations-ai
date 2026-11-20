@@ -10,9 +10,9 @@ const ok = (name: string, level: number): Line => ({ name, status: "ON TRACK", l
 // Sample data only: what an agent would show across one plant's day.
 const scenes: Scene[] = [
   {
-    lines: [{ name: "MATERIALS", status: "LINE 2 SHORT", level: 34, alert: true }, ok("QUALITY", 82), ok("MAINTENANCE", 76), ok("HANDOVER", 88)],
-    alert: "Raw material short for Line 2 tomorrow",
-    action: "Buyer and planner informed",
+    lines: [{ name: "MATERIALS", status: "FILM LOW", level: 34, alert: true }, ok("QUALITY", 82), ok("MAINTENANCE", 76), ok("HANDOVER", 88)],
+    alert: "Packing film low for Friday’s plan",
+    action: "Buyer asked for supplier date",
   },
   {
     lines: [ok("MATERIALS", 72), { name: "QUALITY", status: "CAPA 2/3", level: 45, alert: true }, ok("MAINTENANCE", 76), ok("HANDOVER", 88)],
@@ -34,7 +34,7 @@ const scenes: Scene[] = [
 
 const SCENE_MS = 5200;
 
-/** A sample-data agent card for the hero. It cycles through one plant's day across four areas, and holds while hovered. */
+/** A sample-data agent card for the hero. It plays through one plant's day across four areas once, and holds while hovered. */
 export default function AgentPanel() {
   const [index, setIndex] = useState(0);
   const [onScreen, setOnScreen] = useState(false);
@@ -52,9 +52,11 @@ export default function AgentPanel() {
 
   useEffect(() => {
     if (!onScreen || held || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setIndex((current) => (current + 1) % scenes.length), SCENE_MS);
-    return () => window.clearInterval(timer);
-  }, [onScreen, held]);
+    // Play through the day once and stop on the last scene.
+    if (index >= scenes.length - 1) return;
+    const timer = window.setTimeout(() => setIndex((current) => Math.min(current + 1, scenes.length - 1)), SCENE_MS);
+    return () => window.clearTimeout(timer);
+  }, [onScreen, held, index]);
 
   const scene = scenes[index];
   const resolved = Boolean(scene.resolved);
@@ -69,9 +71,9 @@ export default function AgentPanel() {
       onMouseLeave={() => setHeld(false)}
     >
       <div className="agent-panel-head" aria-hidden="true">
-        <span className="agent-live"><i />Plant operations agent</span>
+        <span className="agent-live">Example: plant operations agent</span>
       </div>
-      <div className="agent-panel-sub" aria-hidden="true"><span>4 areas watched</span><span className="agent-live-chip">EXAMPLE</span></div>
+      <div className="agent-panel-sub" aria-hidden="true"><span>4 areas watched</span><span className="agent-live-chip">SAMPLE DATA</span></div>
       <ul className="agent-lines" aria-hidden="true" key={index}>
         {scene.lines.map((line, row) => (
           <li key={line.name} className={line.alert ? "is-alert" : undefined} style={{ "--row": row, "--level": `${line.level}%` } as React.CSSProperties}>
