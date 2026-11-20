@@ -66,10 +66,10 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 | `company` | Yes | 2–160 characters |
 | `role` | Yes | 2–120 characters |
 | `challenge` | No | Up to 2,000 characters |
-| `website` | No | Hidden spam trap; must stay empty |
+| `hp_extra` | No | Hidden spam trap; must stay empty |
 | `elapsed` | No | Milliseconds the form was open; under 2.5 s is treated as a bot |
 
-Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
+Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored; each one is logged as "Lead dropped as bot" with the reason only. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
 The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields.
 
@@ -107,7 +107,6 @@ app/
 └── twitter-image.tsx         Twitter/X preview image
 public/
 ├── media/                    Hero videos, posters, and area photos
-├── tool-logos/               Illustrative third-party tool logos
 └── ...                       Brand and supporting images
 supabase/
 └── migrations/               Lead-table schema changes

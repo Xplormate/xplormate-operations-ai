@@ -46,7 +46,7 @@ const howItWorks = [
   { tag: "01 / PLUG IN", title: "Read from your systems.", copy: "We read from your systems first. Nothing is replaced, and we write back only where you approve it." },
   { tag: "02 / SHAPE", title: "Build around one job.", copy: "We map one job with the people who run it, and build the agent around how your plant really works." },
   { tag: "03 / APPROVE", title: "You decide what it may do.", copy: "You set what the agent can do alone and what needs a person. Every step it takes is logged." },
-  { tag: "04 / LEARN", title: "Better with each correction.", copy: "When your team corrects the agent, the correction becomes part of how it works next time." },
+  { tag: "04 / LEARN", title: "Better with each correction.", copy: "We use your team’s corrections to improve how the agent works." },
 ];
 
 const systemTypes = [
@@ -83,7 +83,7 @@ const principles = [
   { title: "One job done properly", copy: "We finish one job well before starting the next." },
   { title: "Accountable for what we build", copy: "We stay with the agent we build until it works in your plant." },
   { title: "Numbers as they are", copy: "We report the results as they are, good or bad." },
-  { title: "Simple pricing", copy: "A fixed pilot fee, then pricing tied to what the agent saves." },
+  { title: "Simple pricing", copy: "A fixed pilot fee, agreed before we start. What comes next is agreed on the results." },
 ];
 
 const faq = [
@@ -93,7 +93,7 @@ const faq = [
   ["Will it act without approval?", "Only on routine steps you agree up front. Anything that changes the plan, a record or leaves the plant waits for a person."],
   ["When does it write into our systems?", "Only after the pilot proves itself, and only where you approve it."],
   ["Which AI model does it use?", "We pick the model that fits each task and aren’t tied to one provider."],
-  ["Where is our data?", "In an India cloud region, used only for your plant’s work."],
+  ["Where is our plant data?", "The agent and the plant data it uses run in an India cloud region, used only for your plant’s work."],
   ["What do you need from us?", "One person who owns the job, read access to the systems it touches, and an hour a week."],
   ["What does a pilot cost?", "A fixed fee in rupees, set after the first call once we know the job and the systems involved."],
   ["What if it won’t help?", "We’ll tell you after the first call."],
@@ -161,7 +161,7 @@ export default function Home() {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const values = { ...Object.fromEntries(new FormData(form).entries()), elapsed: formReadyAt.current ? Date.now() - formReadyAt.current : 0 };
+    const values = { ...Object.fromEntries(new FormData(form).entries()), elapsed: formReadyAt.current ? Date.now() - formReadyAt.current : undefined };
     setLeadSubmitting(true);
     setLeadError("");
     setLeadFieldErrors({});
@@ -308,7 +308,7 @@ export default function Home() {
         <div className="approach-head" data-reveal>
           <span className="approach-eyebrow">06 / HOW A PILOT RUNS</span>
           <h2>Pick one job.<br /><span>See if it works.</span></h2>
-          <p>A small paid pilot on one job at one plant, measured against your own records. A fixed fee in rupees, agreed before we start. Usually 4–8 weeks.</p>
+          <p>A small paid pilot on one job at one plant, measured against your own records. A fixed fee in rupees, agreed before we start. Planned for 4–8 weeks.</p>
           <a className="button button-cream" href="#contact">Book a 30-minute call <ArrowUpRight size={17} /></a>
         </div>
         <PilotStack steps={pilotSteps} />
@@ -319,7 +319,7 @@ export default function Home() {
       <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>AI AGENTS FOR INDUSTRIAL OPERATIONS</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Plant work stalls<br /><span className="dim">between systems and people.</span></h2><p>Xplormate builds AI agents for the follow-up work that falls between them. We’re starting with manufacturing, and will grow into other industrial operations from there.</p></div>
       <ul className="systems-points principles" data-reveal>
-        {principles.map((item) => <li key={item.title}><h4>{item.title}</h4><p>{item.copy}</p></li>)}
+        {principles.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
       </ul>
     </div></section>
 
@@ -340,7 +340,7 @@ export default function Home() {
             {!leadSubmitted ? (
               <form className="lead-form" onSubmit={handleLeadSubmit}>
                 <div className="hp-field" aria-hidden="true">
-                  <label htmlFor="lead-website">Leave this field empty<input id="lead-website" name="website" type="text" tabIndex={-1} autoComplete="off" /></label>
+                  <label htmlFor="lead-hp">Leave this field empty<input id="lead-hp" name="hp_extra" type="text" tabIndex={-1} autoComplete="off" /></label>
                 </div>
                 <div className="lead-form-grid">
                   <label className={leadFieldErrors.name ? "has-error" : undefined} htmlFor="lead-name">

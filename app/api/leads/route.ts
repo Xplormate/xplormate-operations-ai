@@ -9,7 +9,7 @@ const leadSchema = z.object({
   role: z.string().trim().min(2, "Enter your role.").max(120, "Role is too long."),
   challenge: z.string().trim().max(2000, "Please keep this under 2,000 characters.").optional().default(""),
   // Spam checks: a hidden field people never see, and how long the form was open before sending.
-  website: z.string().optional().default(""),
+  hp_extra: z.string().optional().default(""),
   elapsed: z.coerce.number().optional(),
 });
 
@@ -64,10 +64,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const { website, elapsed, ...lead } = result.data;
+  const { hp_extra: trap, elapsed, ...lead } = result.data;
 
   // Looks like a bot: answer as if it worked, but store nothing.
-  if (website.trim() !== "" || (typeof elapsed === "number" && elapsed < MIN_FILL_MS)) {
+  const droppedReason = trap.trim() !== "" ? "hidden field filled" : typeof elapsed === "number" && elapsed < MIN_FILL_MS ? "sent too fast" : "";
+  if (droppedReason) {
+    console.info("Lead dropped as bot", { reason: droppedReason });
     return NextResponse.json({ ok: true, lead: { name: lead.name, email: lead.email, company: lead.company, role: lead.role } }, { status: 201 });
   }
 

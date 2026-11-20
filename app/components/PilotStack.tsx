@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 type Step = { number: string; title: string; copy: string; art: "bottleneck" | "understand" | "measure" | "pilot" | "expand" };
 
 /**
- * The five pilot steps as glass cards that tilt up into place as they scroll
+ * The pilot steps as glass cards that tilt up into place as they scroll
  * in, each with a small animated line drawing.
  */
 export default function PilotStack({ steps }: { steps: Step[] }) {
