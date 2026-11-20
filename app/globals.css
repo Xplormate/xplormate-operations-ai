@@ -4,6 +4,7 @@
    display type, mono labels and viewfinder brackets.
    ========================================================================= */
 :root{
+  --rust:#a8461f;
   --paper:#f5f3ee;--paper-2:#ece9e1;--card:#fbfaf7;
   --ink:#14130f;--ink-2:#45443d;--muted:#7b796f;--dim:#8f8c80;
   --line:rgba(20,19,15,.12);--line-2:rgba(20,19,15,.22);
@@ -110,26 +111,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .hero-progress .hero-pause{width:30px;height:30px;padding:0;margin-left:6px;align-self:end;border:1px solid rgba(255,255,255,.25);background:rgba(12,12,9,.4);color:var(--cream)}
 .hero-progress .hero-pause:hover{border-color:var(--amber);color:var(--amber)}
 
-/* Glow intro card (after the hero) */
-.glow-intro{padding:56px 0 0}
-.glow-card{position:relative;isolation:isolate;overflow:hidden;min-height:440px;border-radius:var(--radius);display:grid;place-items:center;text-align:center;color:var(--cream);background:#120f0a}
-.glow-card-light{position:absolute;inset:-20%;z-index:0;background:radial-gradient(ellipse 30% 45% at 50% 55%,rgba(255,150,60,.75),transparent 70%),radial-gradient(ellipse 50% 40% at 30% 20%,rgba(255,182,41,.18),transparent 70%),radial-gradient(ellipse 60% 60% at 75% 80%,rgba(255,110,40,.3),transparent 70%);filter:blur(18px);animation:glowShift 12s ease-in-out infinite alternate}
-.glow-card-dots{position:absolute;inset:0;z-index:1;width:100%;height:100%;opacity:.9;mix-blend-mode:screen;-webkit-mask-image:linear-gradient(90deg,#000,transparent 34%,transparent 66%,#000);mask-image:linear-gradient(90deg,#000,transparent 34%,transparent 66%,#000)}
-.glow-card .grain{opacity:.16}
-.glow-card-content{position:relative;z-index:2;display:grid;justify-items:center;gap:18px;padding:60px 24px}
-.glow-card h2{margin:0;font-size:clamp(34px,4.4vw,64px);font-weight:380;letter-spacing:-.045em;line-height:1.04;text-wrap:balance;text-shadow:0 0 40px rgba(255,180,90,.35)}
-.glow-card p{margin:0 0 10px;font-size:clamp(17px,1.6vw,22px);letter-spacing:-.01em;color:rgba(244,240,230,.82)}
 
-/* Pinned statement */
-.pinned-statement{height:190vh;position:relative;margin-top:-12vh}
-.pinned-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center}
-.pinned-inner{position:relative}
-.statement-rail{position:absolute;left:0;top:50%;margin-top:-40px;display:grid;gap:6px}
-.statement-rail i{display:block;width:7px;height:24px;border:1px solid var(--line-2);border-radius:2px;overflow:hidden}
-.statement-rail b{display:block;width:100%;height:100%;background:var(--ink);transform-origin:top;transform:scaleY(0)}
-.scroll-text{margin:0 auto;max-width:1060px;text-align:center;font-size:clamp(30px,3.6vw,54px);line-height:1.2;letter-spacing:-.035em;font-weight:380}
-.scroll-text [aria-hidden] span{color:rgba(20,19,15,.16);transition:color .35s var(--ease)}
-.scroll-text [aria-hidden] span.is-lit{color:var(--ink)}
 .hero-content{position:relative;z-index:3;height:100%;padding-top:150px;display:flex;flex-direction:column}
 .hero-kicker{display:flex;align-items:center;gap:12px;font:11px/1.5 var(--mono);letter-spacing:.14em;color:rgba(244,240,230,.78)}
 .signal-pulse{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(255,182,41,.65);animation:pulse 2.2s infinite}
@@ -159,7 +141,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 /* =========================================================================
    01 Transformation
    ========================================================================= */
-.card-dots{position:absolute;inset:0;z-index:1;width:100%;height:100%;opacity:.7;-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%);mask-image:linear-gradient(180deg,#000,transparent 70%)}
 
 .systems-map{margin-top:64px;padding:44px 44px 36px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);--bracket-inset:12px}
 .systems-eyebrow{font:10.5px/1.4 var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
@@ -170,7 +151,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 /* =========================================================================
    02 Operating loop (pinned scroll story)
    ========================================================================= */
-.signal-story{height:330vh;position:relative;padding:0}
+.signal-story{height:260vh;position:relative;padding:0}
 .signal-sticky{position:sticky;top:0;min-height:100vh;padding:96px 0 28px;display:flex;align-items:center}
 .signal-sticky>.shell{width:min(1240px,calc(100% - 96px))}
 .signal-heading{margin:28px 0 24px}
@@ -248,29 +229,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .approach-head h2{margin:0;font-size:clamp(36px,4.4vw,64px);font-weight:380;letter-spacing:-.045em;line-height:1.04;text-shadow:0 0 40px rgba(255,180,90,.25)}
 .approach-head h2 span{color:rgba(244,240,230,.55)}
 .approach-head p{margin:0 0 8px;font-size:17px;line-height:1.65;color:rgba(244,240,230,.72);max-width:600px}
-.pilot-stack{position:relative;z-index:2;list-style:none;margin:0;padding:0;display:grid;gap:22px;perspective:1600px}
-.pilot-card{--tilt:0;position:relative;display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:30px;min-height:240px;padding:28px 32px;border:1px dashed rgba(255,240,215,.22);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform-origin:50% 0%;transform:rotateX(calc(var(--tilt) * 32deg)) translateY(calc(var(--tilt) * 60px)) scale(calc(1 - var(--tilt) * .08));opacity:calc(1 - var(--tilt) * .7);will-change:transform,opacity}
-.pilot-card-index{position:absolute;top:22px;left:32px;font:10px var(--mono);letter-spacing:.14em;color:rgba(244,240,230,.5)}
-.pilot-card-copy{order:-1;align-self:end}
-.pilot-card h3{margin:0 0 10px;font-size:24px;font-weight:450;letter-spacing:-.035em}
-.pilot-card p{margin:0;font-size:15px;line-height:1.6;color:rgba(244,240,230,.66);max-width:420px}
-.pilot-art svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto;overflow:visible}
-.art-line,.art-axis{fill:none;stroke:rgba(244,240,230,.28);stroke-width:1.2}
-.art-axis{stroke:rgba(244,240,230,.2)}
-.art-dash{stroke:rgba(244,240,230,.35);stroke-width:1;stroke-dasharray:4 5}
-.art-dash-hot{stroke:rgba(255,182,41,.7)}
-.art-node{fill:#16140f;stroke:rgba(244,240,230,.55);stroke-width:1.2}
-.art-node-hot{fill:var(--amber);stroke:var(--amber)}
-.art-pulse{fill:none;stroke:var(--amber);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:artPulse 2s ease-out infinite}
-.art-pill{fill:rgba(255,255,255,.04);stroke:rgba(244,240,230,.45);stroke-width:1.2}
-.art-pill-hot{stroke:var(--amber);fill:rgba(255,182,41,.12)}
-.art-scan{fill:var(--amber);opacity:.8;animation:artScan 3.6s ease-in-out infinite alternate}
-.art-label{font:8.5px var(--mono);letter-spacing:.1em;fill:rgba(244,240,230,.55)}
-.art-label-hot{fill:var(--amber-2)}
-.flow-dot{fill:var(--amber)}
-.art-draw{fill:none;stroke:var(--amber);stroke-width:2;stroke-dasharray:100;stroke-dashoffset:100;animation:artDraw 4s var(--ease) infinite}
-.art-grow{stroke:rgba(255,182,41,.7);stroke-width:1.2;stroke-dasharray:100;stroke-dashoffset:100;animation:artGrow 4.5s var(--ease) infinite;animation-delay:calc(var(--i) * .25s)}
-.art-node-late{opacity:0;animation:artNode 4.5s var(--ease) infinite;animation-delay:calc(var(--i) * .25s)}
 
 /* =========================================================================
    05 FAQ
@@ -304,8 +262,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .site-footer{background:var(--night);color:var(--cream);padding:80px 0 34px}
 .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
 .footer-brand p{margin:16px 0 22px;font-size:14px;line-height:1.6;color:rgba(244,240,230,.55);max-width:280px}
-.footer-address{display:flex;align-items:flex-start;gap:9px;color:rgba(244,240,230,.55);font-size:13.5px;line-height:1.45;font-style:normal}
-.footer-address svg{flex:none;color:var(--amber);margin-top:2px}
 .footer-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .footer-col h2{margin:0 0 10px;font:10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,240,230,.45)}
 .footer-col a{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:rgba(244,240,230,.85);transition:color .2s}
@@ -362,10 +318,10 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .legal-footer a{color:var(--cream);font-weight:500}
 
 /* =========================================================================
-   v2 additions: security, about, hero agent panel, capabilities, systems
+   v2 additions: hero agent panel, systems and control, pilot path
    ========================================================================= */
 .anchor-target{display:block;height:0}
-.security-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.security-grid{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .security-grid li{padding:26px 26px 28px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 .security-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--night);color:var(--amber)}
 .security-grid h3{margin:22px 0 8px;font-size:19px;font-weight:500;letter-spacing:-.025em}
@@ -390,11 +346,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 @keyframes readoutIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes glowShift{from{transform:translate3d(-3%,2%,0) scale(1)}to{transform:translate3d(3%,-2%,0) scale(1.08)}}
-@keyframes artPulse{from{transform:scale(1);opacity:.9}to{transform:scale(3.2);opacity:0}}
-@keyframes artScan{from{transform:translateX(0)}to{transform:translateX(220px)}}
-@keyframes artDraw{0%{stroke-dashoffset:100}55%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
-@keyframes artGrow{0%{stroke-dashoffset:100}40%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
-@keyframes artNode{0%,30%{opacity:0}45%,85%{opacity:1}100%{opacity:0}}
 
 /* =========================================================================
    Responsive
@@ -421,8 +372,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .area-panel{grid-template-columns:1fr}
   .area-footer{grid-column:auto}
   .approach-panel{padding:72px 32px 56px}
-  .pilot-card{grid-template-columns:1fr;gap:18px;padding-top:54px}
-  .pilot-card-copy{order:0}
   .faq-grid,.contact-grid{gap:56px}
   .footer-top{grid-template-columns:1fr 1fr}
 }
@@ -449,12 +398,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .hero-buttons .button{width:100%}
   .hero-meta{flex-wrap:wrap;align-items:center;gap:6px 14px;padding:16px 0;font-size:9.5px}
   .hero-meta span+span{padding-left:0;border-left:0}
-  .glow-intro{padding-top:28px}
-  .glow-card{min-height:360px;border-radius:16px}
-  .glow-card-dots{-webkit-mask-image:linear-gradient(180deg,#000,transparent 30%,transparent 70%,#000);mask-image:linear-gradient(180deg,#000,transparent 30%,transparent 70%,#000)}
-  .pinned-statement{height:180vh}
-  .statement-rail{display:none}
-  .scroll-text{font-size:28px;text-align:left}
   .transformation{padding:72px 0 0}
   .explorer,.faq{padding:72px 0}
   .section-topline{font-size:9.5px;gap:12px}
@@ -500,9 +443,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .approach-panel{padding:56px 18px 36px;border-radius:16px}
   .approach-head{margin-bottom:40px}
   .approach-head h2{font-size:36px}
-  .pilot-card{padding:50px 18px 22px;min-height:0}
-  .pilot-card-index{left:18px;top:20px;font-size:9px}
-  .pilot-card h3{font-size:21px}
   .faq-intro h2{margin-top:42px}
   .faq-grid,.contact-grid{grid-template-columns:1fr;gap:34px;margin-top:0}
   .contact{padding:6px 6px 0}
@@ -533,16 +473,9 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .hero-slide.is-active .hero-image,.signal-pulse,.contact-glow,.glow-card-light,.alert-icon,.area-panel,.art-pulse,.art-scan{animation:none}
-  .flow-dot{display:none}
-  .art-draw,.art-grow{animation:none;stroke-dashoffset:0}
-  .art-node-late{animation:none;opacity:1}
-  .pinned-statement{height:auto;padding:110px 0 40px}
-  .pinned-sticky{position:static;height:auto}
-  .scroll-text [aria-hidden] span{color:var(--ink);transition:none}
   .signal-story{height:auto;padding:110px 0 0}
   .signal-sticky{position:static}
   .stage-card,.stage-card.is-done{opacity:1}
-  .pilot-card{transform:none;opacity:1}
   .button,.area-card{transition:none}
 }
 
@@ -567,21 +500,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .agent-alert.is-resolved{border-color:rgba(160,220,150,.45);background:rgba(20,34,18,.6)}
 .agent-alert.is-resolved .agent-alert-dot{background:#9fdc8f;animation:none}
 
-/* Capabilities row */
-.capability-section{padding:110px 0 0}
-.capabilities{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.capabilities li{position:relative;overflow:hidden;min-height:250px;padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:border-color .3s,transform .3s var(--ease),box-shadow .3s}
-.capabilities li:hover{transform:translateY(-3px);border-color:rgba(255,182,41,.55);box-shadow:0 14px 40px rgba(20,19,15,.08)}
-.capability-icon{position:relative;display:grid;place-items:center;width:58px;height:58px;color:var(--ink);--b:var(--ink);--s:10px;background:linear-gradient(var(--b),var(--b)) top left/var(--s) 1px no-repeat,linear-gradient(var(--b),var(--b)) top left/1px var(--s) no-repeat,linear-gradient(var(--b),var(--b)) top right/var(--s) 1px no-repeat,linear-gradient(var(--b),var(--b)) top right/1px var(--s) no-repeat,linear-gradient(var(--b),var(--b)) bottom left/var(--s) 1px no-repeat,linear-gradient(var(--b),var(--b)) bottom left/1px var(--s) no-repeat,linear-gradient(var(--b),var(--b)) bottom right/var(--s) 1px no-repeat,linear-gradient(var(--b),var(--b)) bottom right/1px var(--s) no-repeat}
-.capabilities li:hover .capability-icon{color:#8a5a00}
-.reveal-ready .capabilities[data-reveal] .capability-icon svg *{stroke-dasharray:120;stroke-dashoffset:120}
-.reveal-ready .capabilities[data-reveal].is-visible .capability-icon svg *{animation:iconDraw 1.6s var(--ease) forwards;animation-delay:calc(var(--i) * .12s + .2s)}
-.capability-scan{position:absolute;left:0;right:0;top:0;height:40%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,182,41,.14) 80%,rgba(255,182,41,.5) 100%);transform:translateY(-110%)}
-.reveal-ready .capabilities[data-reveal].is-visible .capability-scan{animation:capScan 1.6s var(--ease) forwards;animation-delay:calc(var(--i) * .12s)}
-.capabilities p{margin:28px 0 0;font-size:16px;line-height:1.45;letter-spacing:-.015em;color:var(--ink)}
 @keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes iconDraw{to{stroke-dashoffset:0}}
-@keyframes capScan{0%{transform:translateY(-110%)}100%{transform:translateY(260%)}}
 /* Leave room on the right for the agent panel while it is shown. */
 @media(min-width:1081px){.hero h1{max-width:calc(100% - 380px)}}
 @media(min-width:1081px) and (max-width:1180px){.agent-panel{width:300px}.hero h1{max-width:calc(100% - 330px);font-size:clamp(54px,6vw,108px)}}
@@ -589,14 +508,9 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .agent-panel{display:none}
 }
 @media(max-width:760px){
-  .capability-section{padding:72px 0 0}
-  .capabilities{grid-template-columns:1fr}
-  .capabilities li{min-height:0}
 }
 @media(prefers-reduced-motion:reduce){
   .agent-lines li{opacity:1}
-  .reveal-ready .capabilities[data-reveal] .capability-icon svg *{stroke-dashoffset:0;animation:none}
-  .capability-scan{display:none}
 }
 .security,.about{padding:110px 0 0}
 .systems-points.principles{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -651,13 +565,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 @keyframes tileIn{from{opacity:0;transform:translateY(12px) scale(.97);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 @keyframes tabTimer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-/* Capability cards: index + larger copy */
-.capabilities p{font-size:18px;line-height:1.4}
 
-/* Contact: what happens next */
-.contact-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:530px}
-.contact-steps li{display:flex;align-items:center;gap:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.14);font-size:16px;color:rgba(244,240,230,.88)}
-.contact-steps span{font:10.5px/1 var(--mono);letter-spacing:.12em;color:var(--amber)}
 
 /* Phones: sticky call button */
 .sticky-cta{display:none}
@@ -670,9 +578,45 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .systems-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
   .systems-tiles li{min-height:112px}
   .systems-tiles{min-height:360px}
-  .capabilities p{font-size:16px}
 }
 @media(min-width:761px) and (max-width:1080px){.systems-layout{grid-template-columns:1fr;gap:28px}}
 @media(prefers-reduced-motion:reduce){.systems-tiles li,.systems-tab-timer.is-running{animation:none}.sticky-cta{transition:none}}
 /* Keep the hero buttons clear of the scene progress bar at the bottom. */
 @media(min-width:1081px){.hero-actions{padding-bottom:84px}}
+
+/* Quiet problem line */
+.manifesto{padding:130px 0 20px}
+.manifesto p{margin:0 auto;max-width:920px;text-align:center;font-size:clamp(28px,3.4vw,50px);line-height:1.18;letter-spacing:-.035em;font-weight:380;color:var(--ink);text-wrap:balance}
+.manifesto p span{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--rust)}
+
+/* Hero sentence with the rotating word at its end */
+.hero-actions .rotating-word{justify-items:start}
+
+/* Pilot path: three time-boxed steps on one line */
+.pilot-path{position:relative;z-index:2;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.pilot-path::before,.pilot-path::after{content:"";position:absolute;left:0;right:0;top:7px;height:1px}
+.pilot-path::before{background:rgba(244,240,230,.18)}
+.pilot-path::after{background:linear-gradient(90deg,var(--amber),rgba(255,182,41,.4));transform-origin:left;transition:transform 1.8s var(--ease) .2s}
+.reveal-ready .pilot-path:not(.is-visible)::after{transform:scaleX(0)}
+.pilot-path li{position:relative;padding-top:36px}
+.pilot-path-node{position:absolute;top:0;left:0;width:15px;height:15px;border-radius:50%;background:var(--amber);border:1px solid var(--amber);box-shadow:0 0 18px rgba(255,182,41,.6);transition:background .4s,border-color .4s,box-shadow .4s;transition-delay:calc(var(--i) * .55s + .3s)}
+.reveal-ready .pilot-path:not(.is-visible) .pilot-path-node{background:#16140f;border-color:rgba(244,240,230,.45);box-shadow:none}
+.pilot-path-when{font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber-2)}
+.pilot-path h3{margin:14px 0 10px;font-size:clamp(30px,2.8vw,42px);font-weight:400;letter-spacing:-.045em;line-height:1}
+.pilot-path p{margin:0;font-size:15.5px;line-height:1.6;color:rgba(244,240,230,.72);max-width:340px}
+
+/* Footer address: one quiet line */
+.footer-address{display:block;margin-top:18px;font:10.5px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,240,230,.55);font-style:normal}
+
+@media(max-width:760px){
+  .header-cta{display:none}
+  .manifesto{padding:76px 0 8px}
+  .manifesto p{font-size:27px;text-align:left}
+  .pilot-path{grid-template-columns:1fr;gap:30px}
+  .pilot-path::before,.pilot-path::after{left:7px;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .pilot-path::after{transform-origin:top}
+  .reveal-ready .pilot-path:not(.is-visible)::after{transform:scaleY(0)}
+  .pilot-path li{padding:0 0 0 36px}
+  .pilot-path-node{top:2px}
+}
+@media(prefers-reduced-motion:reduce){.pilot-path::after,.pilot-path-node{transition:none}}

@@ -11,7 +11,7 @@ const spoken = (words: string[]) => (words.length > 1 ? `${words.slice(0, -1).jo
  * All words share one grid cell, so the line never reflows. Holds still for reduced motion
  * and while off screen.
  */
-export default function RotatingWord({ words }: { words: string[] }) {
+export default function RotatingWord({ words, suffix = "" }: { words: string[]; suffix?: string }) {
   const [step, setStep] = useState(0);
   const [onScreen, setOnScreen] = useState(false);
   const rootRef = useRef<HTMLSpanElement>(null);
@@ -33,9 +33,9 @@ export default function RotatingWord({ words }: { words: string[] }) {
 
   return (
     <span className="rotating-word" ref={rootRef}>
-      <span className="sr-only">{spoken(words)}</span>
+      <span className="sr-only">{spoken(words)}{suffix}</span>
       {words.map((word, wordIndex) => (
-        <em key={word} aria-hidden="true" className={wordIndex === index ? "is-active" : undefined}>{word}</em>
+        <em key={word} aria-hidden="true" className={wordIndex === index ? "is-active" : undefined}>{word}{suffix}</em>
       ))}
     </span>
   );

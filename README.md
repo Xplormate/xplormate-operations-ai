@@ -81,19 +81,18 @@ In page order:
 
 | Section | Main component |
 | --- | --- |
-| Hero scenes and a sample-data plant operations panel (plays through once) | `HeroSequence.tsx`, `AgentPanel.tsx` |
-| Glow statement with a rotating word (one cycle) | `page.tsx`, `RotatingWord.tsx` |
-| 01 What an agent would do (three animated cards) | `Capabilities.tsx` |
-| Scroll-highlighted problem statement | `PinnedStatement.tsx` |
-| 02 Your systems: example systems by category, timed tabs | `ToolConveyor.tsx` |
-| 03 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
-| 04 Where agents help: five plant areas | `AreaCarousel.tsx` |
-| 05 Security and control | `page.tsx` |
-| 06 How a pilot runs | `PilotStack.tsx` |
-| 07 About, 08 FAQ, 09 contact form, navigation and footer | `page.tsx` |
+| Hero: plant videos, a sample-data plant operations panel (plays through once) and a rotating word at the end of the sentence | `HeroSequence.tsx`, `AgentPanel.tsx`, `RotatingWord.tsx` |
+| Problem line | `page.tsx` |
+| 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
+| 02 Where agents help: four named agents | `AreaCarousel.tsx` |
+| 03 Your systems and control: example systems by category, timed tabs, four rules | `ToolConveyor.tsx`, `page.tsx` |
+| 04 How a pilot runs: Week 1 / Weeks 2–6 / Weeks 6–8 | `page.tsx` |
+| 05 FAQ, 06 contact form, navigation and footer | `page.tsx` |
 | Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 
-The hero and systems tabs have pause controls. The agent panel holds while hovered; the panel, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel is hidden, the operating loop shows all steps without pinning, and the hero loads smaller video files.
+Calls to action: “Book a 30-minute call” is the only primary button (header on desktop, hero, phone bar); “See an example” is the only secondary one; the form submits with “Request a call”.
+
+The hero and systems tabs have pause controls. The agent panel holds while hovered; the panel, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel and header button are hidden, the example shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -119,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `capabilities`, `systemGroups`, `agentRun`, `agents`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`; the hero panel scenes live in `AgentPanel.tsx`.
+- **Homepage copy and examples:** edit `heroSlides`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`; the hero panel scenes live in `AgentPanel.tsx`.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -144,7 +143,7 @@ Keep example operational data distinguishable from customer evidence:
 
 - The hero panel carries the hero’s only **“Sample data”** label; hero scenes have no readouts.
 - The example agent run is labelled **“Sample data”**.
-- Plant areas use **“Example areas”**; describe what an agent *would* do, not live deployments.
+- The agents carousel uses **“Example areas”**; describe what an agent *would* do, not live deployments.
 - The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) with the note “Not partners or customers.”
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.

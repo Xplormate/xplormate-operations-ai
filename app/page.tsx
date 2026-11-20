@@ -3,15 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
-import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, KeyRound, Lock, Mail, MapPin, Menu, Package, Repeat, ScrollText, Server, ShieldCheck, UserCheck, Users, Workflow, Wrench, X } from "lucide-react";
+import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Lock, Mail, Menu, Repeat, ScrollText, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
 import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
-import Capabilities from "./components/Capabilities";
 import DotField from "./components/DotField";
 import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
 import OperatingLoop from "./components/OperatingLoop";
-import PilotStack from "./components/PilotStack";
-import PinnedStatement from "./components/PinnedStatement";
 import RotatingWord from "./components/RotatingWord";
 import StickyCta from "./components/StickyCta";
 import ToolConveyor, { type ToolGroup } from "./components/ToolConveyor";
@@ -29,13 +26,12 @@ const heroSlides: HeroSlide[] = [
   { label: "Planning", image: "/media/hero-planning.webp", video: "/media/hero-planning.mp4", alt: "Operator pressing buttons on a lit machine control panel" },
 ];
 
-// Areas where agents help. In the carousel: friction = what it watches, ai = what it handles on its own, human = what waits for approval.
+// Where agents help. In the carousel: friction = what it watches, ai = what it handles on its own, human = what waits for approval.
 const agents: Area[] = [
-  { id: "materials", label: "Materials", index: "01", icon: Package, image: "/media/area-materials.webp", code: "PO-7713\nETA · +2 DAYS\nORDERS · 3", title: "Material readiness", friction: "Production plan, stock, open POs and receipts in your ERP.", ai: "Flags shortages for the next 24–48 hours, checks other stores and PO dates, and tells the buyer and planner which orders are affected.", human: "Changing the plan or placing an emergency purchase.", measure: "Time from shortage to an owned action", question: "Which orders were short on material last month, and how did you find out?" },
-  { id: "quality", label: "Quality", index: "02", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "Quality issues and CAPA", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
-  { id: "maintenance", label: "Maintenance", index: "03", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Maintenance escalation", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
-  { id: "handovers", label: "Shift handover", index: "04", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handover", friction: "Shift logs, open issues, and plan versus actual.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
-  { id: "reporting", label: "Daily review", index: "05", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Daily operations review", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
+  { id: "quality", label: "Quality", index: "01", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "CAPA agent", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
+  { id: "maintenance", label: "Maintenance", index: "02", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Breakdown agent", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
+  { id: "handovers", label: "Shift handover", index: "03", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Handover agent", friction: "Shift logs, open issues, and plan versus actual.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
+  { id: "reporting", label: "Morning review", index: "04", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Morning review agent", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
 ];
 
 // Sample agent run for the example section.
@@ -45,12 +41,6 @@ const agentRun = [
   { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes the next order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
   { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new sequence. The agent updates every owner.", icon: UserCheck },
   { number: "05", time: "17:00", title: "Closed and logged", copy: "The buyer confirms the supplier date and closes the issue. The agent logs every step.", icon: Check },
-];
-
-const capabilities = [
-  { icon: Workflow, copy: "Follows work end to end across planning, production, quality and stores." },
-  { icon: Database, copy: "Pulls the facts from records, email and sheets into one place." },
-  { icon: CircleAlert, copy: "Notices problems early, before they hold up a shift." },
 ];
 
 // Examples of systems plants run on, shown by category. Not partners or customers.
@@ -64,27 +54,20 @@ const systemGroups: ToolGroup[] = [
 const controls = [
   { icon: UserCheck, title: "People approve critical steps", copy: "Anything that changes the plan, a record or leaves the plant waits for a person." },
   { icon: ScrollText, title: "Every action recorded", copy: "In a pilot, each action the agent takes is recorded with who approved it." },
-  { icon: Lock, title: "Read-only to start", copy: "At first the agent only reads your systems and messages people. Changing records comes later, only where you agree." },
-  { icon: KeyRound, title: "Access agreed up front", copy: "Nothing connects before you sign off, and you can remove access any time." },
-  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work, never for anyone else." },
-  { icon: Server, title: "Where your data lives", copy: "Agreed with your IT team, including India-only hosting if you need it." },
+  { icon: Lock, title: "Read-only first", copy: "The agent starts by reading. We complete your IT security review before any access, and you can remove access any time." },
+  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with your IT team, India-only if you need it." },
 ];
 
-const pilotSteps = [
-  { number: "01", art: "understand" as const, title: "Map the real work", copy: "We walk through last month’s cases with the people who run the workflow." },
-  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "The agent works on live cases while your team checks its output." },
-  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If it saves time, your team keeps it." },
-  { number: "04", art: "expand" as const, title: "Choose what’s next", copy: "The next workflow or the next plant, as a separate decision based on what the pilot showed." },
-];
-
-const principles = [
-  { title: "Plain reporting", copy: "You see what the agent did each day, in plain words." },
-  { title: "Accountable for what we build", copy: "We stay with the agent we build until it works in your plant." },
-  { title: "Numbers as they are", copy: "If the numbers don’t move, we say so." },
+const pilotPath = [
+  { when: "Week 1", title: "Map", copy: "We walk through last month’s cases with the people who run the workflow." },
+  { when: "Weeks 2–6", title: "Run", copy: "One agent works on your data, read-only first, while your team checks its output." },
+  { when: "Weeks 6–8", title: "Decide", copy: "We compare the results with your own records. Keep it, change it or stop." },
 ];
 
 const faq = [
-  ["Will this replace my people?", "No. It takes over the reminders and data-gathering. Your people keep every decision."],
+  ["Will this replace my people?", "No. It takes the routine follow-up off them."],
+  ["Have you done this before?", "We’re early. Your pilot would be one of our first, which is why it’s small, paid and measured against your own records."],
+  ["Who will we work with?", "The person who scopes your pilot builds it, and stays with it until it works in your plant."],
   ["What do you need from us?", "One person who owns the workflow, access to the systems it touches, and an hour a week."],
   ["What does a pilot cost?", "It depends on the workflow and systems involved. We agree a fixed fee before we start."],
   ["What if it won’t help?", "We’ll tell you after the first call."],
@@ -186,9 +169,9 @@ export default function Home() {
   return <main id="top">
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#what-it-does" onClick={closeNav}>What agents do</a><a href="#example" onClick={closeNav}>Example</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
+      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#example" onClick={closeNav}>Example</a><a href="#agents" onClick={closeNav}>Where it helps</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
       <div className="header-actions">
-        <a className="header-cta" href="#contact" onClick={closeNav}>Book a call <ArrowUpRight size={16} /></a>
+        <a className="header-cta" href="#contact" onClick={closeNav}>Book a 30-minute call <ArrowUpRight size={16} /></a>
         <button className="mobile-nav-toggle" type="button" aria-label={navOpen ? "Close navigation" : "Open navigation"} aria-expanded={navOpen} aria-controls="site-navigation" onClick={() => setNavOpen((open) => !open)}>{navOpen ? <X size={18} /> : <Menu size={18} />}</button>
       </div>
     </div></header>
@@ -204,57 +187,35 @@ export default function Home() {
           <div className="hero-kicker"><span className="signal-pulse" /> FOR PLANT HEADS, COOs AND MDs</div>
           <h1>AI agents for <em>manufacturing</em> operations.</h1>
           <div className="hero-actions">
-            <p>We build AI agents that handle the routine work in production, quality, maintenance and materials, and bring in your team for the decisions that matter.</p>
+            <p>Your team makes the decisions. Agents work on top of the systems you already run and follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "shift handovers"]} suffix="." /></p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section className="glow-intro"><div className="shell">
-      <div className="glow-card" data-reveal>
-        <div className="glow-card-light" aria-hidden="true" />
-        <DotField className="glow-card-dots" color="255,214,150" gap={16} density={0.22} />
-        <div className="grain" aria-hidden="true" />
-        <div className="glow-card-content">
-          <h2>Less time following up on<br /><RotatingWord words={["shortages", "breakdowns", "quality issues", "handovers", "daily reviews"]} /></h2>
-          <p>Start with the workflow that costs you most.</p>
-          <a className="button button-cream" href="#what-it-does">See what agents can do <ArrowRight size={17} /></a>
-        </div>
-      </div>
-    </div></section>
-
-    <section className="capability-section" id="what-it-does"><div className="shell">
-      <div className="section-topline" data-reveal><span>01 / WHAT AN AGENT WOULD DO</span><span>MANUFACTURING OPERATIONS</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Keep material, machines and quality<br /><span className="dim">moving on time.</span></h2></div>
-      <Capabilities items={capabilities} />
-    </div></section>
-
-    <PinnedStatement text="Updates sit in one system. The action needs three people. The follow-up runs on calls and reminders outside any system, so issues close late and nobody sees why until the review." />
-
-    <section className="transformation" id="systems"><div className="shell">
-      <div className="section-topline" data-reveal><span>02 / YOUR SYSTEMS</span><span>NOTHING REPLACED</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Works on top of<br /><span className="dim">what you already run.</span></h2><p>Your ERP, MES, quality and maintenance systems stay the record. An agent connects only to what its workflow needs.</p></div>
-      <div className="systems-map bracketed" data-reveal>
-        <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could read from." note="Not partners or customers." />
-      </div>
+    <section className="manifesto"><div className="shell">
+      <p data-reveal>Your systems already record the problem. Closing it still runs on <span>calls, reminders</span> and the morning meeting.</p>
     </div></section>
 
     <span id="example" className="anchor-target" aria-hidden="true" />
     <OperatingLoop stages={agentRun} alertLabel="SAMPLE DATA · MATERIALS" alertTitle="Raw material short for Line 2 tomorrow" hint="SCROLL TO FOLLOW THE AGENT">
-      <div className="section-topline"><span>03 / EXAMPLE</span><span>ONE ISSUE, START TO FINISH</span></div>
+      <div className="section-topline"><span>01 / EXAMPLE</span><span>ONE ISSUE, START TO FINISH</span></div>
       <div className="section-heading split-heading signal-heading"><h2>One shortage.<br /><span className="dim">Handled before the next shift.</span></h2><p>How an agent would handle a material shortage, step by step.</p></div>
     </OperatingLoop>
 
     <section className="explorer" id="agents"><div className="shell">
-      <div className="section-topline" data-reveal><span>04 / WHERE AGENTS HELP</span><span>PICK AN AREA</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Where agents<br /><span className="dim">can help first.</span></h2><p>Five places a pilot could start.</p></div>
+      <div className="section-topline" data-reveal><span>02 / WHERE AGENTS HELP</span><span>PICK AN AREA</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Four more places<br /><span className="dim">a pilot could start.</span></h2><p>Pick an area to see what its agent would watch, handle and leave to your team.</p></div>
       <div data-reveal><AreaCarousel areas={agents} /></div>
     </div></section>
 
-    <section className="security" id="security"><div className="shell">
-      <div className="section-topline" data-reveal><span>05 / SECURITY AND CONTROL</span><span>NO SURPRISES</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>You stay<br /><span className="dim">in control.</span></h2><p>Six rules for every pilot.</p></div>
+    <section className="transformation" id="systems"><div className="shell">
+      <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span><span>NOTHING REPLACED</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay the record. An agent connects only to what its workflow needs.</p></div>
+      <div className="systems-map bracketed" data-reveal>
+        <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could read from." note="Not partners or customers." />
+      </div>
       <ul className="security-grid" data-reveal>
         {controls.map((item) => {
           const Icon = item.icon;
@@ -268,23 +229,24 @@ export default function Home() {
         <div className="approach-glow" aria-hidden="true" />
         <div className="grain" aria-hidden="true" />
         <div className="approach-head" data-reveal>
-          <span className="approach-eyebrow">06 / HOW A PILOT RUNS</span>
+          <span className="approach-eyebrow">04 / HOW A PILOT RUNS</span>
           <h2>Pick one workflow.<br /><span>See if it works.</span></h2>
-          <p>A small paid pilot on one workflow at one plant, measured against your own records. Planned for 4–8 weeks.</p>
+          <p>A small paid pilot at one plant, measured against your own records.</p>
         </div>
-        <PilotStack steps={pilotSteps} />
+        <ol className="pilot-path" data-reveal>
+          {pilotPath.map((step, index) => (
+            <li key={step.title} style={{ "--i": index } as React.CSSProperties}>
+              <span className="pilot-path-node" aria-hidden="true" />
+              <span className="pilot-path-when">{step.when}</span>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </div></section>
 
-    <section className="about" id="about"><div className="shell">
-      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>WHO WE ARE</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Small and hands-on.<br /><span className="dim">On the floor with you.</span></h2><p>The person who scopes your pilot builds it.</p></div>
-      <ul className="systems-points principles" data-reveal>
-        {principles.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
-      </ul>
-    </div></section>
-
-    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>08 / QUESTIONS</span></div><h2>Before we talk.</h2></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
+    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>05 / QUESTIONS</span></div><h2>Before we talk.</h2></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
 
     <section className="contact" id="contact">
       <div className="contact-frame">
@@ -293,15 +255,10 @@ export default function Home() {
         <div className="grain" aria-hidden="true" />
         <div className="shell contact-grid">
           <div>
-            <div className="section-topline"><span>09 / BOOK A CALL</span></div>
+            <div className="section-topline"><span>06 / CONTACT</span></div>
             <h2>Tell us where work <em>gets stuck in your plant.</em></h2>
           </div>
           <div className="contact-content">
-            <ol className="contact-steps" aria-label="What happens next">
-              <li><span>01</span>Send this form</li>
-              <li><span>02</span>We email you to set up a 30-minute call</li>
-              <li><span>03</span>A pilot proposal, if it fits</li>
-            </ol>
             {!leadSubmitted ? (
               <form className="lead-form" onSubmit={handleLeadSubmit}>
                 <div className="hp-field" aria-hidden="true">
@@ -342,7 +299,7 @@ export default function Home() {
               </form>
             ) : (
               <div className="lead-success" ref={successRef} tabIndex={-1} role="status">
-                <p>Thanks, we have your details. We’ll email you soon to set up the call.</p>
+                <p>Thanks. We’ll email you to fix a time for the call.</p>
                 <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Send another enquiry</button>
               </div>
             )}
@@ -356,8 +313,8 @@ export default function Home() {
     <footer className="site-footer"><div className="shell">
       <div className="footer-top">
         <div className="footer-brand">
-          <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-          <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
+          <span className="wordmark"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></span>
+          <address className="footer-address">BTM 2nd Stage, Bengaluru 560076</address>
         </div>
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
