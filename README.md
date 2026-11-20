@@ -86,7 +86,7 @@ In page order:
 | 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
 | 02 Where agents help: four named agents | `AreaCarousel.tsx` |
 | 03 Your systems and control: example systems by category, timed tabs, four rules | `ToolConveyor.tsx`, `page.tsx` |
-| 04 How a pilot runs: 1 week / 3 weeks / 3 months | `page.tsx` |
+| 04 How a pilot runs: 1 week / 3 weeks / 12 weeks | `page.tsx` |
 | 05 FAQ, 06 contact form, navigation and footer | `page.tsx` |
 | Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 
