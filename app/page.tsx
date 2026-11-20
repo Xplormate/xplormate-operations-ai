@@ -215,7 +215,7 @@ export default function Home() {
             <p>They work on top of your ERP, MES, quality and maintenance systems. They spot what’s slipping, do the routine steps, and bring in the right person when a decision is needed.</p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
           </div>
-          <div className="hero-meta"><span>NOW TAKING OUR FIRST PAID PILOTS</span><span>ONE JOB AT A TIME</span><span>YOUR TEAM APPROVES</span></div>
+          <div className="hero-meta"><span>NOW TAKING OUR FIRST PAID PILOTS</span><span>YOUR TEAM APPROVES</span></div>
         </div>
       </div>
     </section>

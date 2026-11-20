@@ -157,6 +157,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .hero-buttons{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .hero-meta{border-top:1px solid rgba(255,255,255,.16);min-height:58px;display:flex;gap:28px;align-items:center;font:10.5px var(--mono);letter-spacing:.12em;color:rgba(244,240,230,.55)}
 .hero-meta span+span::before{content:"/";margin-right:28px;color:rgba(255,182,41,.6)}
+/* Keep the meta line clear of the scene progress bars on wide screens. */
+@media(min-width:1081px){.hero-meta{padding-right:min(600px,50%)}}
 
 /* =========================================================================
    Shared section furniture
