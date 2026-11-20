@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 
-const businessEmail = "hello@xplormate.com";
+const businessEmail = "jeetendra@xplormate.com";
 
 export default function PrivacyPolicyPage() {
   return (

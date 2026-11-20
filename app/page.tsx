@@ -3,16 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
-import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, KeyRound, Lock, Mail, MapPin, Menu, Package, Repeat, ScrollText, Server, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Factory, KeyRound, Lock, Mail, MapPin, Menu, Package, Repeat, ScrollText, Server, ShieldCheck, UserCheck, Users, Workflow, Wrench, X } from "lucide-react";
+import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
+import Capabilities from "./components/Capabilities";
 import DotField from "./components/DotField";
 import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
 import OperatingLoop from "./components/OperatingLoop";
 import PilotStack from "./components/PilotStack";
 import PinnedStatement from "./components/PinnedStatement";
+import ToolConveyor, { type ToolGroup } from "./components/ToolConveyor";
 
 const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
-const businessEmail = "hello@xplormate.com";
+const businessEmail = "jeetendra@xplormate.com";
 
 // Readouts are sample data: they show what an agent would track in each scene, not real plant data.
 const heroSlides: HeroSlide[] = [
@@ -49,12 +52,20 @@ const howItWorks = [
   { tag: "04 / LEARN", title: "Better with each correction.", copy: "We use your team’s corrections to improve how the agent works." },
 ];
 
-const systemTypes = [
-  { type: "ERP", examples: "SAP, Oracle, Microsoft Dynamics, Tally, Odoo" },
-  { type: "Production", examples: "MES, planning and scheduling" },
-  { type: "Quality", examples: "QMS, inspection and audit records" },
-  { type: "Maintenance", examples: "CMMS, work orders, spares" },
-  { type: "Everyday work", examples: "Email, Excel sheets, PDFs and reports" },
+const capabilities = [
+  { icon: Workflow, copy: "Runs one job end to end across planning, production, quality and stores." },
+  { icon: Database, copy: "Reads your ERP, MES, quality and maintenance records, plus email and sheets." },
+  { icon: CircleAlert, copy: "Flags shortages, breakdowns and quality issues before the next shift." },
+  { icon: Factory, copy: "Covers more lines and plants without adding people to chase updates." },
+  { icon: ShieldCheck, copy: "Waits for approval on what matters, and logs every step it takes." },
+];
+
+// Examples of systems plants run on, shown on the animated conveyor. Not partners or customers.
+const systemGroups: ToolGroup[] = [
+  { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", area: "ERP / supply" }, { brand: "Microsoft Dynamics", area: "ERP / finance" }, { brand: "Tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
+  { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Line data" }, { brand: "ABB", logo: "abb", area: "Drives / utilities" }] },
+  { id: "quality", label: "Quality & maintenance", tools: [{ brand: "SAP", logo: "sap", area: "Quality / maintenance" }, { brand: "Google Forms", logo: "googleforms", area: "Inspections" }, { brand: "Jira", logo: "jira", area: "Work requests" }] },
+  { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans / trackers" }, { brand: "Looker", logo: "looker", area: "Reports" }] },
 ];
 
 const withYou = [
@@ -208,6 +219,7 @@ export default function Home() {
         <div className="hero-shade" />
         <DotField className="hero-dots" color="255,206,128" gap={15} density={0.26} />
         <div className="grain" aria-hidden="true" />
+        <AgentPanel />
         <div className="hero-content shell">
           <div className="hero-kicker"><span className="signal-pulse" /> AI AGENTS FOR MANUFACTURING OPERATIONS</div>
           <h1>AI agents that do the <em>chasing</em> in your plant.</h1>
@@ -233,6 +245,12 @@ export default function Home() {
       </div>
     </div></section>
 
+    <section className="capability-section" id="what-it-does"><div className="shell">
+      <div className="section-topline" data-reveal><span>WHAT AN AGENT DOES</span><span>MANUFACTURING OPERATIONS</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Keep material, machines and quality moving,<br /><span className="dim">without the chasing.</span></h2><p>An agent connects the systems your plant already runs and takes on the follow-up work between them. Your team keeps the decisions.</p></div>
+      <Capabilities items={capabilities} />
+    </div></section>
+
     <PinnedStatement text="The update sits in one system. The action needs three people. The chasing happens on calls, outside any system, so issues close late and nobody can see why until the review." />
 
     <section className="transformation" id="how"><div className="shell">
@@ -247,14 +265,7 @@ export default function Home() {
         ))}
       </div>
       <div className="systems-map bracketed" data-reveal>
-        <div className="systems-head">
-          <span className="systems-eyebrow">SYSTEMS WE WORK ON TOP OF</span>
-          <h3>Works on top of what you already run.</h3>
-        </div>
-        <ul className="systems-types">
-          {systemTypes.map((item) => <li key={item.type}><small>{item.type}</small><p>{item.examples}</p></li>)}
-        </ul>
-        <p className="systems-note">Examples of systems plants use. Not partners or customers.</p>
+        <ToolConveyor groups={systemGroups} eyebrow="SYSTEMS WE WORK ON TOP OF" title="Works on top of what you already run." note="Examples of systems plants use. Not partners or customers." />
         <ul className="systems-points">
           <li><h4>Nothing replaced</h4><p>Your systems stay the record. The agent works alongside them.</p></li>
           <li><h4>Only what one job needs</h4><p>We connect the few sources one agent uses, not your whole estate.</p></li>
@@ -316,8 +327,8 @@ export default function Home() {
     </div></section>
 
     <section className="about" id="about"><div className="shell">
-      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>AI AGENTS FOR INDUSTRIAL OPERATIONS</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Plant work stalls<br /><span className="dim">between systems and people.</span></h2><p>Xplormate builds AI agents for the follow-up work that falls between them. We’re starting with manufacturing, and will grow into other industrial operations from there.</p></div>
+      <div className="section-topline" data-reveal><span>07 / ABOUT XPLORMATE</span><span>AI AGENTS FOR MANUFACTURING</span></div>
+      <div className="section-heading split-heading" data-reveal><h2>Plant work stalls<br /><span className="dim">between systems and people.</span></h2><p>Xplormate builds AI agents for manufacturing operations: the follow-up work that falls between your systems and the people who run the plant.</p></div>
       <ul className="systems-points principles" data-reveal>
         {principles.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
       </ul>
@@ -390,14 +401,14 @@ export default function Home() {
       <div className="footer-top">
         <div className="footer-brand">
           <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-          <p>AI agents for industrial operations, starting with manufacturing.</p>
+          <p>AI agents for manufacturing operations.</p>
           <address className="footer-address"><MapPin size={15} strokeWidth={1.5} /><span>BTM, 2nd Stage,<br />Bengaluru, 560076</span></address>
         </div>
         <nav className="footer-col" aria-label="Sections"><h2>On this page</h2><a href="#how">How it works</a><a href="#example">Example agent run</a><a href="#agents">Agents</a><a href="#security">Security</a><a href="#pilot">How a pilot runs</a><a href="#about">About</a><a href="#questions">Questions</a></nav>
         <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
-      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><span>AI AGENTS FOR INDUSTRIAL OPERATIONS</span></div>
+      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {new Date().getFullYear()} XPLORMATE</span><span>AI AGENTS FOR MANUFACTURING OPERATIONS</span></div>
     </div></footer>
   </main>;
 }

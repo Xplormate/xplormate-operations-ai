@@ -82,14 +82,16 @@ For local submission tests, use a separate test database or local test storage. 
 | Hero scenes and sample operational readouts | `HeroSequence.tsx` |
 | Introductory glow card | `page.tsx` |
 | Scroll-highlighted statement | `PinnedStatement.tsx` |
-| How it works (four steps) and systems we work on top of | `page.tsx` |
+| Live agent panel in the hero (sample data) | `AgentPanel.tsx` |
+| What an agent does (five animated cards) | `Capabilities.tsx` |
+| How it works (four steps) and animated systems conveyor | `page.tsx`, `ToolConveyor.tsx` |
 | Five-step example agent run (sample data) | `OperatingLoop.tsx` |
 | Five agent jobs | `AreaCarousel.tsx` |
 | How we work with you, security and control, about | `page.tsx` |
 | How a pilot runs | `PilotStack.tsx` |
 | FAQ, enquiry form, navigation, and footer | `page.tsx` |
 
-The hero has pause controls. Dot fields pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
+The hero and systems conveyor have pause controls. Dot fields and the conveyor pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
 
 ## Project structure
 
@@ -107,6 +109,7 @@ app/
 └── twitter-image.tsx         Twitter/X preview image
 public/
 ├── media/                    Hero videos, posters, and area photos
+├── tool-logos/               Example system logos for the conveyor
 └── ...                       Brand and supporting images
 supabase/
 └── migrations/               Lead-table schema changes
@@ -114,7 +117,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `agents`, `agentRun`, `howItWorks`, `systemTypes`, `withYou`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`.
+- **Homepage copy and examples:** edit `heroSlides`, `agents`, `agentRun`, `capabilities`, `howItWorks`, `systemGroups`, `withYou`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -140,7 +143,7 @@ Keep example operational data distinguishable from customer evidence:
 - Hero readouts use **“Sample data”**.
 - The example agent run is labelled **“Sample data”**.
 - Agent cards use **“Example agents”**; describe them as what we build in a pilot, not as live deployments.
-- The systems section names systems as plain text with the note “Examples of systems plants use. Not partners or customers.” No third-party logos.
+- The systems conveyor shows example systems (logos where we have them, wordmark tiles otherwise) with the note “Examples of systems plants use. Not partners or customers.”
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 

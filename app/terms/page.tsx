@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Terms for using the Xplormate website and submitting an enquiry.",
 };
 
-const businessEmail = "hello@xplormate.com";
+const businessEmail = "jeetendra@xplormate.com";
 
 export default function TermsPage() {
   return (
