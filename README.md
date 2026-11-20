@@ -2,7 +2,7 @@
 
 The company website for [xplormate.com](https://xplormate.com), focused on AI agents for manufacturing operations.
 
-The site explains how Xplormate approaches recurring workflows across production, quality, maintenance, and materials: start with one workflow, apply AI to routine coordination, keep people in control, and measure the result. Visitors can explore example scenarios and enquire about a focused paid pilot.
+The site explains where Xplormate’s AI agents fit in manufacturing operations (materials, quality, maintenance and shift handover): start with one workflow, keep people in control and measure the result against the plant’s own records. Visitors can follow a sample-data example and request a call about a small paid pilot.
 
 **Stack:** Next.js 16 · React 19 · TypeScript · Supabase · Vercel
 
@@ -86,7 +86,7 @@ In page order:
 | 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
 | 02 Where agents help: four named agents | `AreaCarousel.tsx` |
 | 03 Your systems and control: example systems by category, timed tabs, four rules | `ToolConveyor.tsx`, `page.tsx` |
-| 04 How a pilot runs: Week 1 / Weeks 2–6 / Weeks 6–8 | `page.tsx` |
+| 04 How a pilot runs: Week 1 / Weeks 2–6 / Weeks 7–8 | `page.tsx` |
 | 05 FAQ, 06 contact form, navigation and footer | `page.tsx` |
 | Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 

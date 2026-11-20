@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
             <img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" />
             <span>Xplormate<span className="brand-dot">.</span></span>
           </Link>
-          <Link className="legal-back" href="/">Back to Xplormate <span aria-hidden="true">↗</span></Link>
+          <Link className="legal-back" href="/"><span aria-hidden="true">←</span> Back to Xplormate</Link>
         </div>
       </header>
 

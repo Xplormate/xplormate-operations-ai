@@ -139,7 +139,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .section-heading>p{font-size:17px;line-height:1.65;color:var(--ink-2);margin:0;max-width:440px}
 
 /* =========================================================================
-   01 Transformation
+   Systems section
    ========================================================================= */
 
 .systems-map{margin-top:64px;padding:44px 44px 36px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);--bracket-inset:12px}
@@ -261,7 +261,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .contact-content>p{font-size:18px;line-height:1.6;color:rgba(244,240,230,.78);max-width:530px;margin:0}
 .site-footer{background:var(--night);color:var(--cream);padding:80px 0 34px}
 .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
-.footer-brand p{margin:16px 0 22px;font-size:14px;line-height:1.6;color:rgba(244,240,230,.55);max-width:280px}
 .footer-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .footer-col h2{margin:0 0 10px;font:10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,240,230,.45)}
 .footer-col a{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:rgba(244,240,230,.85);transition:color .2s}
@@ -326,7 +325,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .security-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--night);color:var(--amber)}
 .security-grid h3{margin:22px 0 8px;font-size:19px;font-weight:500;letter-spacing:-.025em}
 .security-grid p{margin:0;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
-.systems-points.principles{margin-top:0;border-top:1px solid var(--line-2)}
 .principles h3{margin:0 0 8px;font-size:16px;font-weight:500;letter-spacing:-.02em}
 .hp-field{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 @media(max-width:1080px){
@@ -472,7 +470,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .hero-slide.is-active .hero-image,.signal-pulse,.contact-glow,.glow-card-light,.alert-icon,.area-panel,.art-pulse,.art-scan{animation:none}
+  .hero-slide.is-active .hero-image,.signal-pulse,.contact-glow,.alert-icon,.area-panel{animation:none}
   .signal-story{height:auto;padding:110px 0 0}
   .signal-sticky{position:static}
   .stage-card,.stage-card.is-done{opacity:1}
@@ -507,13 +505,9 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 @media(max-width:1080px){
   .agent-panel{display:none}
 }
-@media(max-width:760px){
-}
 @media(prefers-reduced-motion:reduce){
   .agent-lines li{opacity:1}
 }
-.security,.about{padding:110px 0 0}
-.systems-points.principles{grid-template-columns:repeat(3,minmax(0,1fr))}
 .hero-meta{flex-wrap:wrap;row-gap:6px}
 .agent-panel,.signal-time{font-variant-numeric:tabular-nums}
 /* Rotating word in the glow card */

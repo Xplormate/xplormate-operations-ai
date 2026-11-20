@@ -30,15 +30,15 @@ const heroSlides: HeroSlide[] = [
 const agents: Area[] = [
   { id: "quality", label: "Quality", index: "01", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "CAPA agent", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
   { id: "maintenance", label: "Maintenance", index: "02", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Breakdown agent", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
-  { id: "handovers", label: "Shift handover", index: "03", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Handover agent", friction: "Shift logs, open issues, and plan versus actual.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
+  { id: "handovers", label: "Shift handover", index: "03", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Handover agent", friction: "Shift logs and open issues.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
   { id: "reporting", label: "Morning review", index: "04", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Morning review agent", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
 ];
 
 // Sample agent run for the example section.
 const agentRun = [
   { number: "01", time: "14:32", title: "Shortage spotted", copy: "The agent sees a raw-material shortage in the ERP against tomorrow’s plan for Line 2.", icon: CircleAlert },
-  { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock at the second store and open POs. One PO is two days late.", icon: Database },
-  { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes the next order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
+  { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock at another store and open POs. One PO is two days late.", icon: Database },
+  { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes a new run order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
   { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new sequence. The agent updates every owner.", icon: UserCheck },
   { number: "05", time: "17:00", title: "Closed and logged", copy: "The buyer confirms the supplier date and closes the issue. The agent logs every step.", icon: Check },
 ];
@@ -52,25 +52,25 @@ const systemGroups: ToolGroup[] = [
 ];
 
 const controls = [
-  { icon: UserCheck, title: "People approve critical steps", copy: "Anything that changes the plan, a record or leaves the plant waits for a person." },
-  { icon: ScrollText, title: "Every action recorded", copy: "In a pilot, each action the agent takes is recorded with who approved it." },
-  { icon: Lock, title: "Read-only first", copy: "The agent starts by reading. We complete your IT security review before any access, and you can remove access any time." },
-  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with your IT team, India-only if you need it." },
+  { icon: UserCheck, title: "People approve critical steps", copy: "Anything that changes the plan or a record, or leaves the plant, waits for a person." },
+  { icon: ScrollText, title: "Every action recorded", copy: "Each action the agent takes is logged with who approved it." },
+  { icon: Lock, title: "Read-only first", copy: "The agent starts by reading. Access begins only after your IT team’s security review, and you can remove it any time." },
+  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with you, in India if you need it." },
 ];
 
 const pilotPath = [
   { when: "Week 1", title: "Map", copy: "We walk through last month’s cases with the people who run the workflow." },
-  { when: "Weeks 2–6", title: "Run", copy: "One agent works on your data, read-only first, while your team checks its output." },
-  { when: "Weeks 6–8", title: "Decide", copy: "We compare the results with your own records. Keep it, change it or stop." },
+  { when: "Weeks 2–6", title: "Run", copy: "One agent works on your data while your team checks its output." },
+  { when: "Weeks 7–8", title: "Decide", copy: "We compare the results with how the workflow ran before. Keep it, change it or stop." },
 ];
 
 const faq = [
   ["Will this replace my people?", "No. It takes the routine follow-up off them."],
-  ["Have you done this before?", "We’re early. Your pilot would be one of our first, which is why it’s small, paid and measured against your own records."],
-  ["Who will we work with?", "The person who scopes your pilot builds it, and stays with it until it works in your plant."],
-  ["What do you need from us?", "One person who owns the workflow, access to the systems it touches, and an hour a week."],
+  ["Have you done this before?", "We’re early. Your pilot would be one of our first, which is why it has a fixed scope and a fixed fee."],
+  ["Who will we work with?", "The person who scopes your pilot builds it, and stays with it to the end of the pilot."],
+  ["What do you need from us?", "One person who owns the workflow, access to the systems it touches and an hour a week."],
   ["What does a pilot cost?", "It depends on the workflow and systems involved. We agree a fixed fee before we start."],
-  ["What if it won’t help?", "We’ll tell you after the first call."],
+  ["What if it won’t help?", "We’ll tell you on the first call."],
 ];
 
 export default function Home() {
@@ -158,7 +158,7 @@ export default function Home() {
       track("lead_submitted");
       form.reset();
     } catch {
-      setLeadError("We could not check those details right now. Please try again.");
+      setLeadError("We could not send your details right now. Please try again.");
     } finally {
       setLeadSubmitting(false);
     }
@@ -169,7 +169,7 @@ export default function Home() {
   return <main id="top">
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}><div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
-      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#example" onClick={closeNav}>Example</a><a href="#agents" onClick={closeNav}>Where it helps</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
+      <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#example" onClick={closeNav}>Example</a><a href="#agents" onClick={closeNav}>Where agents help</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
       <div className="header-actions">
         <a className="header-cta" href="#contact" onClick={closeNav}>Book a 30-minute call <ArrowUpRight size={16} /></a>
         <button className="mobile-nav-toggle" type="button" aria-label={navOpen ? "Close navigation" : "Open navigation"} aria-expanded={navOpen} aria-controls="site-navigation" onClick={() => setNavOpen((open) => !open)}>{navOpen ? <X size={18} /> : <Menu size={18} />}</button>
@@ -187,7 +187,7 @@ export default function Home() {
           <div className="hero-kicker"><span className="signal-pulse" /> FOR PLANT HEADS, COOs AND MDs</div>
           <h1>AI agents for <em>manufacturing</em> operations.</h1>
           <div className="hero-actions">
-            <p>Your team makes the decisions. Agents work on top of the systems you already run and follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "shift handovers"]} suffix="." /></p>
+            <p>Your team makes the decisions. Agents follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "shift handovers"]} suffix="." /></p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
           </div>
         </div>
@@ -299,7 +299,7 @@ export default function Home() {
               </form>
             ) : (
               <div className="lead-success" ref={successRef} tabIndex={-1} role="status">
-                <p>Thanks. We’ll email you to fix a time for the call.</p>
+                <p>Thanks. We’ll email you to fix a time for the 30-minute call.</p>
                 <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Send another enquiry</button>
               </div>
             )}

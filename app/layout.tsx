@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Xplormate | AI agents for manufacturing operations",
   description:
-    "Xplormate builds AI agents for manufacturing operations: production, quality, maintenance and materials, on top of your ERP, MES and quality systems. Start with one workflow in a small paid pilot.",
+    "Xplormate builds AI agents for manufacturing operations that work on top of your ERP, MES, quality and maintenance systems. Start with one workflow in a small paid pilot.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "AI agents for manufacturing operations | Xplormate",
