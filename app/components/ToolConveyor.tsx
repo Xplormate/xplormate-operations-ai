@@ -73,7 +73,7 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
         <span className="systems-eyebrow">{eyebrow}</span>
         <h3 id="systems-map-title">{title}</h3>
         <p className="systems-note">{note}</p>
-        <div className="systems-tabs" role="tablist" aria-label="System types" onFocus={() => setAutoGroups(false)}>
+        <div className="systems-tabs" role="tablist" aria-label="System types" aria-orientation="vertical" onFocus={() => setAutoGroups(false)}>
           {groups.map((item, index) => (
             <button key={item.id} id={`tool-tab-${item.id}`} type="button" role="tab" tabIndex={index === groupIndex ? 0 : -1} aria-selected={index === groupIndex} aria-controls="tool-panel" onClick={() => choose(index)} onKeyDown={(event) => onTabKey(event, index)}>
               <span className="systems-tab-index">{String(index + 1).padStart(2, "0")}</span>
@@ -93,8 +93,8 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
             </li>
           ))}
         </ul>
-        {!reduced ? (
-          <button type="button" className="systems-pause" aria-label={paused ? "Play system categories" : "Pause system categories"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
+        {!reduced && autoGroups ? (
+          <button type="button" className="systems-pause" aria-label="Pause system categories" aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
             {paused ? <Play size={12} /> : <Pause size={12} />}
           </button>
         ) : null}

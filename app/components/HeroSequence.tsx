@@ -72,7 +72,6 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
     if (video && video.currentTime > 0.5) video.currentTime = 0;
   }, [active]);
 
-
   return (
     <>
       <div className="hero-slides">

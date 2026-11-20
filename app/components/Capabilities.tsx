@@ -10,7 +10,6 @@ export default function Capabilities({ items }: { items: Capability[] }) {
         const Icon = item.icon;
         return (
           <li key={item.copy} style={{ "--i": index } as React.CSSProperties}>
-            <span className="capability-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             <span className="capability-icon" aria-hidden="true"><Icon size={26} strokeWidth={1.3} /></span>
             <span className="capability-scan" aria-hidden="true" />
             <p>{item.copy}</p>

@@ -44,7 +44,7 @@ const agentRun = [
   { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock at the second store and open POs. One PO is two days late.", icon: Database },
   { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes the next order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
   { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new sequence. The agent updates every owner.", icon: UserCheck },
-  { number: "05", time: "17:00", title: "Closed and logged", copy: "The supplier date is confirmed and the agent closes the issue.", icon: Check },
+  { number: "05", time: "17:00", title: "Closed and logged", copy: "The buyer confirms the supplier date and closes the issue. The agent logs every step.", icon: Check },
 ];
 
 const capabilities = [
@@ -56,24 +56,24 @@ const capabilities = [
 // Examples of systems plants run on, shown by category. Not partners or customers.
 const systemGroups: ToolGroup[] = [
   { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", area: "ERP / supply" }, { brand: "Microsoft Dynamics", area: "ERP / finance" }, { brand: "Tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
-  { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "Line data" }, { brand: "ABB", logo: "abb", area: "Line data" }] },
+  { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "PLCs / line data" }, { brand: "ABB", logo: "abb", area: "Drives / robots" }] },
   { id: "quality", label: "Quality & maintenance", tools: [{ brand: "SAP", logo: "sap", area: "Quality / maintenance" }, { brand: "Google Forms", logo: "googleforms", area: "Inspections" }, { brand: "Jira", logo: "jira", area: "Work requests" }] },
-  { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans / trackers" }, { brand: "Looker", logo: "looker", area: "Reports" }] },
+  { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans" }, { brand: "Looker", logo: "looker", area: "Reports" }] },
 ];
 
 const controls = [
   { icon: UserCheck, title: "People approve critical steps", copy: "Anything that changes the plan, a record or leaves the plant waits for a person." },
   { icon: ScrollText, title: "Every action recorded", copy: "In a pilot, each action the agent takes is recorded with who approved it." },
-  { icon: Lock, title: "Read-only to start", copy: "The agent starts by reading. Write access comes later, only where you agree." },
+  { icon: Lock, title: "Read-only to start", copy: "At first the agent only reads your systems and messages people. Changing records comes later, only where you agree." },
   { icon: KeyRound, title: "Access agreed up front", copy: "Nothing connects before you sign off, and you can remove access any time." },
   { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work, never for anyone else." },
-  { icon: Server, title: "Where your data lives", copy: "Agreed with your IT team before anything connects, including India-only hosting if you need it." },
+  { icon: Server, title: "Where your data lives", copy: "Agreed with your IT team, including India-only hosting if you need it." },
 ];
 
 const pilotSteps = [
   { number: "01", art: "understand" as const, title: "Map the real work", copy: "We walk through last month’s cases with the people who run the workflow." },
-  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "One agent on one workflow, using your data." },
-  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If it saves time, the agent becomes part of daily work." },
+  { number: "02", art: "pilot" as const, title: "Run it on your data", copy: "The agent works on live cases while your team checks its output." },
+  { number: "03", art: "measure" as const, title: "Use it every day", copy: "If it saves time, your team keeps it." },
   { number: "04", art: "expand" as const, title: "Choose what’s next", copy: "The next workflow or the next plant, as a separate decision based on what the pilot showed." },
 ];
 
@@ -84,8 +84,7 @@ const principles = [
 ];
 
 const faq = [
-  ["Will this replace my people?", "No. The agent handles the routine steps. Your people decide and approve."],
-  ["Which systems can it work with?", "The ones your chosen workflow uses. We confirm access on the first call."],
+  ["Will this replace my people?", "No. It takes over the reminders and data-gathering. Your people keep every decision."],
   ["What do you need from us?", "One person who owns the workflow, access to the systems it touches, and an hour a week."],
   ["What does a pilot cost?", "It depends on the workflow and systems involved. We agree a fixed fee before we start."],
   ["What if it won’t help?", "We’ll tell you after the first call."],
@@ -208,7 +207,6 @@ export default function Home() {
             <p>We build AI agents that handle the routine work in production, quality, maintenance and materials, and bring in your team for the decisions that matter.</p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
           </div>
-          <div className="hero-meta"><span>PRODUCTION</span><span>QUALITY</span><span>MAINTENANCE</span><span>MATERIALS</span></div>
         </div>
       </div>
     </section>
@@ -286,7 +284,7 @@ export default function Home() {
       </ul>
     </div></section>
 
-    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>08 / QUESTIONS</span></div><h2>Before we talk.</h2><p>Short answers before a first call.</p></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
+    <section className="faq" id="questions"><div className="shell faq-grid"><div className="faq-intro" data-reveal><div className="section-topline"><span>08 / QUESTIONS</span></div><h2>Before we talk.</h2></div><div className="faq-items" data-reveal>{faq.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={20} /></summary><p>{answer}</p></details>)}</div></div></section>
 
     <section className="contact" id="contact">
       <div className="contact-frame">
@@ -300,8 +298,8 @@ export default function Home() {
           </div>
           <div className="contact-content">
             <ol className="contact-steps" aria-label="What happens next">
-              <li><span>01</span>Tell us about one workflow</li>
-              <li><span>02</span>A 30-minute call, no slides</li>
+              <li><span>01</span>Send this form</li>
+              <li><span>02</span>We email you to set up a 30-minute call</li>
               <li><span>03</span>A pilot proposal, if it fits</li>
             </ol>
             {!leadSubmitted ? (
@@ -338,14 +336,14 @@ export default function Home() {
                 </div>
                 {leadError ? <p className="form-error" role="alert">{leadError}</p> : null}
                 <button className="button button-amber" type="submit" disabled={leadSubmitting} aria-busy={leadSubmitting}>
-                  {leadSubmitting ? "Sending" : "Book a 30-minute call"} <ArrowUpRight size={20} />
+                  {leadSubmitting ? "Sending…" : "Request a call"} <ArrowUpRight size={20} />
                 </button>
-                <small className="form-note">Name, email, company and role are required. We use your details only to reply to your enquiry.</small>
+                <small className="form-note">We use your details only to reply.</small>
               </form>
             ) : (
               <div className="lead-success" ref={successRef} tabIndex={-1} role="status">
-                <p>Thanks. Your details are in. Expect an email from us soon.</p>
-                <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Submit another response</button>
+                <p>Thanks, we have your details. We’ll email you soon to set up the call.</p>
+                <button className="text-button" type="button" onClick={() => { setLeadSubmitted(false); setLeadError(""); setLeadFieldErrors({}); }}>Send another enquiry</button>
               </div>
             )}
           </div>
@@ -365,7 +363,7 @@ export default function Home() {
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
       <div className="footer-mark" aria-hidden="true" data-reveal>Xplormate<span>.</span></div>
-      <div className="footer-bar bracketed"><span>© {year} XPLORMATE</span><a href="#top" className="footer-top-link">BACK TO TOP <ArrowUp size={13} /></a></div>
+      <div className="footer-bar bracketed"><span suppressHydrationWarning>© {year} XPLORMATE</span><a href="#top" className="footer-top-link">BACK TO TOP <ArrowUp size={13} /></a></div>
     </div></footer>
   </main>;
 }

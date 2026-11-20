@@ -3,22 +3,24 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
-/** Phones only: a slim "Book a call" bar after the hero, hidden again once the contact form is on screen. */
+/** Phones only: a slim "Book a call" bar after the hero, hidden from the contact form down. */
 export default function StickyCta() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     const contact = document.getElementById("contact");
-    let contactVisible = false;
-    const update = () => setShow(window.scrollY > window.innerHeight * 0.9 && !contactVisible);
-    const observer = contact ? new IntersectionObserver(([entry]) => { contactVisible = entry.isIntersecting; update(); }) : null;
-    if (contact && observer) observer.observe(contact);
+    // Show after the hero, and stay hidden once the contact form comes into view (and below it).
+    const update = () => {
+      const top = contact?.getBoundingClientRect().top;
+      setShow(window.scrollY > window.innerHeight * 0.9 && (top === undefined || top > window.innerHeight));
+    };
     const first = requestAnimationFrame(update);
     window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     return () => {
       cancelAnimationFrame(first);
-      observer?.disconnect();
       window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
     };
   }, []);
 

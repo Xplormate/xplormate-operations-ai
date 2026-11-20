@@ -85,14 +85,15 @@ In page order:
 | Glow statement with a rotating word (one cycle) | `page.tsx`, `RotatingWord.tsx` |
 | 01 What an agent would do (three animated cards) | `Capabilities.tsx` |
 | Scroll-highlighted problem statement | `PinnedStatement.tsx` |
-| 02 Your systems: animated conveyor of example systems | `ToolConveyor.tsx` |
+| 02 Your systems: example systems by category, timed tabs | `ToolConveyor.tsx` |
 | 03 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
 | 04 Where agents help: five plant areas | `AreaCarousel.tsx` |
 | 05 Security and control | `page.tsx` |
 | 06 How a pilot runs | `PilotStack.tsx` |
 | 07 About, 08 FAQ, 09 contact form, navigation and footer | `page.tsx` |
+| Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 
-The hero and systems conveyor have pause controls. The agent panel holds while hovered; the panel, the rotating word and the conveyor stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel is hidden, the operating loop shows all steps without pinning, and the hero loads smaller video files.
+The hero and systems tabs have pause controls. The agent panel holds while hovered; the panel, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel is hidden, the operating loop shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -110,7 +111,7 @@ app/
 └── twitter-image.tsx         Twitter/X preview image
 public/
 ├── media/                    Hero videos, posters, and area photos
-├── tool-logos/               Example system logos for the conveyor
+├── tool-logos/               Example system logos for the systems section
 └── ...                       Brand and supporting images
 supabase/
 └── migrations/               Lead-table schema changes
@@ -144,7 +145,7 @@ Keep example operational data distinguishable from customer evidence:
 - The hero panel carries the hero’s only **“Sample data”** label; hero scenes have no readouts.
 - The example agent run is labelled **“Sample data”**.
 - Plant areas use **“Example areas”**; describe what an agent *would* do, not live deployments.
-- The systems conveyor shows example systems (logos where we have them, wordmark tiles otherwise) with the note “Not partners or customers.”
+- The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) with the note “Not partners or customers.”
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 
