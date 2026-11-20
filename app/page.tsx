@@ -59,9 +59,9 @@ const controls = [
 ];
 
 const pilotPath = [
-  { when: "Week 1", title: "Map", copy: "We walk through last month’s cases with the people who run the workflow." },
-  { when: "Weeks 2–6", title: "Run", copy: "One agent works on your data while your team checks its output." },
-  { when: "Weeks 7–8", title: "Decide", copy: "We compare the results with how the workflow ran before. Keep it, change it or stop." },
+  { when: "1 week", title: "Map", copy: "We map the workflow with the people who run it, using last month’s real cases." },
+  { when: "3 weeks", title: "Run", copy: "The agent runs that workflow on your systems, in daily use by your team." },
+  { when: "3 months", title: "Expand", copy: "If it works, agents take on more workflows across your plant on the same connections. If not, we stop." },
 ];
 
 const faq = [
@@ -243,6 +243,7 @@ export default function Home() {
             </li>
           ))}
         </ol>
+        <p className="pilot-path-note" data-reveal>Timings depend on when system access is ready.</p>
       </div>
     </div></section>
 

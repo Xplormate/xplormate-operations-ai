@@ -598,6 +598,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .pilot-path-when{font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--amber-2)}
 .pilot-path h3{margin:14px 0 10px;font-size:clamp(30px,2.8vw,42px);font-weight:400;letter-spacing:-.045em;line-height:1}
 .pilot-path p{margin:0;font-size:15.5px;line-height:1.6;color:rgba(244,240,230,.72);max-width:340px}
+.pilot-path-note{position:relative;z-index:2;margin:44px 0 0;font:10.5px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,240,230,.55)}
 
 /* Footer address: one quiet line */
 .footer-address{display:block;margin-top:18px;font:10.5px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,240,230,.55);font-style:normal}
