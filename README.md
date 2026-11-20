@@ -1,6 +1,6 @@
 # Xplormate
 
-The company website for [xplormate.com](https://xplormate.com), focused on AI transformation for manufacturing operations.
+The company website for [xplormate.com](https://xplormate.com), focused on AI agents for manufacturing operations.
 
 The site explains how Xplormate approaches recurring workflows across production, quality, maintenance, and materials: start with one workflow, apply AI to routine coordination, keep people in control, and measure the result. Visitors can explore example scenarios and enquire about a focused paid pilot.
 
@@ -66,8 +66,10 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 | `company` | Yes | 2–160 characters |
 | `role` | Yes | 2–120 characters |
 | `challenge` | No | Up to 2,000 characters |
+| `website` | No | Hidden spam trap; must stay empty |
+| `elapsed` | No | Milliseconds the form was open; under 2.5 s is treated as a bot |
 
-The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
+Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
 The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields.
 
@@ -80,13 +82,14 @@ For local submission tests, use a separate test database or local test storage. 
 | Hero scenes and sample operational readouts | `HeroSequence.tsx` |
 | Introductory glow card | `page.tsx` |
 | Scroll-highlighted statement | `PinnedStatement.tsx` |
-| How we work and example tools | `page.tsx`, `ToolConveyor.tsx` |
-| Five-step example operating loop | `OperatingLoop.tsx` |
-| Six plant-area scenarios | `AreaCarousel.tsx` |
-| Paid-pilot approach | `PilotStack.tsx` |
+| How it works (four steps) and systems we work on top of | `page.tsx` |
+| Five-step example agent run (sample data) | `OperatingLoop.tsx` |
+| Five agent jobs | `AreaCarousel.tsx` |
+| How we work with you, security and control, about | `page.tsx` |
+| How a pilot runs | `PilotStack.tsx` |
 | FAQ, enquiry form, navigation, and footer | `page.tsx` |
 
-The hero and tools carousel have pause controls. Dot fields and the tools conveyor pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
+The hero has pause controls. Dot fields pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
 
 ## Project structure
 
@@ -112,7 +115,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `areas`, `stages`, `toolGroups`, `pilotSteps`, and `faq` in `app/page.tsx`.
+- **Homepage copy and examples:** edit `heroSlides`, `agents`, `agentRun`, `howItWorks`, `systemTypes`, `withYou`, `controls`, `pilotSteps`, `principles`, and `faq` in `app/page.tsx`.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -129,16 +132,16 @@ Hero media lives in `public/media/`. Each video scene uses a desktop clip, a sma
 | `hero-<scene>.webp` | Video poster and reduced-motion still |
 | `area-<area>.webp` | Plant-area carousel photo |
 
-Keep those variants together when replacing media and update `heroSlides` or `areas` if a path changes. Record the source and licence for any new third-party assets.
+Keep those variants together when replacing media and update `heroSlides` or `agents` if a path changes. Record the source and licence for any new third-party assets.
 
 ### Example labels and claims
 
 Keep example operational data distinguishable from customer evidence:
 
-- Hero readouts use **“Illustrative data”**.
-- The operating loop uses **“Example workflow”**.
-- Plant-area cards use **“Example scenarios”**.
-- The tools section explains that the logos are examples, not partners or customers; avoid a second disclaimer beneath the carousel.
+- Hero readouts use **“Sample data”**.
+- The example agent run is labelled **“Sample data”**.
+- Agent cards use **“Example agents”**; describe them as what we build in a pilot, not as live deployments.
+- The systems section names systems as plain text with the note “Examples of systems plants use. Not partners or customers.” No third-party logos.
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 

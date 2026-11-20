@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 
-const businessEmail = "jeetendra@xplormate.com";
+const businessEmail = "hello@xplormate.com";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Your requests</h2>
-          <p>You may ask us to explain, correct, or delete the personal information you submitted through the form. Contact Jeetendra at <a href={`mailto:${businessEmail}`}>{businessEmail}</a>. We may need to verify a request before acting on it.</p>
+          <p>You may ask us to explain, correct, or delete the personal information you submitted through the form. Contact us at <a href={`mailto:${businessEmail}`}>{businessEmail}</a>. We may need to verify a request before acting on it.</p>
         </section>
 
         <section>
@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
       </article>
 
       <footer className="legal-footer">
-        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI transformation for manufacturing operations.</span></div>
+        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI agents for manufacturing operations.</span></div>
       </footer>
     </main>
   );

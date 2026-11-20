@@ -16,23 +16,23 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Xplormate | AI Transformation for Manufacturing Operations",
+  title: "Xplormate | AI agents for manufacturing operations",
   description:
-    "Xplormate helps manufacturers redesign core production, quality, maintenance and materials workflows with AI. Start with one focused paid pilot, measure the result and expand what works.",
+    "Xplormate builds AI agents that take over follow-up work in manufacturing plants, on top of your ERP, MES, quality and maintenance systems. Start with one job in a small paid pilot.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI transformation for core manufacturing operations | Xplormate",
+    title: "AI agents for manufacturing operations | Xplormate",
     description:
-      "Redesign the work that runs your plant. Start with one workflow, put AI to work on routine steps and keep your team in control.",
+      "AI agents that do the chasing in your plant, on top of the systems you already run. Your team approves what matters.",
     url: "/",
     siteName: "Xplormate",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI transformation for manufacturing operations | Xplormate",
+    title: "AI agents for manufacturing operations | Xplormate",
     description:
-      "Redesign core manufacturing workflows with AI. Start with one focused pilot and measure what improves.",
+      "AI agents for the follow-up work in manufacturing plants. Start with one job in a small paid pilot.",
   },
   icons: {
     icon: "/xplormate-logo.jpg",

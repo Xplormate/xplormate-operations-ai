@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Terms for using the Xplormate website and submitting an enquiry.",
 };
 
-const businessEmail = "jeetendra@xplormate.com";
+const businessEmail = "hello@xplormate.com";
 
 export default function TermsPage() {
   return (
@@ -28,7 +28,7 @@ export default function TermsPage() {
 
         <section>
           <h2>About the website</h2>
-          <p>Xplormate is exploring AI transformation opportunities in manufacturing operations. The workflows, examples, and questions on this site are illustrative and support early discovery. They are not a promise of a specific product, result, or pilot.</p>
+          <p>Xplormate builds AI agents for manufacturing operations. The agents, workflows, sample data, examples, and questions on this site are illustrative and support early discovery. They are not a promise of a specific product, result, or pilot.</p>
         </section>
 
         <section>
@@ -64,7 +64,7 @@ export default function TermsPage() {
       </article>
 
       <footer className="legal-footer">
-        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI transformation for manufacturing operations.</span></div>
+        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI agents for manufacturing operations.</span></div>
       </footer>
     </main>
   );

@@ -19,7 +19,7 @@ export type Area = {
 };
 
 /**
- * "Where AI fits" as a horizontal carousel of plant areas: the chosen area opens
+ * The agent jobs as a horizontal carousel: the chosen area opens
  * wide with its photo, the rest stay as narrow strips you can click. The detail
  * for the chosen area sits underneath.
  */
@@ -86,8 +86,8 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
   return (
     <div className="areas">
       <div className="areas-bar">
-        <span className="areas-kicker">EXAMPLE SCENARIOS</span>
-        <div className="areas-tabs" role="tablist" aria-label="Plant areas">
+        <span className="areas-kicker">EXAMPLE AGENTS</span>
+        <div className="areas-tabs" role="tablist" aria-label="Agent jobs">
           {areas.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -109,8 +109,8 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
           })}
         </div>
         <div className="areas-arrows">
-          <button type="button" aria-label="Previous area" onClick={() => go(active - 1)}><ArrowLeft size={18} /></button>
-          <button type="button" aria-label="Next area" onClick={() => go(active + 1)}><ArrowRight size={18} /></button>
+          <button type="button" aria-label="Previous agent" onClick={() => go(active - 1)}><ArrowLeft size={18} /></button>
+          <button type="button" aria-label="Next agent" onClick={() => go(active + 1)}><ArrowRight size={18} /></button>
         </div>
       </div>
 
@@ -137,9 +137,9 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
       <div className="area-panel" id="area-panel" role="tabpanel" tabIndex={0} aria-labelledby={`area-tab-${area.id}`} key={area.id}>
         <div className="area-panel-head"><span>{area.index} / {String(areas.length).padStart(2, "0")}</span><h3>{area.title}</h3></div>
         <div className="area-facts">
-          <div><small>WHERE IT SLOWS DOWN</small><p>{area.friction}</p></div>
-          <div><small>HOW AI COULD HELP</small><p>{area.ai}</p></div>
-          <div><small>WHAT YOUR TEAM DECIDES</small><p>{area.human}</p></div>
+          <div><small>WHAT IT WATCHES</small><p>{area.friction}</p></div>
+          <div><small>WHAT IT DOES ON ITS OWN</small><p>{area.ai}</p></div>
+          <div><small>WAITS FOR YOUR APPROVAL</small><p>{area.human}</p></div>
         </div>
         <div className="area-footer">
           <div><small>WHAT WE’D MEASURE</small><strong>{area.measure}</strong></div>
