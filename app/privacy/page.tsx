@@ -5,6 +5,7 @@ import { clarityId, linkedinPartnerId } from "../trackers";
 export const metadata: Metadata = {
   title: "Privacy Policy | Xplormate",
   alternates: { canonical: "/privacy" },
+  openGraph: { title: "Privacy Policy | Xplormate", url: "/privacy" },
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 
@@ -57,7 +58,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Sharing and service providers</h2>
-          <p>We use trusted service providers for website hosting, secure database storage, aggregate analytics, and basic security. They process information only as needed to provide services for Xplormate. Form submissions are kept separate from anonymous website analytics.</p>
+          <p>We use trusted service providers for website hosting, secure database storage, aggregate analytics, and basic security. They process information only as needed to provide services for Xplormate.</p>
           <p>We may share information when required by law, to protect the website and its users, or to respond to a valid legal request. We do not sell or rent the personal information submitted through this form.</p>
         </section>
 

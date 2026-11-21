@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service | Xplormate",
   alternates: { canonical: "/terms" },
+  openGraph: { title: "Terms of Service | Xplormate", url: "/terms" },
   description: "Terms for using the Xplormate website and submitting an enquiry.",
 };
 

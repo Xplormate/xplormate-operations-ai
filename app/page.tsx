@@ -39,7 +39,7 @@ const agentRun = [
   { number: "01", time: "14:32", title: "Shortage spotted", copy: "The agent sees a raw-material shortage in the ERP against tomorrow’s plan for Line 2.", icon: CircleAlert },
   { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock in other stores and open POs. One PO is two days late.", icon: Database },
   { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes a new run order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
-  { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new sequence. The agent updates every owner.", icon: UserCheck },
+  { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new run order. The agent updates every owner.", icon: UserCheck },
   { number: "05", time: "17:00", title: "Closed and logged", copy: "The buyer confirms the supplier date and closes the issue. The agent logs every step.", icon: Check },
 ];
 
@@ -54,7 +54,7 @@ const systemGroups: ToolGroup[] = [
 const controls = [
   { icon: UserCheck, title: "A person signs off key steps", copy: "Changes to the plan, closing a record, and anything sent outside the plant wait for a person." },
   { icon: ScrollText, title: "Every action recorded", copy: "Every action the agent takes is logged. Where a person approved it, the log says who." },
-  { icon: Lock, title: "Read-only first", copy: "Access starts after your IT team’s security review, and starts read-only. You can remove it any time." },
+  { icon: Lock, title: "Read-only first", copy: "Access begins read-only, after your IT team’s security review. Write access is added only for the steps you agree. You can remove it any time." },
   { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with you, in India if you need it." },
 ];
 
@@ -220,7 +220,7 @@ export default function Home() {
     </OperatingLoop>
 
     <section className="explorer" id="agents"><div className="shell">
-      <div className="section-topline" data-reveal><span>02 / WHERE AGENTS HELP</span><span>FOUR EXAMPLES</span></div>
+      <div className="section-topline" data-reveal><span>02 / WHERE AGENTS HELP</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Four more places<br /><span className="dim">a pilot could start.</span></h2><p>Pick an area to see what its agent would watch, handle and leave to your team.</p></div>
       <div data-reveal><AreaCarousel areas={agents} /></div>
     </div></section>
@@ -229,7 +229,7 @@ export default function Home() {
       <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span><span>ACCESS AND CONTROL</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay where your data lives. An agent connects only to what its workflow needs.</p></div>
       <div className="systems-map bracketed" data-reveal>
-        <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could read from." note="Not partners or customers." />
+        <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could work with." note="Not partners or customers." />
       </div>
       <ul className="security-grid" data-reveal>
         {controls.map((item) => {

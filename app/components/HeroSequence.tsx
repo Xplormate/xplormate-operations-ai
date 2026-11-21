@@ -110,7 +110,7 @@ export default function HeroSequence({ slides }: { slides: HeroSlide[] }) {
           </button>
         ))}
         {!reduced ? (
-          <button type="button" className="hero-pause" aria-label={paused ? "Play scenes" : "Pause scenes"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
+          <button type="button" className="hero-pause" aria-label="Pause scenes" aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
             {paused ? <Play size={13} /> : <Pause size={13} />}
           </button>
         ) : null}
