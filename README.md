@@ -2,7 +2,7 @@
 
 The company website for [xplormate.com](https://xplormate.com), focused on AI agents for manufacturing operations.
 
-The site explains where Xplormate’s AI agents fit in manufacturing operations (materials, quality, maintenance and shift handover): start with one workflow, keep people in control and measure the result against the plant’s own records. Visitors can follow a sample-data example and request a call about a small paid pilot.
+The site explains where Xplormate’s AI agents fit in manufacturing operations (materials, quality, maintenance, production and reporting): start with one workflow, keep people in control and measure the result against the plant’s own records. Visitors can follow a sample-data example and request a call about a small paid pilot.
 
 **Stack:** Next.js 16 · React 19 · TypeScript · Supabase · Vercel
 
@@ -46,7 +46,7 @@ SUPABASE_SECRET_KEY=YOUR_SERVER_ONLY_KEY
 
 The lead endpoint also accepts `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as fallbacks. Keep server keys out of browser code and never give them a `NEXT_PUBLIC_` prefix. Local environment files are ignored by Git.
 
-If `NEXT_PUBLIC_SITE_URL` is unset, metadata uses `VERCEL_URL` when available, then `http://localhost:3000`. Set the local URL explicitly when checking metadata on port 5173.
+If `NEXT_PUBLIC_SITE_URL` is unset, metadata uses `VERCEL_PROJECT_PRODUCTION_URL`, then `VERCEL_URL`, when available, then `http://localhost:3000`. Set the local URL explicitly when checking metadata on port 5173.
 
 Vercel Analytics is included in the app layout. The optional LinkedIn and Clarity tags load only when their IDs are configured.
 
@@ -67,7 +67,7 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 | `role` | Yes | 2–120 characters |
 | `challenge` | No | Up to 2,000 characters |
 | `hp_extra` | No | Hidden spam trap; must stay empty |
-| `elapsed` | No | Milliseconds the form was open; under 2.5 s is treated as a bot |
+| `elapsed` | No | Milliseconds the form was open; under 1.5 s is treated as a bot |
 
 Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored; each one is logged as "Lead dropped as bot" with the reason only. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
@@ -81,18 +81,18 @@ In page order:
 
 | Section | Main component |
 | --- | --- |
-| Hero: plant videos, a sample-data plant operations panel (plays through once) and a rotating word at the end of the sentence | `HeroSequence.tsx`, `AgentPanel.tsx`, `RotatingWord.tsx` |
+| Hero: plant videos, a sample-data agent activity card (fills in once) and a rotating word at the end of the sentence | `HeroSequence.tsx`, `AgentPanel.tsx`, `RotatingWord.tsx` |
 | Problem line | `page.tsx` |
 | 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
-| 02 Where agents help: four named agents | `AreaCarousel.tsx` |
-| 03 Your systems and control: example systems by category, timed tabs, four rules | `ToolConveyor.tsx`, `page.tsx` |
+| 02 Where agents help: four example areas | `AreaCarousel.tsx` |
+| 03 Your systems and control: example systems by category, timed tabs, three control points | `ToolConveyor.tsx`, `page.tsx` |
 | 04 How a pilot runs: 1 week Prototype / 3 weeks First workflow / 3 months Full system | `page.tsx` |
 | 05 FAQ, 06 contact form, navigation and footer | `page.tsx` |
 | Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 
-Calls to action: “Book a 30-minute call” is the only primary button (header on desktop, hero, phone bar); “See an example” is the only secondary one; the form submits with “Request a call”.
+Calls to action: “Book a call” in the header (desktop only) and “Book a 30-minute call” in the hero and phone bar are the primary buttons; “See an example” is the only secondary one; the form submits with “Request a call”.
 
-The hero and systems tabs have pause controls. The agent panel holds while hovered; the panel, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel and header button are hidden, the example shows all steps without pinning, and the hero loads smaller video files.
+The hero and systems tabs have pause controls. The agent card fills in once; the card, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel and header button are hidden, the example shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -118,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`; the hero panel scenes live in `AgentPanel.tsx`.
+- **Homepage copy and examples:** edit `heroSlides`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`; the hero card entries (`entries`) live in `AgentPanel.tsx`.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.

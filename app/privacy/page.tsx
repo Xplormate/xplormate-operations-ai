@@ -5,7 +5,8 @@ import { clarityId, linkedinPartnerId } from "../trackers";
 export const metadata: Metadata = {
   title: "Privacy Policy | Xplormate",
   alternates: { canonical: "/privacy" },
-  openGraph: { title: "Privacy Policy | Xplormate", url: "/privacy" },
+  openGraph: { title: "Privacy Policy | Xplormate", description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.", url: "/privacy", siteName: "Xplormate", type: "website" },
+  twitter: { card: "summary_large_image", title: "Privacy Policy | Xplormate", description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests." },
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 

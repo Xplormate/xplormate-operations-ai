@@ -123,7 +123,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 /* =========================================================================
    Shared section furniture
    ========================================================================= */
-.transformation,.signal-story{padding:110px 0 0}
+.systems-section,.signal-story{padding:110px 0 0}
 .explorer{padding:110px 0 120px}
 .approach{padding:110px 0}
 .faq{padding:110px 0 130px}
@@ -146,7 +146,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .hero-pause{display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:8px;cursor:pointer;transition:background .2s,border-color .2s}
 
 /* =========================================================================
-   02 Operating loop (pinned scroll story)
+   01 Example (pinned scroll story)
    ========================================================================= */
 .signal-story{height:260vh;position:relative;padding:0}
 .signal-sticky{position:sticky;top:0;min-height:100vh;padding:96px 0 28px;display:flex;align-items:center}
@@ -178,7 +178,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
 .signal-scroll-hint span{display:block;width:120px;height:2px;background:var(--amber);transform-origin:left;transform:scaleX(0)}
 
 /* =========================================================================
-   03 Where AI fits (area carousel)
+   02 Where agents help (area carousel)
    ========================================================================= */
 .explorer{padding:110px 0 120px}
 .areas-bar{display:flex;align-items:center;gap:28px;padding-bottom:18px}
@@ -232,7 +232,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visi
    ========================================================================= */
 .faq-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:110px}
 .faq-intro h2{margin-top:52px}
-.faq-intro>p{font-size:17px;line-height:1.65;color:var(--ink-2);max-width:330px}
 .faq-items{border-top:1px solid var(--line-2)}
 details{border-bottom:1px solid var(--line-2)}
 summary{list-style:none;padding:24px 0;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:18px;line-height:1.4;letter-spacing:-.02em;transition:color .2s}
@@ -255,11 +254,10 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .contact h2{margin-top:52px;font-weight:330}
 .contact h2 em{display:block;font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.02em;color:var(--amber-2)}
 .contact-content{padding-top:62px}
-.contact-content>p{font-size:18px;line-height:1.6;color:rgba(244,240,230,.78);max-width:530px;margin:0}
 .site-footer{background:var(--night);color:var(--cream);padding:80px 0 34px}
 .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
 .footer-col{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
-.footer-col h2{margin:0 0 10px;font:10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,240,230,.45)}
+.footer-col h2{margin:0 0 10px;font:10.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,240,230,.6)}
 .footer-col a{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:rgba(244,240,230,.85);transition:color .2s}
 .footer-col a:hover{color:var(--amber)}
 .footer-bar{margin-top:64px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px dashed rgba(255,255,255,.14);border-bottom:1px dashed rgba(255,255,255,.14);font:10.5px var(--mono);letter-spacing:.12em;color:rgba(244,240,230,.5);--bracket:rgba(255,255,255,.35);--bracket-inset:-1px}
@@ -269,9 +267,8 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .lead-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .lead-form label{display:grid;gap:8px}
 .lead-form label span{font:10.5px/1.4 var(--mono);letter-spacing:.1em;color:rgba(244,240,230,.62);text-transform:uppercase}
-.lead-form label span svg{vertical-align:-1px}
 .required-mark{color:var(--amber);font-style:normal}
-.lead-form .optional-mark{font-style:normal;color:rgba(244,240,230,.4);text-transform:none;letter-spacing:0;margin-left:6px}
+.lead-form .optional-mark{font-style:normal;color:rgba(244,240,230,.55);text-transform:none;letter-spacing:0;margin-left:6px}
 .lead-form .field-wide{grid-column:1/-1}
 .lead-form input,.lead-form textarea{width:100%;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(10,9,7,.45);color:var(--cream);padding:13px 14px;font-size:16px;line-height:1.4;font-family:inherit;outline:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s,background .2s,box-shadow .2s}
 .lead-form input{min-height:50px}
@@ -284,7 +281,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .form-error{margin:0;font-size:13px;line-height:1.5;color:#ffb49e}
 .lead-form .button{width:100%;border:0;cursor:pointer;justify-content:center}
 .lead-form .button:disabled{cursor:wait;opacity:.65}
-.form-note{font-size:12.5px;line-height:1.55;color:rgba(244,240,230,.5)}
+.form-note{font-size:12.5px;line-height:1.55;color:rgba(244,240,230,.6)}
 .lead-success{display:grid;gap:16px;margin-top:28px;max-width:620px;outline:none}
 .lead-success>p{font-size:17px;line-height:1.6;color:var(--cream);margin:0}
 .text-button{justify-self:start;border:0;border-bottom:1px solid rgba(244,240,230,.4);background:transparent;color:rgba(244,240,230,.8);padding:0 0 6px;cursor:pointer;font-size:13px}
@@ -317,7 +314,6 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
    v2 additions: hero agent panel, systems and control, pilot path
    ========================================================================= */
 .anchor-target{display:block;height:0}
-.principles h3{margin:0 0 8px;font-size:16px;font-weight:500;letter-spacing:-.02em}
 .hp-field{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 
 /* =========================================================================
@@ -378,7 +374,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
   .hero-actions>p{font-size:16px}
   .hero-buttons{width:100%;flex-direction:column}
   .hero-buttons .button{width:100%}
-  .transformation{padding:72px 0 0}
+  .systems-section{padding:72px 0 0}
   .explorer,.faq{padding:72px 0}
   .section-topline{font-size:9.5px;gap:12px}
   .section-topline span:last-child{text-align:right}
@@ -469,7 +465,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .agent-log li{display:grid;grid-template-columns:38px 1fr auto;align-items:start;gap:10px;max-height:0;padding:0;overflow:hidden;opacity:0;transform:translateY(6px);transition:max-height .6s var(--ease),padding .6s var(--ease),opacity .5s var(--ease) .1s,transform .5s var(--ease) .1s}
 .agent-log li.is-in{max-height:120px;padding:9px 0;opacity:1;transform:none}
 .agent-log li.is-in+li.is-in{border-top:1px solid rgba(255,255,255,.07)}
-.agent-log time{font:10px/1.5 var(--mono);color:rgba(244,240,230,.5);letter-spacing:.04em}
+.agent-log time{font:10px/1.5 var(--mono);color:rgba(244,240,230,.6);letter-spacing:.04em}
 .agent-log-area{display:block;font:9.5px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,240,230,.55)}
 .agent-log p{margin:2px 0 0;font-size:12px;line-height:1.35;color:rgba(244,240,230,.9)}
 .agent-log-status{margin-top:1px;font:9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;padding:4px 6px;border-radius:4px;color:#a9dc9c;border:1px solid rgba(160,220,150,.35)}
@@ -506,7 +502,8 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .footer-top-link:hover{color:var(--amber)}
 .footer-top-link svg{transition:transform .3s var(--ease)}
 .footer-top-link:hover svg{transform:translateY(-3px)}
-@keyframes markSweep{from{background-position:110% 0}to{background-position:-56.667% 0}}#example{scroll-margin-top:-96px}
+@keyframes markSweep{from{background-position:110% 0}to{background-position:-56.667% 0}}
+#example{scroll-margin-top:-96px}
 @media(max-width:760px){.footer-top{grid-template-columns:1fr 1fr}.footer-mark{margin-top:40px}.footer-bar{flex-direction:row}}
 @media(prefers-reduced-motion:reduce){.footer-mark,.footer-mark.is-visible{animation:none}.footer-col a,.footer-top-link svg{transition:none}}
 

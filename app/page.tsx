@@ -28,19 +28,19 @@ const heroSlides: HeroSlide[] = [
 
 // Where agents help. In the carousel: friction = what it watches, ai = what it handles on its own, human = what waits for approval.
 const agents: Area[] = [
-  { id: "quality", label: "Quality", index: "01", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "CAPA follow-up", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA, and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
-  { id: "maintenance", label: "Maintenance", index: "02", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Breakdown follow-up", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed, and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
-  { id: "handovers", label: "Production", index: "03", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handover", friction: "Shift logs and open issues.", ai: "Builds the handover, carries open items to the next shift with owners, and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
-  { id: "reporting", label: "Reporting", index: "04", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Morning review", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Anything sent outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
+  { id: "quality", label: "Quality", index: "01", icon: ShieldCheck, image: "/media/area-quality.webp", code: "NCR-0418\nCAPA · OPEN\nEVIDENCE 2/3", title: "CAPA follow-up", friction: "NCRs, CAPAs and audit findings in your quality system.", ai: "Assigns owners, collects evidence, reminds before due dates and flags overdue items ahead of audits.", human: "Closing a CAPA and deciding what happens to held material.", measure: "Time from issue to verified closure", question: "Where are issues, actions and evidence recorded today?" },
+  { id: "maintenance", label: "Maintenance", index: "02", icon: Wrench, image: "/media/area-maintenance.webp", code: "WR-2291\nPRIORITY · B\nSPARES ✓", title: "Breakdown follow-up", friction: "Breakdowns and work orders in your maintenance system.", ai: "Updates work orders, checks spares, escalates when response time is missed and tells planning which orders are at risk.", human: "Taking a machine down or buying spares.", measure: "Open-request age and repeat follow-ups", question: "How does a breakdown move from report to confirmed fix?" },
+  { id: "handovers", label: "Production", index: "03", icon: Repeat, image: "/media/area-handovers.webp", code: "SHIFT B → C\nOPEN ITEMS · 5\nACK 3/5", title: "Shift handover", friction: "Shift logs and open issues.", ai: "Builds the handover, carries open items to the next shift with owners and asks for acknowledgement.", human: "Marking an issue closed.", measure: "Open items missed or explained twice", question: "How is acknowledgement captured between shifts today?" },
+  { id: "reporting", label: "Reporting", index: "04", icon: ChartColumn, image: "/media/area-reporting.webp", code: "DAILY · 07:30\nEXCEPTIONS · 3\nACTIONS · 7", title: "Morning review", friction: "Plan versus actual, downtime, quality and dispatch.", ai: "Prepares the morning review with exceptions and owners, and tracks every action point until it’s closed.", human: "Sending the review to anyone outside the plant.", measure: "Preparation time and open action points", question: "Which morning report takes the most manual work?" },
 ];
 
 // Sample agent run for the example section.
 const agentRun = [
   { number: "01", time: "14:32", title: "Shortage spotted", copy: "The agent sees a raw-material shortage in the ERP against tomorrow’s plan for Line 2.", icon: CircleAlert },
   { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock in other stores and open POs. One PO is two days late.", icon: Database },
-  { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes a new run order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
+  { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes a new run order for Line 2 and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
   { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new run order. The agent updates every owner.", icon: UserCheck },
-  { number: "05", time: "17:00", title: "Issue closed", copy: "The buyer confirms the supplier date and closes the issue. Every step is on record.", icon: Check },
+  { number: "05", time: "17:00", title: "Issue closed", copy: "The buyer confirms the supplier date and closes the issue.", icon: Check },
 ];
 
 // Examples of systems plants run on, shown by category. Not partners or customers.
@@ -53,7 +53,7 @@ const systemGroups: ToolGroup[] = [
 
 const controls = [
   { title: "You approve key steps", copy: "Changes to the plan, orders and anything sent outside the plant wait for a person." },
-  { title: "Every action is logged", copy: "You can see what the agent did, and who approved it." },
+  { title: "Every action is logged", copy: "You can see what the agent did and who approved it." },
   { title: "Your data stays yours", copy: "Used only for your plant’s work. Access starts read-only and you can remove it any time." },
 ];
 
@@ -66,7 +66,7 @@ const pilotPath = [
 const faq = [
   ["Will this replace my people?", "No. It takes the routine follow-up off them."],
   ["Is this a finished product?", "No. We build the agent for your workflow during the pilot, on your systems and data. That’s why a pilot starts with one workflow."],
-  ["Who will we work with?", "The person who scopes your pilot also builds it, and stays with you until it ends."],
+  ["Who will we work with?", "The person who scopes your pilot also builds it and stays with you until it ends."],
   ["What do you need from us?", "One person who owns the workflow, access to the systems it touches and an hour a week."],
   ["What does a pilot cost?", "It depends on the workflow and the systems involved. We agree the fee in writing before we start."],
   ["What happens on the call?", "You walk us through one workflow that gets stuck. We tell you plainly whether an agent can help and, if it can, what a pilot would cover."],
@@ -224,7 +224,7 @@ export default function Home() {
       <div data-reveal><AreaCarousel areas={agents} /></div>
     </div></section>
 
-    <section className="transformation" id="systems"><div className="shell">
+    <section className="systems-section" id="systems"><div className="shell">
       <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span><span>ACCESS AND CONTROL</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay as they are. An agent connects only to what its workflow needs.</p></div>
       <div className="systems-map bracketed" data-reveal>
@@ -242,7 +242,7 @@ export default function Home() {
         <div className="approach-head" data-reveal>
           <span className="approach-eyebrow">04 / HOW A PILOT RUNS</span>
           <h2>Pick one workflow.<br /><span>See if it works.</span></h2>
-          <p>A small paid pilot at one plant, with a fixed scope and fee, measured against your own records.</p>
+          <p>A small paid pilot at one plant, with a fixed scope, measured against your own records.</p>
         </div>
         <ol className="pilot-path" data-reveal>
           {pilotPath.map((step, index) => (

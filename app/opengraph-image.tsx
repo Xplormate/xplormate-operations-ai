@@ -48,7 +48,7 @@ export default function OpengraphImage() {
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, letterSpacing: 2, color: "#c9cec8" }}>
-          MATERIALS · QUALITY · MAINTENANCE · SHIFT HANDOVER
+          MATERIALS · QUALITY · MAINTENANCE · PRODUCTION · REPORTING
         </div>
       </div>
     ),
