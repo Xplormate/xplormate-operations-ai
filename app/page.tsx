@@ -6,6 +6,7 @@ import { track } from "@vercel/analytics";
 import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Lock, Menu, Repeat, ScrollText, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
 import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
+import ControlPanel from "./components/ControlPanel";
 import DotField from "./components/DotField";
 import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
 import OperatingLoop from "./components/OperatingLoop";
@@ -52,9 +53,9 @@ const systemGroups: ToolGroup[] = [
 ];
 
 const controls = [
+  { icon: Lock, title: "Access you approve", copy: "It starts read-only, after your IT team’s security review. Write access is added only for the steps you agree, and you can remove it any time." },
   { icon: UserCheck, title: "A person signs off key steps", copy: "Changes to the plan, closing a record, and anything sent outside the plant wait for a person." },
-  { icon: ScrollText, title: "Every action recorded", copy: "Every action the agent takes is logged. Where a person approved it, the log says who." },
-  { icon: Lock, title: "Read-only first", copy: "Access begins read-only, after your IT team’s security review. Write access is added only for the steps you agree. You can remove it any time." },
+  { icon: ScrollText, title: "Every action logged", copy: "What the agent did, when, and who approved it." },
   { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with you, in India if you need it." },
 ];
 
@@ -231,12 +232,15 @@ export default function Home() {
       <div className="systems-map bracketed" data-reveal>
         <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could work with." note="Not partners or customers." />
       </div>
-      <ul className="security-grid" data-reveal>
-        {controls.map((item) => {
-          const Icon = item.icon;
-          return <li key={item.title}><span className="security-icon" aria-hidden="true"><Icon size={18} strokeWidth={1.6} /></span><h3>{item.title}</h3><p>{item.copy}</p></li>;
-        })}
-      </ul>
+      <div className="control-block" data-reveal>
+        <ControlPanel />
+        <ul className="control-points">
+          {controls.map((item) => {
+            const Icon = item.icon;
+            return <li key={item.title}><span className="security-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.6} /></span><div><h3>{item.title}</h3><p>{item.copy}</p></div></li>;
+          })}
+        </ul>
+      </div>
     </div></section>
 
     <section className="approach" id="pilot"><div className="shell">
