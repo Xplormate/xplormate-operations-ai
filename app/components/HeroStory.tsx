@@ -106,7 +106,27 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
       return;
     }
     const nearCard = marker.x + 250 > cardLeft && marker.y + 14 < cardBottom + 8;
-    const side: Hud["side"] = marker.x > box.width * 0.62 || nearCard ? "left" : "right";
+    const preferred: Hud["side"] = marker.x > box.width * 0.62 || nearCard ? "left" : "right";
+    // Never sit on the headline: test the marker and the readout's box against the heading's text lines.
+    const lines: DOMRect[] = [];
+    const heading = layer.parentElement?.querySelector("h1");
+    if (heading) {
+      const range = document.createRange();
+      range.selectNodeContents(heading);
+      lines.push(...Array.from(range.getClientRects()));
+    }
+    const clashes = (sideToTry: Hud["side"]) => {
+      const x1 = sideToTry === "right" ? marker.x - 12 : marker.x - 240;
+      const x2 = sideToTry === "right" ? marker.x + 240 : marker.x + 12;
+      return lines.some((line) => x2 > line.left - box.left && x1 < line.right - box.left && marker.y + 42 > line.top - box.top && marker.y - 12 < line.bottom - box.top);
+    };
+    const other: Hud["side"] = preferred === "left" ? "right" : "left";
+    const otherFits = other === "left" || marker.x + 250 < cardLeft;
+    const side: Hud["side"] | null = !clashes(preferred) ? preferred : otherFits && !clashes(other) ? other : null;
+    if (!side) {
+      setHud(null);
+      return;
+    }
     const round = (value: number) => Math.round(value);
     setHud((current) => {
       const nextHud = { marker: { x: round(marker.x), y: round(marker.y) }, target: target ? { x: round(target.x), y: round(target.y) } : null, side };
@@ -136,6 +156,7 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
   const select = (index: number) => {
     setStep(index);
     setEnded(reduced);
+    setPaused(false);
   };
 
   const scene = scenes[step];
@@ -173,6 +194,7 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
         ) : null}
         <div className={`hud-chip is-${scene.entry.status}`} key={`chip-${step}`}><span>{scene.entry.area}</span><em>{scene.short}</em><i>SAMPLE</i></div>
       </div>
+      <p className="sr-only">Sample data: one day of agent activity at a plant. The agent sent the morning review, reminded a CAPA owner and escalated a late work order on its own. An order to a backup supplier for packing film waits for a person to approve.</p>
       <AgentPanel ref={cardRef} entries={entries} shown={step + 1} />
     </>
   );

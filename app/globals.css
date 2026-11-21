@@ -477,7 +477,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 
 /* Leave room on the right for the agent panel while it is shown. */
 @media(min-width:1081px){.hero h1{max-width:calc(100% - 380px)}}
-@media(min-width:1081px) and (max-width:1180px){.agent-panel{width:300px}.hero h1{max-width:calc(100% - 330px);font-size:clamp(54px,6vw,108px)}}
+@media(min-width:1081px) and (max-width:1180px){.agent-panel{width:300px}.agent-panel-foot{font-size:8.5px;letter-spacing:.04em}.hero h1{max-width:calc(100% - 330px);font-size:clamp(54px,6vw,108px)}}
 @media(max-width:1080px){
   .agent-panel{display:none}
 }

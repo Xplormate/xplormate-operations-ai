@@ -20,8 +20,7 @@ const AgentPanel = forwardRef<HTMLDivElement, Props>(function AgentPanel({ entri
     <div
       className="agent-panel"
       ref={ref}
-      role="img"
-      aria-label="Sample data: one day of agent activity at a plant. The agent sent the morning review, reminded a CAPA owner and escalated a late work order on its own. An order to a backup supplier for packing film waits for a person to approve."
+      aria-hidden="true"
     >
       <div className="agent-panel-head" aria-hidden="true">
         <span className="agent-live"><span className="agent-live-dot" />Agent activity · today</span>

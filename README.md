@@ -118,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroScenes`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`. Each hero scene holds its clip, its card entry (`entry`), the marker spot (`focus`, x/y fractions of the 1280x720 clip), the readout and the phone line (`short`). Update the card’s screen-reader summary (`aria-label` in `AgentPanel.tsx`) when the entries change.
+- **Homepage copy and examples:** edit `heroScenes`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`. Each hero scene holds its clip, its card entry (`entry`), the marker spot (`focus`, x/y fractions of the 1280x720 clip), the readout and the phone line (`short`). Update the hero’s screen-reader summary (the hidden paragraph in `HeroStory.tsx`) when the entries change.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.

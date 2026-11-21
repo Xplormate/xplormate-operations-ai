@@ -90,7 +90,11 @@ export default function HeroSequence({ slides, active, running, paused, reduced,
             className={`${index === active ? "is-active" : ""}${index < active || (ended && index === active) ? " is-done" : ""}`}
             aria-label={`Show ${item.label.toLowerCase()} scene`}
             aria-current={index === active ? "true" : undefined}
-            onClick={() => onSelect(index)}
+            onClick={() => {
+              const video = videoRefs.current[index];
+              if (index === active && video) video.currentTime = 0;
+              onSelect(index);
+            }}
           >
             <span className="hero-progress-label">{item.label}</span>
             <span className="hero-progress-bar"><b key={index === active ? `active-${active}` : "idle"} className={running ? undefined : "is-paused"} onAnimationEnd={index === active ? onSceneEnd : undefined} style={index === active ? { animationDuration: `${durationMs}ms` } : undefined} /></span>
