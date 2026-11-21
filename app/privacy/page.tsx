@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Information collected automatically</h2>
-          <p>The website may collect basic technical and aggregate usage information, such as pages viewed, referring source, approximate location, browser, device, and operating system. We use privacy-focused analytics to understand how the site is used and improve it.</p>
+          <p>The website may collect basic technical and aggregate usage information, such as pages viewed, which buttons are clicked, referring source, approximate location, browser, device, and operating system. We use privacy-focused analytics to understand how the site is used and improve it.</p>
           {linkedinPartnerId || clarityId ? (
             <p>
               We also use {[linkedinPartnerId ? "the LinkedIn Insight Tag, which shows us aggregate information such as the companies, industries and job functions of visitors" : "", clarityId ? "Microsoft Clarity, which helps us see how visitors scroll and use the page" : ""].filter(Boolean).join(", and ")}. These services may set cookies. We do not receive your name or contact details from them, and they are kept separate from the details you submit through the form.

@@ -71,7 +71,7 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 
 Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored; each one is logged as "Lead dropped as bot" with the reason only. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
-The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields.
+The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields. Button clicks send `cta_click` (`location`: `header`, `hero` or `phone_bar`) and `example_click` (`location`: `hero`) through `track()` from `@vercel/analytics`.
 
 For local submission tests, use a separate test database or local test storage. For an authorised production test, clearly mark the entry and verify the saved fields directly in Supabase.
 

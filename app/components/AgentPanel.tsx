@@ -25,7 +25,7 @@ const AgentPanel = forwardRef<HTMLDivElement, Props>(function AgentPanel({ entri
       <div className="agent-panel-head" aria-hidden="true">
         <div className="agent-name">
           <span className="agent-live"><span className="agent-live-dot" />Plant follow-up agent</span>
-          <span className="agent-sub">4 areas · one plant, one day</span>
+          <span className="agent-sub">Four areas · one plant, one day</span>
         </div>
         <span className="agent-live-chip">SAMPLE DATA</span>
       </div>
