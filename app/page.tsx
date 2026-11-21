@@ -54,9 +54,9 @@ const systemGroups: ToolGroup[] = [
 
 const controls = [
   { icon: Lock, title: "Access you approve", copy: "It starts read-only, after your IT team’s security review. Write access is added only for the steps you agree, and you can remove it any time." },
-  { icon: UserCheck, title: "A person signs off key steps", copy: "Changes to the plan, closing a record, and anything sent outside the plant wait for a person." },
+  { icon: UserCheck, title: "A person signs off key steps", copy: "Changes to the plan, orders, closing a record and anything sent outside the plant wait for a person." },
   { icon: ScrollText, title: "Every action logged", copy: "What the agent did, when, and who approved it." },
-  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Hosting is agreed with you, in India if you need it." },
+  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Where it’s hosted and which AI model processes it are agreed with your IT team, with hosting in India if you need it." },
 ];
 
 const pilotPath = [
@@ -228,7 +228,7 @@ export default function Home() {
 
     <section className="transformation" id="systems"><div className="shell">
       <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span><span>ACCESS AND CONTROL</span></div>
-      <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay where your data lives. An agent connects only to what its workflow needs.</p></div>
+      <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay as they are. An agent connects only to what its workflow needs.</p></div>
       <div className="systems-map bracketed" data-reveal>
         <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could work with." note="Not partners or customers." />
       </div>
@@ -237,7 +237,7 @@ export default function Home() {
         <ul className="control-points">
           {controls.map((item) => {
             const Icon = item.icon;
-            return <li key={item.title}><span className="security-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.6} /></span><div><h3>{item.title}</h3><p>{item.copy}</p></div></li>;
+            return <li key={item.title}><span className="control-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.6} /></span><div><h3>{item.title}</h3><p>{item.copy}</p></div></li>;
           })}
         </ul>
       </div>

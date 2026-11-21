@@ -16,7 +16,7 @@ const access: Access[] = [
 const log: LogLine[] = [
   { time: "14:33", text: "Read stock in 3 stores and 2 open POs", who: "Agent" },
   { time: "14:35", text: "Proposed a new run order for Line 2", who: "Agent" },
-  { time: "15:10", text: "Run order approved, plan updated", who: "Planner", pending: "Waiting for planner" },
+  { time: "15:10", text: "Planner approved it and updated the plan", who: "Planner", pending: "Waiting for planner" },
 ];
 
 /** Section 03 visual: what one agent may touch, and the log of what it did. Plays once when it scrolls into view. */
@@ -76,7 +76,7 @@ export default function ControlPanel() {
           const waiting = isLast && !approved;
           return (
             <li key={line.time} className={`${shown ? "is-in" : ""}${waiting ? " is-waiting" : ""}${isLast && approved ? " is-approved" : ""}`}>
-              <time>{waiting ? "14:35" : line.time}</time>
+              <time>{waiting ? "" : line.time}</time>
               <span>{waiting ? "Run order sent for approval" : line.text}</span>
               <em>{waiting ? line.pending : line.who}</em>
             </li>
