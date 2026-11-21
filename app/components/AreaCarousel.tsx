@@ -86,7 +86,6 @@ export default function AreaCarousel({ areas }: { areas: Area[] }) {
   return (
     <div className="areas">
       <div className="areas-bar">
-        <span className="areas-kicker">EXAMPLE AREAS</span>
         <div className="areas-tabs" role="tablist" aria-label="Plant areas">
           {areas.map((item, index) => {
             const Icon = item.icon;

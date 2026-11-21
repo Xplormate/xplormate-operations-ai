@@ -222,7 +222,7 @@ export default function Home() {
     </div></section>
 
     <section className="systems-section" id="systems"><div className="shell">
-      <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span><span>ACCESS AND CONTROL</span></div>
+      <div className="section-topline" data-reveal><span>03 / YOUR SYSTEMS</span></div>
       <div className="section-heading split-heading" data-reveal><h2>Works on what you already run.<br /><span className="dim">You stay in control.</span></h2><p>Your ERP, MES, quality and maintenance systems stay as they are. An agent connects only to what its workflow needs.</p></div>
       <div className="systems-map bracketed" data-reveal>
         <ToolConveyor groups={systemGroups} title="Systems an agent could work with." />
