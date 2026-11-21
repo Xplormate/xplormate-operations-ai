@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
 import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Menu, Repeat, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
-import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
 import DotField from "./components/DotField";
-import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
+import HeroStory, { type HeroScene } from "./components/HeroStory";
 import OperatingLoop from "./components/OperatingLoop";
 import RotatingWord from "./components/RotatingWord";
 import StickyCta from "./components/StickyCta";
@@ -17,13 +16,12 @@ const linkedinProfile = "https://www.linkedin.com/in/jeetendra-yadav-4363457a/";
 const businessEmail = "jeetendra@xplormate.com";
 const year = new Date().getFullYear();
 
-const heroSlides: HeroSlide[] = [
-  { label: "Fabrication", image: "/media/hero-weld.webp", video: "/media/hero-weld.mp4", alt: "Welder at work, sparks lighting a dark fabrication bay" },
-  { label: "Assembly", image: "/media/hero-assembly.webp", video: "/media/hero-assembly.mp4", alt: "Robot arm working on an automated assembly line" },
-  { label: "Materials", image: "/media/hero-materials.webp", video: "/media/hero-materials.mp4", alt: "Forklift moving through warehouse racking" },
-  { label: "Cutting", image: "/media/hero-maintenance.webp", video: "/media/hero-maintenance.mp4", alt: "Cutting head moving over a metal sheet" },
-  { label: "Handover", image: "/media/hero-handover.webp", video: "/media/hero-handover.mp4", alt: "Shift team huddle on the warehouse floor, seen from above" },
-  { label: "Controls", image: "/media/hero-planning.webp", video: "/media/hero-planning.mp4", alt: "Operator pressing buttons on a lit machine control panel" },
+// Hero: each scene shows one clip, adds one entry to the agent card and marks the spot on the clip. Sample data only.
+const heroScenes: HeroScene[] = [
+  { label: "Reporting", image: "/media/hero-planning.webp", video: "/media/hero-planning.mp4", alt: "Operator pressing buttons on a lit machine control panel", focus: [0.6, 0.45], readout: "DAILY REVIEW · 07:30", short: "Morning review sent", entry: { time: "07:30", area: "Reporting", text: "Morning review sent: 3 exceptions, 7 actions with owners", status: "done", statusLabel: "Done" } },
+  { label: "Quality", image: "/media/hero-weld.webp", video: "/media/hero-weld.mp4", alt: "Welder at work, sparks lighting a dark fabrication bay", focus: [0.6, 0.42], readout: "NCR-0418 · EVIDENCE 2/3", short: "CAPA owner reminded", entry: { time: "09:12", area: "Quality", text: "CAPA evidence missing. Owner reminded, due Thursday", status: "done", statusLabel: "Done" } },
+  { label: "Maintenance", image: "/media/hero-maintenance.webp", video: "/media/hero-maintenance.mp4", alt: "Cutting head moving over a metal sheet", focus: [0.49, 0.72], readout: "CUTTER 2 · NO RESPONSE 42 MIN", short: "Late work order escalated", entry: { time: "11:40", area: "Maintenance", text: "Cutter 2 work order past response time. Escalated", status: "done", statusLabel: "Done" } },
+  { label: "Materials", image: "/media/hero-materials.webp", video: "/media/hero-materials.mp4", alt: "Forklift moving through warehouse racking", focus: [0.64, 0.6], readout: "PACKING FILM · 2 DAYS LEFT", short: "Backup order needs approval", entry: { time: "14:05", area: "Materials", text: "Packing film short for Friday. Order to backup supplier drafted", status: "waiting", statusLabel: "Needs approval" } },
 ];
 
 // Where agents help. In the carousel: friction = what it watches, ai = what it handles on its own, human = what waits for approval.
@@ -74,7 +72,7 @@ const faq = [
 
 export default function Home() {
   // First hero frame: fetch it early so the hero is never empty.
-  preload("/media/hero-weld.webp", { as: "image", fetchPriority: "high" });
+  preload("/media/hero-planning.webp", { as: "image", fetchPriority: "high" });
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadError, setLeadError] = useState("");
@@ -192,11 +190,10 @@ export default function Home() {
 
     <section className="hero">
       <div className="hero-frame">
-        <HeroSequence slides={heroSlides} />
+        <HeroStory scenes={heroScenes} />
         <div className="hero-shade" />
         <DotField className="hero-dots" color="255,206,128" gap={15} density={0.26} />
         <div className="grain" aria-hidden="true" />
-        <AgentPanel />
         <div className="hero-content shell">
           <div className="hero-kicker"><span className="signal-pulse" /> FOR PLANT HEADS, COOs AND MDs</div>
           <h1>AI agents for <em>manufacturing</em> operations.</h1>
