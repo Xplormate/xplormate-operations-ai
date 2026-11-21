@@ -41,12 +41,12 @@ const agentRun = [
   { number: "05", time: "17:00", title: "Issue closed", copy: "The buyer confirms the supplier date and closes the issue.", icon: Check },
 ];
 
-// Examples of systems plants run on, shown by category. Not partners or customers.
+// Common plant systems, shown by category. Examples only: never describe them as partners or customers.
 const systemGroups: ToolGroup[] = [
-  { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", area: "ERP / supply" }, { brand: "Microsoft Dynamics", area: "ERP / finance" }, { brand: "Tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
+  { id: "erp", label: "ERP & planning", tools: [{ brand: "SAP", logo: "sap", area: "ERP / orders" }, { brand: "Oracle", logo: "oracle", area: "ERP / supply" }, { brand: "Dynamics 365", logo: "dynamics365", area: "ERP / finance" }, { brand: "Tally", logo: "tally", area: "Stock / accounts" }, { brand: "Odoo", logo: "odoo", area: "Materials / dispatch" }] },
   { id: "production", label: "Production & shop floor", tools: [{ brand: "Siemens", logo: "siemens", area: "MES / shop floor" }, { brand: "Rockwell Automation", logo: "rockwellautomation", area: "MES / production data" }, { brand: "ABB", logo: "abb", area: "Line data via MES" }] },
-  { id: "quality", label: "Quality & maintenance", tools: [{ brand: "IBM Maximo", area: "Maintenance" }, { brand: "Google Forms", logo: "googleforms", area: "Inspections" }, { brand: "Jira", logo: "jira", area: "Work requests" }] },
-  { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Excel", area: "Plans" }, { brand: "Power BI", area: "Reports" }] },
+  { id: "quality", label: "Quality & maintenance", tools: [{ brand: "IBM Maximo", logo: "ibm", area: "Maintenance" }, { brand: "Google Forms", logo: "googleforms", area: "Inspections" }, { brand: "Jira", logo: "jira", area: "Work requests" }] },
+  { id: "everyday", label: "Everyday work", tools: [{ brand: "Gmail", logo: "gmail", area: "Email" }, { brand: "Google Sheets", logo: "googlesheets", area: "Trackers" }, { brand: "Microsoft Excel", logo: "microsoftexcel", area: "Plans" }, { brand: "Power BI", logo: "powerbi", area: "Reports" }] },
 ];
 
 const controls = [
