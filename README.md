@@ -144,7 +144,7 @@ Keep example operational data distinguishable from customer evidence:
 - The hero card carries the hero’s **“Sample data”** label, and the phone summary line is marked **“Sample”**. Scene readouts are sample data too: keep them plausible and never present them as a live plant.
 - The example agent run is labelled **“Sample data”**.
 - The agents carousel uses **“Example areas”**; describe what an agent *would* do, not live deployments.
-- The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) with the note “Not partners or customers.”
+- The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) under the label “Example systems”; they are examples, not partners or customers
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 
