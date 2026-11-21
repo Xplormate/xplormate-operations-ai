@@ -144,7 +144,7 @@ Keep example operational data distinguishable from customer evidence:
 - The hero card carries the hero’s **“Sample data”** label, and the phone summary line is marked **“Sample”**. Scene readouts are sample data too: keep them plausible and never present them as a live plant.
 - The example agent run is labelled **“Sample data”**.
 - The agents carousel describes what an agent *would* do in each area, not live deployments.
-- The systems section shows common plant systems by category (logos where we have them, two-letter badges otherwise). They carry no on-page label, so never describe them as partners, customers or finished integrations.
+- The systems section shows common plant systems by category (each brand’s own logo in its colours, from Simple Icons or the brand’s site; a two-letter badge only if a logo is missing). They carry no on-page label, so never describe them as partners, customers or finished integrations.
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 

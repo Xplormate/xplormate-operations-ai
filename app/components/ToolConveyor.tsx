@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 
-// `logo` is a file in /public/tool-logos; systems without one show a two-letter badge.
+// `logo` is a file in /public/tool-logos (the brand's own mark, in its colours); systems without one show a two-letter badge.
 export type Tool = { brand: string; logo?: string; area: string };
 export type ToolGroup = { id: string; label: string; tools: Tool[] };
 
