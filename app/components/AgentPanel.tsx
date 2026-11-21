@@ -9,7 +9,7 @@ const entries: Entry[] = [
   { time: "07:30", area: "Reporting", text: "Morning review sent: 3 exceptions, 7 actions with owners", status: "done", statusLabel: "Done" },
   { time: "09:12", area: "Quality", text: "CAPA evidence missing. Owner reminded, due Thursday", status: "done", statusLabel: "Done" },
   { time: "11:40", area: "Maintenance", text: "Press 4 work order past response time. Escalated", status: "done", statusLabel: "Done" },
-  { time: "14:05", area: "Materials", text: "Packing film short for Friday. New supplier date proposed", status: "waiting", statusLabel: "Needs approval" },
+  { time: "14:05", area: "Materials", text: "Packing film short for Friday. Order to backup supplier drafted", status: "waiting", statusLabel: "Needs approval" },
 ];
 
 const STEP_MS = 1900;
@@ -46,7 +46,7 @@ export default function AgentPanel() {
       className="agent-panel"
       ref={rootRef}
       role="img"
-      aria-label="Sample data: an agent's log for one plant's day. It sent the morning review, reminded a CAPA owner and escalated a late work order on its own. A new supplier date for a material shortage waits for a person to approve."
+      aria-label="Sample data: one day of agent activity at a plant. It sent the morning review, reminded a CAPA owner and escalated a late work order on its own. An order to a backup supplier for packing film waits for a person to approve."
     >
       <div className="agent-panel-head" aria-hidden="true">
         <span className="agent-live"><span className="agent-live-dot" />Agent activity · today</span>
@@ -62,7 +62,7 @@ export default function AgentPanel() {
         ))}
       </ol>
       <div className="agent-panel-foot" aria-hidden="true">
-        <span>{done} handled by the agent</span>
+        <span>{done} handled by agents</span>
         <span className={waiting ? "is-waiting" : undefined}>{waiting} waiting for a person</span>
       </div>
     </div>
