@@ -71,7 +71,7 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 
 Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored; each one is logged as "Lead dropped as bot" with the reason only. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
-The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields. Button clicks send `cta_click` (`location`: `header`, `hero` or `phone_bar`) and `example_click` (`location`: `hero`) through `track()` from `@vercel/analytics`.
+The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields. Button clicks send `cta_click` (`location`: `header`, `hero` or `phone_bar`) and `example_click` (`location`: `hero`) through `track()` from `@vercel/analytics`. Custom events show in Vercel only on a Pro plan; on Hobby, page views, referrers and devices still appear.
 
 For local submission tests, use a separate test database or local test storage. For an authorised production test, clearly mark the entry and verify the saved fields directly in Supabase.
 
@@ -143,8 +143,8 @@ Keep example operational data distinguishable from customer evidence:
 
 - The hero card carries the hero’s **“Sample data”** label, and the phone summary line is marked **“Sample”**. Scene readouts are sample data too: keep them plausible and never present them as a live plant.
 - The example agent run is labelled **“Sample data”**.
-- The agents carousel uses **“Example areas”**; describe what an agent *would* do, not live deployments.
-- The systems section shows example systems by category (logos where we have them, two-letter badges otherwise); they are examples of common plant systems, not partners or customers
+- The agents carousel describes what an agent *would* do in each area, not live deployments.
+- The systems section shows common plant systems by category (logos where we have them, two-letter badges otherwise). They carry no on-page label, so never describe them as partners, customers or finished integrations.
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 
@@ -153,6 +153,8 @@ Do not present sample counts, outcomes, tool logos, or factory imagery as verifi
 The company repository is [Xplormate/xplormate-operations-ai](https://github.com/Xplormate/xplormate-operations-ai). Its `main` branch is connected to production on Vercel at [xplormate.com](https://xplormate.com).
 
 Use Vercel’s detected Next.js settings, with `npm run build` as the build command and the default output configuration. Configure database credentials and the site URL for the intended environment. Preview deployments should use separate test storage if submissions need testing.
+
+Work on a branch, check the Vercel preview, then merge into `main` with a pull request to go live.
 
 Before pushing a website change:
 
