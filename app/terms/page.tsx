@@ -25,7 +25,7 @@ export default function TermsPage() {
       </header>
 
       <article className="legal-shell legal-content">
-        <p className="legal-kicker">TERMS / LAST UPDATED 10 SEPTEMBER 2026</p>
+        <p className="legal-kicker">TERMS / LAST UPDATED 21 NOVEMBER 2026</p>
         <h1>Terms of Service</h1>
         <p className="legal-lede">These terms describe the basic rules for using the Xplormate website and submitting an enquiry.</p>
 
