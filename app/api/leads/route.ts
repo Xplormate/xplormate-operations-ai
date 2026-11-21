@@ -14,7 +14,7 @@ const leadSchema = z.object({
 });
 
 // Submissions sent faster than a person could fill the form are treated as bots.
-const MIN_FILL_MS = 2500;
+const MIN_FILL_MS = 1500;
 
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;

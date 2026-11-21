@@ -10,7 +10,9 @@ const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["nor
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL
-  : process.env.VERCEL_URL
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
 
@@ -21,18 +23,18 @@ export const metadata: Metadata = {
     "Xplormate builds AI agents for manufacturing operations that work on top of your ERP, MES, quality and maintenance systems. Start with one workflow in a small paid pilot.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI agents for manufacturing operations | Xplormate",
+    title: "Xplormate | AI agents for manufacturing operations",
     description:
-      "AI agents for manufacturing operations, on top of the systems your plant already runs. Your team keeps the decisions.",
+      "Agents that follow up on shortages, breakdowns and quality issues in the systems your plant already runs. Your team makes the decisions.",
     url: "/",
     siteName: "Xplormate",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI agents for manufacturing operations | Xplormate",
+    title: "Xplormate | AI agents for manufacturing operations",
     description:
-      "AI agents for manufacturing operations. Start with one workflow in a small paid pilot.",
+      "Agents that follow up on shortages, breakdowns and quality issues in the systems your plant already runs. Your team makes the decisions.",
   },
   icons: {
     icon: "/xplormate-logo.jpg",

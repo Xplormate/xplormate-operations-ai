@@ -4,6 +4,7 @@ import { clarityId, linkedinPartnerId } from "../trackers";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Xplormate",
+  alternates: { canonical: "/privacy" },
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 

@@ -71,9 +71,9 @@ export default function AgentPanel() {
       onMouseLeave={() => setHeld(false)}
     >
       <div className="agent-panel-head" aria-hidden="true">
-        <span className="agent-live">Example: plant operations agent</span>
+        <span className="agent-live">Example: one plant’s day</span>
       </div>
-      <div className="agent-panel-sub" aria-hidden="true"><span>4 areas watched</span><span className="agent-live-chip">SAMPLE DATA</span></div>
+      <div className="agent-panel-sub" aria-hidden="true"><span>4 areas</span><span className="agent-live-chip">SAMPLE DATA</span></div>
       <ul className="agent-lines" aria-hidden="true" key={index}>
         {scene.lines.map((line, row) => (
           <li key={line.name} className={line.alert ? "is-alert" : undefined} style={{ "--row": row, "--level": `${line.level}%` } as React.CSSProperties}>

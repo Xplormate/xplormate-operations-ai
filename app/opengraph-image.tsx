@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-// Link-preview image for LinkedIn, WhatsApp and X, generated at build time.
+// Link-preview image for LinkedIn and X, generated at build time.
 export const alt = "Xplormate: AI agents for manufacturing operations.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

@@ -6,7 +6,7 @@
 :root{
   --rust:#a8461f;
   --paper:#f5f3ee;--paper-2:#ece9e1;--card:#fbfaf7;
-  --ink:#14130f;--ink-2:#45443d;--muted:#7b796f;--dim:#8f8c80;
+  --ink:#14130f;--ink-2:#45443d;--muted:#6b695f;--dim:#8f8c80;
   --line:rgba(20,19,15,.12);--line-2:rgba(20,19,15,.22);
   --night:#0e0e0b;--night-2:#17160f;--cream:#f4f0e6;--cream-2:#bdb8aa;
   --amber:#ffb629;--amber-2:#ffc95a;--ember:#ff8a3d;
@@ -529,7 +529,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .footer-top-link:hover{color:var(--amber)}
 .footer-top-link svg{transition:transform .3s var(--ease)}
 .footer-top-link:hover svg{transform:translateY(-3px)}
-@keyframes markSweep{from{background-position:100% 0}to{background-position:-150% 0}}
+@keyframes markSweep{from{background-position:110% 0}to{background-position:-150% 0}}
 @media(max-width:760px){.footer-top{grid-template-columns:1fr 1fr}.footer-mark{margin-top:40px}.footer-bar{flex-direction:row}}
 @media(prefers-reduced-motion:reduce){.footer-mark,.footer-mark.is-visible{animation:none}.footer-col a,.footer-top-link svg{transition:none}}
 
