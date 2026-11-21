@@ -21,7 +21,7 @@ const monogram = (brand: string) => {
  * the active category animate in on the right. Clicking a category holds it, and
  * a pause button stops the cycle. Reduced motion holds the first category.
  */
-export default function ToolConveyor({ groups, eyebrow, title, note }: { groups: ToolGroup[]; eyebrow: string; title: string; note?: string }) {
+export default function ToolConveyor({ groups, eyebrow, title, note }: { groups: ToolGroup[]; eyebrow?: string; title: string; note?: string }) {
   const [groupIndex, setGroupIndex] = useState(0);
   const [autoGroups, setAutoGroups] = useState(true);
   const [reduced, setReduced] = useState(false);
@@ -70,7 +70,7 @@ export default function ToolConveyor({ groups, eyebrow, title, note }: { groups:
   return (
     <div className="systems-layout" ref={rootRef}>
       <div className="systems-intro">
-        <span className="systems-eyebrow">{eyebrow}</span>
+        {eyebrow ? <span className="systems-eyebrow">{eyebrow}</span> : null}
         <h3 id="systems-map-title">{title}</h3>
         {note ? <p className="systems-note">{note}</p> : null}
         <div className="systems-tabs" role="tablist" aria-label="System types" aria-orientation="vertical" onFocus={() => setAutoGroups(false)}>
