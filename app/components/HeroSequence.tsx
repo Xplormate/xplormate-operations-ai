@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 
 export type HeroSlide = {
@@ -23,7 +23,7 @@ type Props = {
   reduced: boolean;
   variant: "desktop" | "mobile" | null;
   durationMs: number;
-  /** The last scene has played through; its bar stays full. */
+  /** Reduced motion: the final scene shows as a still and its bar stays full. */
   ended: boolean;
   /** False while the hero is scrolled out of view. */
   onScreen: boolean;
@@ -40,8 +40,9 @@ type Props = {
  */
 export default function HeroSequence({ slides, active, running, paused, reduced, variant, durationMs, ended, onScreen, onSceneEnd, onSelect, onTogglePause }: Props) {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [restarts, setRestarts] = useState(0);
 
-  // Only the visible clip plays. It keeps looping on the last scene even after the timer stops.
+  // Only the active clip plays; it pauses with the pause button, while off screen and for reduced motion.
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
@@ -56,7 +57,7 @@ export default function HeroSequence({ slides, active, running, paused, reduced,
   // Restart each clip from the top when its scene comes round again.
   useEffect(() => {
     const video = videoRefs.current[active];
-    if (video && video.currentTime > 0.5) video.currentTime = 0;
+    if (video && video.currentTime > 0) video.currentTime = 0;
   }, [active]);
 
   return (
@@ -92,12 +93,15 @@ export default function HeroSequence({ slides, active, running, paused, reduced,
             aria-current={index === active ? "true" : undefined}
             onClick={() => {
               const video = videoRefs.current[index];
-              if (index === active && video) video.currentTime = 0;
+              if (index === active) {
+                if (video) video.currentTime = 0;
+                setRestarts((count) => count + 1);
+              }
               onSelect(index);
             }}
           >
             <span className="hero-progress-label">{item.label}</span>
-            <span className="hero-progress-bar"><b key={index === active ? `active-${active}` : "idle"} className={running ? undefined : "is-paused"} onAnimationEnd={index === active ? onSceneEnd : undefined} style={index === active ? { animationDuration: `${durationMs}ms` } : undefined} /></span>
+            <span className="hero-progress-bar"><b key={index === active ? `active-${active}-${restarts}` : "idle"} className={running ? undefined : "is-paused"} onAnimationEnd={index === active ? onSceneEnd : undefined} style={index === active ? { animationDuration: `${durationMs}ms` } : undefined} /></span>
           </button>
         ))}
         {!reduced ? (

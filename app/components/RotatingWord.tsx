@@ -7,7 +7,7 @@ const ROTATE_MS = 2400;
 const spoken = (words: string[]) => (words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words[words.length - 1]}` : words[0]);
 
 /**
- * Cycles once through a short list of words with a soft slide, then rests on the first word.
+ * Cycles through a short list of words with a soft slide.
  * All words share one grid cell, so the line never reflows. Holds still for reduced motion
  * and while off screen.
  */
@@ -26,7 +26,7 @@ export default function RotatingWord({ words, suffix = "" }: { words: string[]; 
   }, []);
 
   useEffect(() => {
-    if (!onScreen || step >= words.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!onScreen || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(() => setStep((current) => current + 1), ROTATE_MS);
     return () => window.clearTimeout(timer);
   }, [onScreen, step, words.length]);

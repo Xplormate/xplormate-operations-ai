@@ -63,7 +63,7 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
   const running = !paused && !reduced && onScreen && !ended;
 
 
-  // The active progress bar is the clock: when its animation ends, move on (or stop after the last scene).
+  // The active progress bar is the clock: when its animation ends, move on, wrapping from the last scene to the first.
   const next = useCallback(() => {
     setStep(step < scenes.length - 1 ? step + 1 : 0);
   }, [step, scenes.length]);
