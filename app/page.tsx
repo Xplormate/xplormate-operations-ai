@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
-import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Lock, Mail, Menu, Repeat, ScrollText, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
+import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Lock, Menu, Repeat, ScrollText, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
 import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
 import DotField from "./components/DotField";
@@ -328,11 +328,8 @@ export default function Home() {
 
     <footer className="site-footer"><div className="shell">
       <div className="footer-top">
-        <div className="footer-brand">
-          <img className="brand-logo footer-logo" src="/xplormate-logo.jpg" alt="Xplormate" width="44" height="44" />
-          <address className="footer-address">BTM 2nd Stage, Bengaluru 560076</address>
-        </div>
-        <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}><Mail size={15} /> Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
+        <div className="footer-col footer-brand"><h2>Office</h2><address className="footer-address">BTM 2nd Stage, Bengaluru 560076</address></div>
+        <nav className="footer-col" aria-label="Contact"><h2>Contact</h2><a href={`mailto:${businessEmail}`}>Email</a><a href={linkedinProfile} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={15} /></a></nav>
         <nav className="footer-col" aria-label="Legal"><h2>Legal</h2><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
       </div>
       <div className="footer-mark" aria-hidden="true" data-reveal>Xplormate<span>.</span></div>
