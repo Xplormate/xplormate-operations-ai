@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 /** Phones only: a slim "Book a call" bar after the hero, hidden from the contact form down. */
 export default function StickyCta() {
@@ -25,7 +26,7 @@ export default function StickyCta() {
   }, []);
 
   return (
-    <a className={`sticky-cta${show ? " is-shown" : ""}`} href="#contact" aria-hidden={!show} tabIndex={show ? 0 : -1}>
+    <a className={`sticky-cta${show ? " is-shown" : ""}`} href="#contact" aria-hidden={!show} tabIndex={show ? 0 : -1} onClick={() => track("cta_click", { location: "phone_bar" })}>
       Book a 30-minute call <ArrowRight size={17} />
     </a>
   );

@@ -23,7 +23,10 @@ const AgentPanel = forwardRef<HTMLDivElement, Props>(function AgentPanel({ entri
       aria-hidden="true"
     >
       <div className="agent-panel-head" aria-hidden="true">
-        <span className="agent-live"><span className="agent-live-dot" />Agent activity · today</span>
+        <div className="agent-name">
+          <span className="agent-live"><span className="agent-live-dot" />Plant follow-up agent</span>
+          <span className="agent-sub">4 areas · one plant, one day</span>
+        </div>
         <span className="agent-live-chip">SAMPLE DATA</span>
       </div>
       <ol className="agent-log" aria-hidden="true">
@@ -36,7 +39,7 @@ const AgentPanel = forwardRef<HTMLDivElement, Props>(function AgentPanel({ entri
         ))}
       </ol>
       <div className="agent-panel-foot" aria-hidden="true">
-        <span>{done} handled by agents</span>
+        <span>{done} handled by the agent</span>
         <span className={waiting ? "is-waiting" : undefined}>{waiting} waiting for a person</span>
       </div>
     </div>

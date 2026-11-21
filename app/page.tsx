@@ -183,7 +183,7 @@ export default function Home() {
       <a className="wordmark" href="#top" aria-label="Xplormate home"><img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" /><span>Xplormate<span className="brand-dot">.</span></span></a>
       <nav className={`site-nav${navOpen ? " is-open" : ""}`} id="site-navigation" aria-label="Main navigation"><a href="#example" onClick={closeNav}>Example</a><a href="#agents" onClick={closeNav}>Where agents help</a><a href="#pilot" onClick={closeNav}>Pilot</a><a href="#questions" onClick={closeNav}>FAQ</a></nav>
       <div className="header-actions">
-        <a className="header-cta" href="#contact" onClick={closeNav}>Book a call <ArrowUpRight size={16} /></a>
+        <a className="header-cta" href="#contact" onClick={() => { closeNav(); track("cta_click", { location: "header" }); }}>Book a call <ArrowUpRight size={16} /></a>
         <button className="mobile-nav-toggle" type="button" aria-label={navOpen ? "Close navigation" : "Open navigation"} aria-expanded={navOpen} aria-controls="site-navigation" onClick={() => setNavOpen((open) => !open)}>{navOpen ? <X size={18} /> : <Menu size={18} />}</button>
       </div>
     </div></header>
@@ -198,8 +198,8 @@ export default function Home() {
           <div className="hero-kicker"><span className="signal-pulse" /> FOR PLANT HEADS, COOs AND MDs</div>
           <h1>AI agents for <em>manufacturing</em> operations.</h1>
           <div className="hero-actions">
-            <p>Your team makes the decisions. Agents follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "shift handovers"]} suffix="." /></p>
-            <div className="hero-buttons"><a className="button button-amber" href="#contact">Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example">See an example</a></div>
+            <p>Your team makes the decisions. Agents follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "morning reviews"]} suffix="." /></p>
+            <div className="hero-buttons"><a className="button button-amber" href="#contact" onClick={() => track("cta_click", { location: "hero" })}>Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example" onClick={() => track("example_click", { location: "hero" })}>See an example</a></div>
           </div>
         </div>
       </div>

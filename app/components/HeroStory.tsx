@@ -194,7 +194,7 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
         ) : null}
         <div className={`hud-chip is-${scene.entry.status}`} key={`chip-${step}`}><span>{scene.entry.area}</span><em>{scene.short}</em><i>SAMPLE</i></div>
       </div>
-      <p className="sr-only">Sample data: one day of agent activity at a plant. The agent sent the morning review, reminded a CAPA owner and escalated a late work order on its own. An order to a backup supplier for packing film waits for a person to approve.</p>
+      <p className="sr-only">Sample data: a plant follow-up agent’s log for one day at one plant. The agent sent the morning review, reminded a CAPA owner and escalated a late work order on its own. An order to a backup supplier for packing film waits for a person to approve.</p>
       <AgentPanel ref={cardRef} entries={entries} shown={step + 1} />
     </>
   );
