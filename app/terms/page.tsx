@@ -3,6 +3,9 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Xplormate",
+  alternates: { canonical: "/terms" },
+  openGraph: { title: "Terms of Service | Xplormate", description: "Terms for using the Xplormate website and submitting an enquiry.", url: "/terms", siteName: "Xplormate", type: "website" },
+  twitter: { card: "summary_large_image", title: "Terms of Service | Xplormate", description: "Terms for using the Xplormate website and submitting an enquiry." },
   description: "Terms for using the Xplormate website and submitting an enquiry.",
 };
 
@@ -17,7 +20,7 @@ export default function TermsPage() {
             <img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" />
             <span>Xplormate<span className="brand-dot">.</span></span>
           </Link>
-          <Link className="legal-back" href="/">Back to Xplormate <span aria-hidden="true">↗</span></Link>
+          <Link className="legal-back" href="/"><span aria-hidden="true">←</span> Back to Xplormate</Link>
         </div>
       </header>
 
@@ -28,12 +31,12 @@ export default function TermsPage() {
 
         <section>
           <h2>About the website</h2>
-          <p>Xplormate is exploring AI transformation opportunities in manufacturing operations. The workflows, examples, and questions on this site are illustrative and support early discovery. They are not a promise of a specific product, result, or pilot.</p>
+          <p>Xplormate builds AI agents for manufacturing operations. The agents, workflows, sample data, examples, and questions on this site are illustrative and show how we might work. They are not a promise of a specific product, result, or pilot.</p>
         </section>
 
         <section>
           <h2>Using the site</h2>
-          <p>You may use the site for lawful, personal, or business evaluation. Do not use it to interfere with the site, attempt unauthorised access, submit misleading information, or introduce malicious code.</p>
+          <p>You may use the site for lawful personal or business purposes. Do not use it to interfere with the site, attempt unauthorised access, submit misleading information, or introduce malicious code.</p>
         </section>
 
         <section>
@@ -64,7 +67,7 @@ export default function TermsPage() {
       </article>
 
       <footer className="legal-footer">
-        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI transformation for manufacturing operations.</span></div>
+        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI agents for manufacturing operations.</span></div>
       </footer>
     </main>
   );

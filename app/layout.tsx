@@ -10,29 +10,31 @@ const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["nor
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL
-  : process.env.VERCEL_URL
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Xplormate | AI Transformation for Manufacturing Operations",
+  title: "Xplormate | AI agents for manufacturing operations",
   description:
-    "Xplormate helps manufacturers redesign core production, quality, maintenance and materials workflows with AI. Start with one focused paid pilot, measure the result and expand what works.",
+    "Xplormate builds AI agents for manufacturing operations that work on top of your ERP, MES, quality and maintenance systems. Start with one workflow in a small paid pilot.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI transformation for core manufacturing operations | Xplormate",
+    title: "Xplormate | AI agents for manufacturing operations",
     description:
-      "Redesign the work that runs your plant. Start with one workflow, put AI to work on routine steps and keep your team in control.",
+      "Agents that follow up on shortages, breakdowns and quality issues in the systems your plant already runs. Your team makes the decisions.",
     url: "/",
     siteName: "Xplormate",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI transformation for manufacturing operations | Xplormate",
+    title: "Xplormate | AI agents for manufacturing operations",
     description:
-      "Redesign core manufacturing workflows with AI. Start with one focused pilot and measure what improves.",
+      "Agents that follow up on shortages, breakdowns and quality issues in the systems your plant already runs. Your team makes the decisions.",
   },
   icons: {
     icon: "/xplormate-logo.jpg",
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} ${serif.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Analytics />
         <Trackers />

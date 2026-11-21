@@ -3,35 +3,37 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 
-type Tool = { brand: string; logo: string; area: string };
-type ToolGroup = { id: string; label: string; tools: Tool[] };
+// `logo` is a file in /public/tool-logos; systems without one show a two-letter badge.
+export type Tool = { brand: string; logo?: string; area: string };
+export type ToolGroup = { id: string; label: string; tools: Tool[] };
 
-const GROUP_MS = 3600;
+const GROUP_MS = 4200;
+
+// Two-letter badge for systems without a logo file, e.g. "Microsoft Dynamics" -> "MD", "Tally" -> "TA".
+const monogram = (brand: string) => {
+  const words = brand.split(/\s+/).filter(Boolean);
+  return (words.length > 1 ? words[0][0] + words[1][0] : brand.slice(0, 2)).toUpperCase();
+};
 
 /**
- * Logo cards gliding continuously right-to-left on a horizontal conveyor.
- * The category list on the left cycles on its own and lights up that
- * category's tools as they pass; clicking a category holds it. A pause button
- * stops everything, and nothing runs while the conveyor is off screen.
+ * Example systems by category. The categories cycle on their own while the panel
+ * is on screen (a line under the active one shows the time left); the systems of
+ * the active category animate in on the right. Clicking a category holds it, and
+ * a pause button stops the cycle. Reduced motion holds the first category.
  */
-export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
+export default function ToolConveyor({ groups, eyebrow, title, note }: { groups: ToolGroup[]; eyebrow: string; title: string; note: string }) {
   const [groupIndex, setGroupIndex] = useState(0);
   const [autoGroups, setAutoGroups] = useState(true);
   const [reduced, setReduced] = useState(false);
   const [paused, setPaused] = useState(false);
   const [onScreen, setOnScreen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-
   const group = groups[groupIndex];
-  const highlighted = new Set(group.tools.map((tool) => `${tool.logo}-${tool.area}`));
-  // Every tool once, in category order, then the same list again for a seamless loop.
-  const tools = groups.flatMap((item) => item.tools).filter((tool, index, all) => all.findIndex((other) => other.logo === tool.logo && other.area === tool.area) === index);
-  const track = [...tools, ...tools];
 
   useEffect(() => {
     const still = requestAnimationFrame(() => setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches));
     const root = rootRef.current;
-    const observer = root ? new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting)) : null;
+    const observer = root ? new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.3 }) : null;
     if (root && observer) observer.observe(root);
     return () => {
       cancelAnimationFrame(still);
@@ -39,13 +41,13 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
     };
   }, []);
 
-  const running = !reduced && !paused && onScreen;
+  const running = !reduced && !paused && onScreen && autoGroups;
 
   useEffect(() => {
-    if (!running || !autoGroups) return;
-    const timer = window.setInterval(() => setGroupIndex((current) => (current + 1) % groups.length), GROUP_MS);
-    return () => window.clearInterval(timer);
-  }, [running, autoGroups, groups.length]);
+    if (!running) return;
+    const timer = window.setTimeout(() => setGroupIndex((current) => (current + 1) % groups.length), GROUP_MS);
+    return () => window.clearTimeout(timer);
+  }, [running, groupIndex, groups.length]);
 
   const choose = (index: number) => {
     setAutoGroups(false);
@@ -66,39 +68,36 @@ export default function ToolConveyor({ groups }: { groups: ToolGroup[] }) {
   };
 
   return (
-    <div className="conveyor-layout" ref={rootRef}>
-      <div className="conveyor-intro">
-        <span className="systems-eyebrow">YOUR EXISTING OPERATION</span>
-        <h3 id="systems-map-title">Work with the systems you already use.</h3>
-        <p className="conveyor-note">Examples of tools plants commonly run on. They are not our partners or customers.</p>
-        <div className="conveyor-groups" role="tablist" aria-label="Tool categories">
+    <div className="systems-layout" ref={rootRef}>
+      <div className="systems-intro">
+        <span className="systems-eyebrow">{eyebrow}</span>
+        <h3 id="systems-map-title">{title}</h3>
+        <p className="systems-note">{note}</p>
+        <div className="systems-tabs" role="tablist" aria-label="System types" aria-orientation="vertical" onFocus={() => setAutoGroups(false)}>
           {groups.map((item, index) => (
             <button key={item.id} id={`tool-tab-${item.id}`} type="button" role="tab" tabIndex={index === groupIndex ? 0 : -1} aria-selected={index === groupIndex} aria-controls="tool-panel" onClick={() => choose(index)} onKeyDown={(event) => onTabKey(event, index)}>
-              <span aria-hidden="true">{index === groupIndex ? ">" : ""}</span>{item.label}
+              <span className="systems-tab-index">{String(index + 1).padStart(2, "0")}</span>
+              {item.label}
+              {index === groupIndex ? <i className={`systems-tab-timer${running ? " is-running" : ""}`} key={`${item.id}-${groupIndex}`} style={{ "--ms": `${GROUP_MS}ms` } as React.CSSProperties} aria-hidden="true" /> : null}
             </button>
           ))}
         </div>
       </div>
-      <div className="conveyor-stage" id="tool-panel" role="tabpanel" tabIndex={0} aria-labelledby={`tool-tab-${group.id}`}>
-        <span className="sr-only">{group.tools.map((tool) => tool.brand).join(", ")}</span>
-        <span className="conveyor-ticks" aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <i key={index} />)}</span>
-        <div className="conveyor-window" aria-hidden="true">
-          <div className={`conveyor-track${running ? "" : " is-paused"}`} style={{ "--count": tools.length } as React.CSSProperties}>
-            {track.map((tool, index) => (
-              <div key={`${tool.logo}-${tool.area}-${index}`} className={`conveyor-card${highlighted.has(`${tool.logo}-${tool.area}`) ? " is-lit" : ""}`}>
-                <img src={`/tool-logos/${tool.logo}.svg`} width="44" height="44" alt="" />
-                <span>{tool.area}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="conveyor-foot">
-          {!reduced ? (
-            <button type="button" className="conveyor-pause" aria-label={paused ? "Play tool carousel" : "Pause tool carousel"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
-              {paused ? <Play size={12} /> : <Pause size={12} />}
-            </button>
-          ) : null}
-        </div>
+      <div className="systems-stage" id="tool-panel" role="tabpanel" tabIndex={0} aria-labelledby={`tool-tab-${group.id}`}>
+        <ul className="systems-tiles" key={group.id}>
+          {group.tools.map((tool, index) => (
+            <li key={`${tool.brand}-${tool.area}`} style={{ "--i": index } as React.CSSProperties}>
+              <span className="systems-tile-logo">{tool.logo ? <img src={`/tool-logos/${tool.logo}.svg`} width="40" height="40" alt="" /> : <b aria-hidden="true">{monogram(tool.brand)}</b>}</span>
+              <span className="systems-tile-name">{tool.brand}</span>
+              <span className="systems-tile-area">{tool.area}</span>
+            </li>
+          ))}
+        </ul>
+        {!reduced && autoGroups ? (
+          <button type="button" className="systems-pause" aria-label="Pause system categories" aria-pressed={paused} onClick={() => setPaused((value) => !value)}>
+            {paused ? <Play size={12} /> : <Pause size={12} />}
+          </button>
+        ) : null}
       </div>
     </div>
   );

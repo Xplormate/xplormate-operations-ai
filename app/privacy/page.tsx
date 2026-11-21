@@ -4,6 +4,9 @@ import { clarityId, linkedinPartnerId } from "../trackers";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Xplormate",
+  alternates: { canonical: "/privacy" },
+  openGraph: { title: "Privacy Policy | Xplormate", description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.", url: "/privacy", siteName: "Xplormate", type: "website" },
+  twitter: { card: "summary_large_image", title: "Privacy Policy | Xplormate", description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests." },
   description: "How Xplormate handles enquiry details, aggregate analytics, and privacy requests.",
 };
 
@@ -18,7 +21,7 @@ export default function PrivacyPolicyPage() {
             <img className="brand-logo" src="/xplormate-logo.jpg" alt="" width="44" height="44" />
             <span>Xplormate<span className="brand-dot">.</span></span>
           </Link>
-          <Link className="legal-back" href="/">Back to Xplormate <span aria-hidden="true">↗</span></Link>
+          <Link className="legal-back" href="/"><span aria-hidden="true">←</span> Back to Xplormate</Link>
         </div>
       </header>
 
@@ -29,12 +32,12 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Information you provide</h2>
-          <p>When you submit the contact form, we collect your name, email address, company, and role. These fields are required so we can understand who is reaching out and respond to the enquiry. You can also choose to share a short description of the work your team keeps chasing. This is optional.</p>
+          <p>When you submit the contact form, we collect your name, email address, company, and role. These fields are required so we can understand who is reaching out and respond to the enquiry. You can also choose to share a short description of the workflow you want to improve. This is optional.</p>
         </section>
 
         <section>
           <h2>Information collected automatically</h2>
-          <p>The website may collect basic technical and aggregate usage information, such as pages viewed, referring source, approximate location, browser, device, and operating system. We use privacy-focused analytics to understand how the site is used and improve it.</p>
+          <p>The website may collect basic technical and aggregate usage information, such as pages viewed, which buttons are clicked, referring source, approximate location, browser, device, and operating system. We use privacy-focused analytics to understand how the site is used and improve it.</p>
           {linkedinPartnerId || clarityId ? (
             <p>
               We also use {[linkedinPartnerId ? "the LinkedIn Insight Tag, which shows us aggregate information such as the companies, industries and job functions of visitors" : "", clarityId ? "Microsoft Clarity, which helps us see how visitors scroll and use the page" : ""].filter(Boolean).join(", and ")}. These services may set cookies. We do not receive your name or contact details from them, and they are kept separate from the details you submit through the form.
@@ -56,7 +59,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Sharing and service providers</h2>
-          <p>We use trusted service providers for website hosting, secure database storage, aggregate analytics, and basic security. They process information only as needed to provide services for Xplormate. Form submissions are kept separate from anonymous website analytics.</p>
+          <p>We use trusted service providers for website hosting, secure database storage, aggregate analytics, and basic security. They process information only as needed to provide services for Xplormate.</p>
           <p>We may share information when required by law, to protect the website and its users, or to respond to a valid legal request. We do not sell or rent the personal information submitted through this form.</p>
         </section>
 
@@ -73,7 +76,7 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2>Your requests</h2>
-          <p>You may ask us to explain, correct, or delete the personal information you submitted through the form. Contact Jeetendra at <a href={`mailto:${businessEmail}`}>{businessEmail}</a>. We may need to verify a request before acting on it.</p>
+          <p>You may ask us to explain, correct, or delete the personal information you submitted through the form. Contact us at <a href={`mailto:${businessEmail}`}>{businessEmail}</a>. We may need to verify a request before acting on it.</p>
         </section>
 
         <section>
@@ -83,7 +86,7 @@ export default function PrivacyPolicyPage() {
       </article>
 
       <footer className="legal-footer">
-        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI transformation for manufacturing operations.</span></div>
+        <div className="legal-shell"><Link href="/">Xplormate<span className="brand-dot">.</span></Link><span>AI agents for manufacturing operations.</span></div>
       </footer>
     </main>
   );

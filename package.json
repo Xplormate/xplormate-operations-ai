@@ -2,7 +2,7 @@
   "name": "xplormate-operations-ai",
   "version": "0.1.0",
   "private": true,
-  "description": "Xplormate AI transformation for manufacturing operations",
+  "description": "Xplormate: AI agents for manufacturing operations",
   "engines": {
     "node": ">=22.13.0"
   },

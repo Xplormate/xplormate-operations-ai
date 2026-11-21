@@ -8,7 +8,13 @@ const leadSchema = z.object({
   company: z.string().trim().min(2, "Enter your company.").max(160, "Company is too long."),
   role: z.string().trim().min(2, "Enter your role.").max(120, "Role is too long."),
   challenge: z.string().trim().max(2000, "Please keep this under 2,000 characters.").optional().default(""),
+  // Spam checks: a hidden field people never see, and how long the form was open before sending.
+  hp_extra: z.string().optional().default(""),
+  elapsed: z.coerce.number().optional(),
 });
+
+// Submissions sent faster than a person could fill the form are treated as bots.
+const MIN_FILL_MS = 1500;
 
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -58,10 +64,19 @@ export async function POST(request: Request) {
     );
   }
 
+  const { hp_extra: trap, elapsed, ...lead } = result.data;
+
+  // Looks like a bot: answer as if it worked, but store nothing.
+  const droppedReason = trap.trim() !== "" ? "hidden field filled" : typeof elapsed === "number" && elapsed < MIN_FILL_MS ? "sent too fast" : "";
+  if (droppedReason) {
+    console.info("Lead dropped as bot", { reason: droppedReason });
+    return NextResponse.json({ ok: true, lead: { name: lead.name, email: lead.email, company: lead.company, role: lead.role } }, { status: 201 });
+  }
+
   try {
     const supabase = getSupabaseAdmin();
     let { error } = await supabase.from("leads").insert({
-      ...result.data,
+      ...lead,
       source: "website",
     });
 
@@ -69,7 +84,7 @@ export async function POST(request: Request) {
     // still save the core lead instead of losing it.
     if (error && (error.code === "PGRST204" || error.code === "42703")) {
       console.warn("Lead extra columns missing; saving core fields only. Run the latest Supabase migration.");
-      const { challenge: _challenge, ...core } = result.data;
+      const { challenge: _challenge, ...core } = lead;
       void _challenge;
       ({ error } = await supabase.from("leads").insert({ ...core, source: "website" }));
     }
@@ -89,5 +104,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, lead: result.data }, { status: 201 });
+  return NextResponse.json({ ok: true, lead }, { status: 201 });
 }

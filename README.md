@@ -1,8 +1,8 @@
 # Xplormate
 
-The company website for [xplormate.com](https://xplormate.com), focused on AI transformation for manufacturing operations.
+The company website for [xplormate.com](https://xplormate.com), focused on AI agents for manufacturing operations.
 
-The site explains how Xplormate approaches recurring workflows across production, quality, maintenance, and materials: start with one workflow, apply AI to routine coordination, keep people in control, and measure the result. Visitors can explore example scenarios and enquire about a focused paid pilot.
+The site explains where Xplormate’s AI agents fit in manufacturing operations (materials, quality, maintenance, production and reporting): start with one workflow, keep people in control and measure the result against the plant’s own records. Visitors can follow a sample-data example and request a call about a small paid pilot.
 
 **Stack:** Next.js 16 · React 19 · TypeScript · Supabase · Vercel
 
@@ -46,7 +46,7 @@ SUPABASE_SECRET_KEY=YOUR_SERVER_ONLY_KEY
 
 The lead endpoint also accepts `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as fallbacks. Keep server keys out of browser code and never give them a `NEXT_PUBLIC_` prefix. Local environment files are ignored by Git.
 
-If `NEXT_PUBLIC_SITE_URL` is unset, metadata uses `VERCEL_URL` when available, then `http://localhost:3000`. Set the local URL explicitly when checking metadata on port 5173.
+If `NEXT_PUBLIC_SITE_URL` is unset, metadata uses `VERCEL_PROJECT_PRODUCTION_URL`, then `VERCEL_URL`, when available, then `http://localhost:3000`. Set the local URL explicitly when checking metadata on port 5173.
 
 Vercel Analytics is included in the app layout. The optional LinkedIn and Clarity tags load only when their IDs are configured.
 
@@ -66,27 +66,33 @@ The form sends JSON to `POST /api/leads`. The server trims and validates the fie
 | `company` | Yes | 2–160 characters |
 | `role` | Yes | 2–120 characters |
 | `challenge` | No | Up to 2,000 characters |
+| `hp_extra` | No | Hidden spam trap; must stay empty |
+| `elapsed` | No | Milliseconds the form was open; under 1.5 s is treated as a bot |
 
-The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
+Submissions that fill the hidden field or arrive too fast get a normal `201` reply but are not stored; each one is logged as "Lead dropped as bot" with the reason only. The endpoint returns `201` after saving, `400` for invalid JSON, `422` for validation errors, and `503` when storage is unavailable. If the optional column is missing, it retries with the core fields so the enquiry can still be saved.
 
-The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields.
+The current endpoint stores enquiries in Supabase; it does not send email notifications. Successful submissions trigger the `lead_submitted` analytics event without attaching the enquiry fields. Button clicks send `cta_click` (`location`: `header`, `hero` or `phone_bar`) and `example_click` (`location`: `hero`) through `track()` from `@vercel/analytics`.
 
 For local submission tests, use a separate test database or local test storage. For an authorised production test, clearly mark the entry and verify the saved fields directly in Supabase.
 
 ## Website sections
 
+In page order:
+
 | Section | Main component |
 | --- | --- |
-| Hero scenes and sample operational readouts | `HeroSequence.tsx` |
-| Introductory glow card | `page.tsx` |
-| Scroll-highlighted statement | `PinnedStatement.tsx` |
-| How we work and example tools | `page.tsx`, `ToolConveyor.tsx` |
-| Five-step example operating loop | `OperatingLoop.tsx` |
-| Six plant-area scenarios | `AreaCarousel.tsx` |
-| Paid-pilot approach | `PilotStack.tsx` |
-| FAQ, enquiry form, navigation, and footer | `page.tsx` |
+| Hero: four plant scenes on a loop (about 7 s each); each adds one entry to a sample-data agent card, marks the spot on the clip and draws a dotted line to that entry; a rotating word ends the sentence | `HeroStory.tsx` (timing, marker, line, phone line), `HeroSequence.tsx` (clips, scene buttons, pause), `AgentPanel.tsx` (card), `RotatingWord.tsx` |
+| Problem line | `page.tsx` |
+| 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
+| 02 Where agents help: four example areas | `AreaCarousel.tsx` |
+| 03 Your systems and control: example systems by category, timed tabs, three control points | `ToolConveyor.tsx`, `page.tsx` |
+| 04 How a pilot runs: 1 week Prototype / 3 weeks First workflow / 3 months Full system | `page.tsx` |
+| 05 FAQ, 06 contact form, navigation and footer | `page.tsx` |
+| Phones only: a “Book a 30-minute call” bar after the hero, hidden from the contact form down | `StickyCta.tsx` |
 
-The hero and tools carousel have pause controls. Dot fields and the tools conveyor pause off screen. Reduced-motion styles simplify animation and use still hero posters. On phones, the operating loop displays all steps without pinning, and the hero loads smaller video files; the statement retains its pinned layout.
+Calls to action: “Book a call” in the header (desktop only) and “Book a 30-minute call” in the hero and phone bar are the primary buttons; “See an example” is the only secondary one; the form submits with “Request a call”.
+
+The hero and systems tabs have pause controls. The hero plays its four scenes in a loop, ending each round on the entry that needs approval and then starting again; a scene button jumps to that scene and plays on from there. The hero, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation and show the final scene. Up to 1080px the agent card, marker and line are hidden; on phones the header button is hidden too, a one-line summary of the current scene (marked "Sample") sits over the clip, the example shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -104,7 +110,7 @@ app/
 └── twitter-image.tsx         Twitter/X preview image
 public/
 ├── media/                    Hero videos, posters, and area photos
-├── tool-logos/               Illustrative third-party tool logos
+├── tool-logos/               Example system logos for the systems section
 └── ...                       Brand and supporting images
 supabase/
 └── migrations/               Lead-table schema changes
@@ -112,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `areas`, `stages`, `toolGroups`, `pilotSteps`, and `faq` in `app/page.tsx`.
+- **Homepage copy and examples:** edit `heroScenes`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`. Each hero scene holds its clip, its card entry (`entry`), the marker spot (`focus`, x/y fractions of the 1280x720 clip), the readout and the phone line (`short`). Update the hero’s screen-reader summary (the hidden paragraph in `HeroStory.tsx`) when the entries change.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -129,16 +135,16 @@ Hero media lives in `public/media/`. Each video scene uses a desktop clip, a sma
 | `hero-<scene>.webp` | Video poster and reduced-motion still |
 | `area-<area>.webp` | Plant-area carousel photo |
 
-Keep those variants together when replacing media and update `heroSlides` or `areas` if a path changes. Record the source and licence for any new third-party assets.
+Keep those variants together when replacing media and update `heroScenes` or `agents` if a path changes. Hero clips must stay 1280x720 (or change `MEDIA_W`/`MEDIA_H` in `HeroStory.tsx`) so the markers line up. Record the source and licence for any new third-party assets.
 
 ### Example labels and claims
 
 Keep example operational data distinguishable from customer evidence:
 
-- Hero readouts use **“Illustrative data”**.
-- The operating loop uses **“Example workflow”**.
-- Plant-area cards use **“Example scenarios”**.
-- The tools section explains that the logos are examples, not partners or customers; avoid a second disclaimer beneath the carousel.
+- The hero card carries the hero’s **“Sample data”** label, and the phone summary line is marked **“Sample”**. Scene readouts are sample data too: keep them plausible and never present them as a live plant.
+- The example agent run is labelled **“Sample data”**.
+- The agents carousel uses **“Example areas”**; describe what an agent *would* do, not live deployments.
+- The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) with the note “Not partners or customers.”
 
 Do not present sample counts, outcomes, tool logos, or factory imagery as verified customer results, integrations, partnerships, or Xplormate facilities. Publish customer proof only when it can be substantiated.
 
