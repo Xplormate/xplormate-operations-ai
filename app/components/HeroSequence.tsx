@@ -25,6 +25,10 @@ type Props = {
   durationMs: number;
   /** The last scene has played through; its bar stays full. */
   ended: boolean;
+  /** False while the hero is scrolled out of view. */
+  onScreen: boolean;
+  /** Called when the active scene's progress bar finishes. */
+  onSceneEnd: () => void;
   onSelect: (index: number) => void;
   onTogglePause: () => void;
 };
@@ -34,20 +38,20 @@ type Props = {
  * The parent (HeroStory) owns the timing so the clips stay in step with the agent card.
  * Only the visible clip plays and only the next one preloads; phones get lighter files.
  */
-export default function HeroSequence({ slides, active, running, paused, reduced, variant, durationMs, ended, onSelect, onTogglePause }: Props) {
+export default function HeroSequence({ slides, active, running, paused, reduced, variant, durationMs, ended, onScreen, onSceneEnd, onSelect, onTogglePause }: Props) {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   // Only the visible clip plays. It keeps looping on the last scene even after the timer stops.
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
-      if (index === active && !paused && !reduced && variant) {
+      if (index === active && !paused && !reduced && onScreen && variant) {
         video.play().catch(() => undefined);
       } else {
         video.pause();
       }
     });
-  }, [active, paused, reduced, variant]);
+  }, [active, paused, reduced, onScreen, variant]);
 
   // Restart each clip from the top when its scene comes round again.
   useEffect(() => {
@@ -89,7 +93,7 @@ export default function HeroSequence({ slides, active, running, paused, reduced,
             onClick={() => onSelect(index)}
           >
             <span className="hero-progress-label">{item.label}</span>
-            <span className="hero-progress-bar"><b key={index === active ? `active-${active}-${running}` : "idle"} className={running ? undefined : "is-paused"} style={index === active ? { animationDuration: `${durationMs}ms` } : undefined} /></span>
+            <span className="hero-progress-bar"><b key={index === active ? `active-${active}` : "idle"} className={running ? undefined : "is-paused"} onAnimationEnd={index === active ? onSceneEnd : undefined} style={index === active ? { animationDuration: `${durationMs}ms` } : undefined} /></span>
           </button>
         ))}
         {!reduced ? (

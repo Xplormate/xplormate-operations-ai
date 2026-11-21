@@ -81,7 +81,7 @@ In page order:
 
 | Section | Main component |
 | --- | --- |
-| Hero: plant videos, a sample-data agent activity card (fills in once) and a rotating word at the end of the sentence | `HeroSequence.tsx`, `AgentPanel.tsx`, `RotatingWord.tsx` |
+| Hero: four plant scenes played once (about 7 s each); each adds one entry to a sample-data agent card, marks the spot on the clip and draws a dotted line to that entry; a rotating word ends the sentence | `HeroStory.tsx` (timing, marker, line, phone line), `HeroSequence.tsx` (clips, scene buttons, pause), `AgentPanel.tsx` (card), `RotatingWord.tsx` |
 | Problem line | `page.tsx` |
 | 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
 | 02 Where agents help: four example areas | `AreaCarousel.tsx` |
@@ -92,7 +92,7 @@ In page order:
 
 Calls to action: “Book a call” in the header (desktop only) and “Book a 30-minute call” in the hero and phone bar are the primary buttons; “See an example” is the only secondary one; the form submits with “Request a call”.
 
-The hero and systems tabs have pause controls. The agent card fills in once; the card, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation. On phones the agent panel and header button are hidden, the example shows all steps without pinning, and the hero loads smaller video files.
+The hero and systems tabs have pause controls. The hero plays its four scenes once and stops on the entry that needs approval (the last clip keeps looping); a scene button jumps to that scene and plays on from there. The hero, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation and show the final scene. Up to 1080px the agent card, marker and line are hidden; on phones the header button is hidden too, a one-line summary of the current scene (marked "Sample") sits over the clip, the example shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 
@@ -118,7 +118,7 @@ supabase/
 
 ### Editing content and design
 
-- **Homepage copy and examples:** edit `heroSlides`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`; the hero card entries (`entries`) live in `AgentPanel.tsx`.
+- **Homepage copy and examples:** edit `heroScenes`, `agentRun`, `agents`, `systemGroups`, `controls`, `pilotPath` and `faq` in `app/page.tsx`. Each hero scene holds its clip, its card entry (`entry`), the marker spot (`focus`, x/y fractions of the 1280x720 clip), the readout and the phone line (`short`). Update the card’s screen-reader summary (`aria-label` in `AgentPanel.tsx`) when the entries change.
 - **Contact details:** edit `businessEmail` and `linkedinProfile` in `app/page.tsx`; check the legal pages for corresponding details.
 - **Colours, spacing, and responsive layout:** edit `app/globals.css`.
 - **Fonts and site metadata:** edit `app/layout.tsx`. Fonts are Geist, Geist Mono, and Instrument Serif.
@@ -135,13 +135,13 @@ Hero media lives in `public/media/`. Each video scene uses a desktop clip, a sma
 | `hero-<scene>.webp` | Video poster and reduced-motion still |
 | `area-<area>.webp` | Plant-area carousel photo |
 
-Keep those variants together when replacing media and update `heroSlides` or `agents` if a path changes. Record the source and licence for any new third-party assets.
+Keep those variants together when replacing media and update `heroScenes` or `agents` if a path changes. Hero clips must stay 1280x720 (or change `MEDIA_W`/`MEDIA_H` in `HeroStory.tsx`) so the markers line up. Record the source and licence for any new third-party assets.
 
 ### Example labels and claims
 
 Keep example operational data distinguishable from customer evidence:
 
-- The hero panel carries the hero’s only **“Sample data”** label; hero scenes have no readouts.
+- The hero card carries the hero’s **“Sample data”** label, and the phone summary line is marked **“Sample”**. Scene readouts are sample data too: keep them plausible and never present them as a live plant.
 - The example agent run is labelled **“Sample data”**.
 - The agents carousel uses **“Example areas”**; describe what an agent *would* do, not live deployments.
 - The systems section shows example systems by category (logos where we have them, two-letter badges otherwise) with the note “Not partners or customers.”
