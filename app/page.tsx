@@ -198,7 +198,7 @@ export default function Home() {
           <div className="hero-kicker"><span className="signal-pulse" /> FOR PLANT HEADS, COOs AND MDs</div>
           <h1>AI agents for <em>manufacturing</em> operations.</h1>
           <div className="hero-actions">
-            <p>Your team makes the decisions. Agents follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "morning reviews"]} suffix="." /></p>
+            <p>Your team makes the decisions. Agents follow up on <RotatingWord words={["shortages", "breakdowns", "quality issues", "morning review actions"]} suffix="." /></p>
             <div className="hero-buttons"><a className="button button-amber" href="#contact" onClick={() => track("cta_click", { location: "hero" })}>Book a 30-minute call <ArrowRight size={18} /></a><a className="button button-ghost" href="#example" onClick={() => track("example_click", { location: "hero" })}>See an example</a></div>
           </div>
         </div>
