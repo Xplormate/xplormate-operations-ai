@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { preload } from "react-dom";
 import { track } from "@vercel/analytics";
-import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Lock, Menu, Repeat, ScrollText, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
+import { ArrowRight, ArrowUp, ArrowUpRight, ChartColumn, Check, ChevronDown, CircleAlert, Database, Menu, Repeat, ShieldCheck, UserCheck, Users, Wrench, X } from "lucide-react";
 import AgentPanel from "./components/AgentPanel";
 import AreaCarousel, { type Area } from "./components/AreaCarousel";
-import ControlPanel from "./components/ControlPanel";
 import DotField from "./components/DotField";
 import HeroSequence, { type HeroSlide } from "./components/HeroSequence";
 import OperatingLoop from "./components/OperatingLoop";
@@ -41,7 +40,7 @@ const agentRun = [
   { number: "02", time: "14:33", title: "Facts checked", copy: "It checks stock in other stores and open POs. One PO is two days late.", icon: Database },
   { number: "03", time: "14:35", title: "Owners asked", copy: "It flags three affected orders, proposes a new run order for Line 2, and asks the buyer to confirm the supplier date by 17:00.", icon: Users },
   { number: "04", time: "15:10", title: "Planner approves", copy: "The planner approves the new run order. The agent updates every owner.", icon: UserCheck },
-  { number: "05", time: "17:00", title: "Closed and logged", copy: "The buyer confirms the supplier date and closes the issue. The agent logs every step.", icon: Check },
+  { number: "05", time: "17:00", title: "Issue closed", copy: "The buyer confirms the supplier date and closes the issue. Every step is on record.", icon: Check },
 ];
 
 // Examples of systems plants run on, shown by category. Not partners or customers.
@@ -53,10 +52,9 @@ const systemGroups: ToolGroup[] = [
 ];
 
 const controls = [
-  { icon: Lock, title: "Access you approve", copy: "It starts read-only, after your IT team’s security review. Write access is added only for the steps you agree, and you can remove it any time." },
-  { icon: UserCheck, title: "A person signs off key steps", copy: "Changes to the plan, orders, closing a record and anything sent outside the plant wait for a person." },
-  { icon: ScrollText, title: "Every action logged", copy: "What the agent did, when, and who approved it." },
-  { icon: Database, title: "Your data stays yours", copy: "Used only for your plant’s work. Where it’s hosted and which AI model processes it are agreed with your IT team, with hosting in India if you need it." },
+  { title: "You approve key steps", copy: "Changes to the plan, orders and anything sent outside the plant wait for a person." },
+  { title: "Every action is logged", copy: "You can see what the agent did, and who approved it." },
+  { title: "Your data stays yours", copy: "Used only for your plant’s work. Access starts read-only and you can remove it any time." },
 ];
 
 const pilotPath = [
@@ -232,15 +230,9 @@ export default function Home() {
       <div className="systems-map bracketed" data-reveal>
         <ToolConveyor groups={systemGroups} eyebrow="EXAMPLE SYSTEMS" title="Systems an agent could work with." note="Not partners or customers." />
       </div>
-      <div className="control-block" data-reveal>
-        <ControlPanel />
-        <ul className="control-points">
-          {controls.map((item) => {
-            const Icon = item.icon;
-            return <li key={item.title}><span className="control-icon" aria-hidden="true"><Icon size={17} strokeWidth={1.6} /></span><div><h3>{item.title}</h3><p>{item.copy}</p></div></li>;
-          })}
-        </ul>
-      </div>
+      <ul className="control-points" data-reveal>
+        {controls.map((item) => <li key={item.title}><h3>{item.title}</h3><p>{item.copy}</p></li>)}
+      </ul>
     </div></section>
 
     <section className="approach" id="pilot"><div className="shell">
