@@ -24,8 +24,8 @@ export default function AgentPanel() {
     const root = rootRef.current;
     if (!root) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(entries.length);
-      return;
+      const frame = requestAnimationFrame(() => setShown(entries.length));
+      return () => cancelAnimationFrame(frame);
     }
     const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
     observer.observe(root);

@@ -5,6 +5,8 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Images are pre-sized WebP/SVG files served as-is; next/image is not used on purpose.
+  { rules: { "@next/next/no-img-element": "off" } },
   globalIgnores([
     ".next/**",
     "out/**",
