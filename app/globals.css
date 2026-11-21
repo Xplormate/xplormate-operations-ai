@@ -461,7 +461,8 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .agent-live-chip{font:9.5px/1 var(--mono);letter-spacing:.1em;color:var(--amber);border:1px solid rgba(255,182,41,.45);border-radius:4px;padding:4px 6px}
 .agent-panel-head{align-items:flex-start;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.12)}
 .agent-name{display:grid;gap:5px}
-.agent-sub{padding-left:15px;font:9.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,240,230,.6)}
+.agent-sub{padding-left:15px;font:9.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:rgba(244,240,230,.6)}
+.agent-panel-head .agent-live-chip{flex:none;white-space:nowrap}
 .agent-live-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(255,182,41,.5);animation:pulse 2.2s infinite}
 .agent-log{list-style:none;margin:6px 0 0;padding:0;display:grid}
 .agent-log li{display:grid;grid-template-columns:38px 1fr auto;align-items:start;gap:10px;max-height:0;padding:0;overflow:hidden;opacity:0;transform:translateY(6px);transition:max-height .6s var(--ease),padding .6s var(--ease),opacity .5s var(--ease) .1s,transform .5s var(--ease) .1s}
