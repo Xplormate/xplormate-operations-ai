@@ -522,7 +522,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .footer-col a{background:linear-gradient(currentColor,currentColor) left bottom/0 1px no-repeat;padding-bottom:2px;transition:color .2s,background-size .35s var(--ease)}
 .footer-col a:hover,.footer-col a:focus-visible{background-size:100% 1px}
 .footer-mark{margin-top:64px;overflow:hidden;white-space:nowrap;font-size:clamp(52px,15vw,210px);font-weight:500;line-height:1.08;letter-spacing:-.065em;color:transparent;background:linear-gradient(100deg,rgba(244,240,230,.07) 35%,rgba(255,182,41,.55) 50%,rgba(244,240,230,.07) 65%) 50% 0/250% 100%;-webkit-background-clip:text;background-clip:text;user-select:none}
-.footer-mark.is-visible{animation:markSweep 7s linear 2}
+.footer-mark.is-visible{animation:markSweep 9s linear infinite}
 .footer-mark span{color:rgba(255,182,41,.6)}
 .footer-bar{margin-top:28px}
 .footer-top-link{display:inline-flex;align-items:center;gap:6px;color:rgba(244,240,230,.6);transition:color .2s}
