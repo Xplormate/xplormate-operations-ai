@@ -81,7 +81,7 @@ In page order:
 
 | Section | Main component |
 | --- | --- |
-| Hero: four plant scenes played once (about 7 s each); each adds one entry to a sample-data agent card, marks the spot on the clip and draws a dotted line to that entry; a rotating word ends the sentence | `HeroStory.tsx` (timing, marker, line, phone line), `HeroSequence.tsx` (clips, scene buttons, pause), `AgentPanel.tsx` (card), `RotatingWord.tsx` |
+| Hero: four plant scenes on a loop (about 7 s each); each adds one entry to a sample-data agent card, marks the spot on the clip and draws a dotted line to that entry; a rotating word ends the sentence | `HeroStory.tsx` (timing, marker, line, phone line), `HeroSequence.tsx` (clips, scene buttons, pause), `AgentPanel.tsx` (card), `RotatingWord.tsx` |
 | Problem line | `page.tsx` |
 | 01 Example: a material shortage, step by step (sample data) | `OperatingLoop.tsx` |
 | 02 Where agents help: four example areas | `AreaCarousel.tsx` |
@@ -92,7 +92,7 @@ In page order:
 
 Calls to action: “Book a call” in the header (desktop only) and “Book a 30-minute call” in the hero and phone bar are the primary buttons; “See an example” is the only secondary one; the form submits with “Request a call”.
 
-The hero and systems tabs have pause controls. The hero plays its four scenes once and stops on the entry that needs approval (the last clip keeps looping); a scene button jumps to that scene and plays on from there. The hero, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation and show the final scene. Up to 1080px the agent card, marker and line are hidden; on phones the header button is hidden too, a one-line summary of the current scene (marked "Sample") sits over the clip, the example shows all steps without pinning, and the hero loads smaller video files.
+The hero and systems tabs have pause controls. The hero plays its four scenes in a loop, ending each round on the entry that needs approval and then starting again; a scene button jumps to that scene and plays on from there. The hero, the rotating word and the systems tabs stop while off screen. Reduced-motion settings stop every animation and show the final scene. Up to 1080px the agent card, marker and line are hidden; on phones the header button is hidden too, a one-line summary of the current scene (marked "Sample") sits over the clip, the example shows all steps without pinning, and the hero loads smaller video files.
 
 ## Project structure
 

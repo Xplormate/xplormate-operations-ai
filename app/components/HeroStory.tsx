@@ -25,7 +25,7 @@ type Hud = { marker: Point; target: Point | null; side: "left" | "right" };
 /**
  * The hero scene: plant clips, the agent card and a light annotation layer kept in step.
  * Each scene adds one entry to the card; a marker sits on the machine in the clip and a dotted line
- * runs from it to that entry. It plays through once and rests on the entry that needs approval.
+ * runs from it to that entry. After the last scene (the entry that needs approval) it starts again from the first.
  */
 export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
   const [step, setStep] = useState(0);
@@ -65,8 +65,7 @@ export default function HeroStory({ scenes }: { scenes: HeroScene[] }) {
 
   // The active progress bar is the clock: when its animation ends, move on (or stop after the last scene).
   const next = useCallback(() => {
-    if (step < scenes.length - 1) setStep(step + 1);
-    else setEnded(true);
+    setStep(step < scenes.length - 1 ? step + 1 : 0);
   }, [step, scenes.length]);
 
   // Place the marker on the clip (the clip is object-fit: cover) and aim the line at the current card entry.
