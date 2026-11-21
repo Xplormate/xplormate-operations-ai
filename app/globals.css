@@ -514,6 +514,7 @@ details p{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:700px;ma
 .systems-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:stretch}
 .systems-intro{display:flex;flex-direction:column}
 .systems-intro h3{font-size:clamp(28px,3vw,42px);line-height:1.06;letter-spacing:-.045em;font-weight:400;margin:12px 0 0;max-width:420px;text-wrap:balance}
+.systems-intro h3:first-child{margin-top:0}
 .systems-note{margin:12px 0 0;font-size:14px;line-height:1.55;color:var(--ink-2)}
 .systems-tabs{margin-top:auto;padding-top:36px;display:grid;gap:2px}
 .systems-tabs button{position:relative;display:flex;gap:14px;align-items:center;width:100%;max-width:340px;border:0;border-bottom:1px solid var(--line);background:none;padding:12px 0;cursor:pointer;font:11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);text-align:left;transition:color .25s}
